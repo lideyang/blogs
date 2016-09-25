@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="lidy个人博客，lidy个人主页，lidy个人简历">
+    <meta name="keywords" content="lidy个人博客，lidy个人主页，lidy个人简历">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <title><%= title %></title>
+    <link rel='stylesheet' id='boostrap-grid-css' href='/assets/dist/css/bootstrap-grid.css' type='text/css' media='all'/>
+    <link rel='stylesheet' id='fontawesome-css' href='/assets/dist/css/font-awesome.css' type='text/css' media='all'/>
+    <link rel='stylesheet' id='animate-css' href='/assets/dist/css/animate.css' type='text/css' media='all'/>
+    <link rel='stylesheet' id='fabthemes-style-css' href='/assets/dist/css/style.css' type='text/css' media='all'/>
+    <link rel='stylesheet' id='theme-css' href='/assets/dist/css/theme.css' type='text/css' media='all'/>
+</head>
+                <!-- loading -->
+                <div id="main_loading">
+                    <p id="loading-one">载入中</p>
+                </div>
+                <body class="home blog hfeed">
+                <!--右侧导航-->
+                <div class="stmenu">
+                    <nav id="site-navigation" class="sidebar-navigation" role="navigation">
+                        <div id="primary-menu" class="menu">
+                            <ul>
+                <li class="page_item page-item-2"><h2 class=""><%= title %></h2></li>
+            </ul>
+        </div>
+    </nav>
+    <!--搜索-文章列表-->
+    <aside id="secondary" class="widget-area" role="complementary">
+        <section id="search-2" class="widget widget_search">
+            <form role="search" method="get" class="search-form" action="/search">
+                <label>
+                    <input type="search" class="search-field" placeholder="搜索&hellip;" value="" name="keyword" />
+                </label>
+                <input type="submit" class="search-submit" value="搜索"/>
+            </form>
+        </section>
+        <section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>
+            <ul>
+            </ul>
+        </section>
+        <section id="recent-comments-2" class="widget widget_recent_comments"><h2 class="widget-title">近期评论</h2>
+            <ul id="recentcomments">
+            </ul>
+        </section>
+        <!--<section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>-->
+            <!--<ul>-->
+                <!--<li><a href=''>2016年九月</a></li>-->
+            <!--</ul>-->
+        <!--</section>-->
+        <section id="categories-2" class="widget widget_categories"><h2 class="widget-title">分类目录</h2>
+            <ul>
+                <li class="cat-item cat-item-1">
+                    <a href="/u/sort/心情">心情</a>
+                    <a href="/u/sort/技术">技术</a>
+                    <a href="/u/sort/学习">学习</a>
+                    <a href="/archive">存档</a>
+                </li>
+            </ul>
+        </section>
+        <section id="meta-2" class="widget widget_meta"><h2 class="widget-title">功能</h2>
+            <ul>
+            </ul>
+        </section>
+    </aside>
+</div>
+<!--内容开始-->
+<%- body %>
+</body>
+</html>

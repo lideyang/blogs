@@ -1,0 +1,1 @@
+define(function(t,e,n){n.exports={init:function(){$=t("jquery"),$.ajax({url:"/api/getNavInfo",dataType:"json",success:function(t){var e='<li><a href="/u/'+t.name+"/"+t.time.day+"/"+t.title+'">'+t.title+"</a>";$("#recent-posts-2").find("ul").html(e)}})}}});

@@ -1,0 +1,1 @@
+define(function(n,i,o){$=n("jquery"),o.exports={init:function(){$(".nav-switch").on("click",function(){$("body").toggleClass("isOpen")})}}});
