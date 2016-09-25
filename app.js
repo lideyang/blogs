@@ -24,7 +24,7 @@ var errorLog = fs.createWriteStream('error.log', {flags: 'a'});
 var app = express();
 app.use('/upload', upload);
 app.use('/api', api);
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3002);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(favicon(__dirname + '/public/images/favicon.ico'));

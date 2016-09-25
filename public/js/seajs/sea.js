@@ -1216,7 +1216,7 @@ if (location.href.indexOf("?dev") > 0) {
         })
 } else {
         seajs.config({
-                base: '/assets/js/'
+                base: '/assets/dist/js/'
         })
 }
 seajs.config({

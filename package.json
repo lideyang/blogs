@@ -1,8 +1,8 @@
 {
-  "name": "N-blog",
+  "name": "lidy-blog",
   "version": "1.0.0",
   "private": true,
-  "description": "N-blog for express4.x",
+  "description": "lidy-blog for express4.x",
   "scripts": {
     "start": "node app"
   },

@@ -58,7 +58,8 @@ gulp.task('uglify', function () {
         .pipe(uglify({
             output: {
                 comments:false
-            }
+            },
+            mangle: { except: ['require', 'exports', 'module', '$'] }//排除混淆关键字
         }))
         .pipe(gulp.dest(config.dist.js))
        // .pipe(copy(config.path.dist_js));

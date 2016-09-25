@@ -4,6 +4,7 @@
 define(function (require, exports, module) {
         var $ = require('jquery');
         require('jquery.waypoints');
+
         require('owl.carousel');
         module.exports = {
                 init: function () {
@@ -29,10 +30,6 @@ define(function (require, exports, module) {
                                 addClassActive: true,
                                 rewindNav: false,
                         });
-
-
-
-
                 }
         }
 });
