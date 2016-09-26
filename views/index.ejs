@@ -31,7 +31,7 @@
                                 <a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a>
                             </h3>
                             <div class="">
-                                <%- (post.post.length > 120 ? post.post.substring(0, 120) : post.post) %>
+                                <%= post.description %>
                             </div>
                             <a class="readmore" href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">
                                 Read More
@@ -58,7 +58,7 @@
                                      class="dynpost animated post-5 post type-post status-publish format-standard hentry category-uncategorized">
                                 <header class="entry-header">
                                     <div class="cat-list">
-                                        <a href="/u/sort/<%= post.sort %>" rel="category tag"><%=post.sort%></a>
+                                        <a href="/u/sort/<%= post.sort %>" rel="category tag"><%= post.sort %></a>
                                     </div>
                                     <h2 class="entry-title">
                                         <a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"
@@ -68,19 +68,19 @@
                                     </div>
                                 </header>
                                 <div class="entry-content">
-                                    <%- (post.post.length > 300 ? post.post.substring(0, 300) : post.post) %>
+                                    <%= post.description %>
                                 </div>
                                 <footer class="entry-footer">
                                     <a href=" /u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"
                                        class="read-more"> <i class="fa fa-plus"></i> 阅读详情 </a>
                                     <ul class="sharebtn">
                                         <li class="weibo">
-                                            <a href="http://service.weibo.com/share/share.php?url=http://<%=host%>/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>&title=<%= post.title %>"
+                                            <a href="http://service.weibo.com/share/share.php?url=http://<%= host %>/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>&title=<%= post.title %>"
                                                target="_blank"><i class="fa fa-weibo"></i></a>
                                         </li>
                                         <li class="qqkongjian">
-                                            <a href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://<%=host%>/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>&title=<%= post.title %>"
-                                                    target="_blank"><i class="fa fa-qq"></i></a>
+                                            <a href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://<%= host %>/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>&title=<%= post.title %>"
+                                               target="_blank"><i class="fa fa-qq"></i></a>
                                         </li>
                                     </ul>
                                     <div class="clear"></div>

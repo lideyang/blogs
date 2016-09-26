@@ -4,7 +4,7 @@
 <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
 <script type="text/javascript" charset="utf-8" src="/assets/js/ueditor/lang/zh-cn/zh-cn.js"></script>
 <%- include header %>
-<form method="post" style="padding: 20px">
+<form method="post" style="padding: 20px" id="postForm">
     标题：<br/>
     <input type="text" name="title"/><br/>
     标签：<br/>
@@ -18,12 +18,13 @@
     正文：<br/>
     <script id="editor" name="post" type="text/plain" style="width:100%;height:500px;"></script>
     <br/>
-    <input type="submit" value="发表"/>
+    <input type="hidden" name="description" id="description"/>
+    <input type="submit" id="submitBtn" value="发表"/>
 </form>
 <%- include footer %>
 <script>
-    seajs.use(['article'], function (main) {
+    var ue = UE.getEditor('editor');
+    seajs.use(['post'], function (main) {
         main.init();
     })
-    var ue = UE.getEditor('editor');
 </script>

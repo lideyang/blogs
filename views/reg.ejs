@@ -1,9 +1,13 @@
 <%- include header %>
-<form method="post">
-  用户名：  <input type="text" name="name"/><br />
-  密码：    <input type="password" name="password"/><br />
-  确认密码：<input type="password" name="password-repeat"/><br />
-  邮箱：    <input type="email" name="email"/><br />
-            <input type="submit" value="注册"/>
-</form>
+<div class="container" style="padding:20px;">
+    <form method="post">
+        <ul>
+            <li> 用户名： <input type="text" name="name"/></li>
+            <li>密码： <input type="password" name="password"/></li>
+            <li> 确认密码：<input type="password" name="password-repeat"/></li>
+            <li>邮箱： <input type="email" name="email"/></li>
+        </ul>
+        <input type="submit" value="注册"/>
+    </form>
+</div>
 <%- include footer %>

@@ -47,7 +47,7 @@ a:active {
   background: #ffffff;
 }
 #masthead {
-  background: #222222 url('images/head.jpg') center center;
+  background: #222222 url('../images/header.jpg') center center;
   background-size: cover;
 }
 #masthead .top {
@@ -143,7 +143,7 @@ a:active {
 }
 .entry-header h2.entry-title,
 .entry-header h1.entry-title {
-  font-size: 46px;
+  font-size: 42px;
   font-weight: 400;
   padding: 0px 15%;
   line-height: 1.2;
@@ -181,7 +181,7 @@ a:active {
 }
 .entry-content p,
 .entry-summary p {
-  padding: 0px 15%;
+  padding: 0px;
 }
 .entry-footer {
   padding: 20px 15%;

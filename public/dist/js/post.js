@@ -1,0 +1,1 @@
+define(function(require,exports,module){$=require("jquery"),module.exports={init:function(){$("#postForm").submit(function(){var t=ue.getContent(),n=$(t).text();n=n.length>100?n.substring(0,200):n,$("#description").val(n)})}}});

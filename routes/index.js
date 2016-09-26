@@ -18,7 +18,7 @@ module.exports = function (app) {
                                 title: 'lidy的个人主页',
                                 posts: posts,
                                 page: page,
-                                host:req.rawHeaders[1],
+                                host: req.rawHeaders[1],
                                 isFirstPage: (page - 1) == 0,
                                 isLastPage: ((page - 1) * 10 + posts.length) == total,
                                 user: req.session.user,
@@ -122,7 +122,7 @@ module.exports = function (app) {
         app.post('/post', function (req, res) {
                 var currentUser = req.session.user,
                         tags = [req.body.tag1, req.body.tag2, req.body.tag3],
-                        post = new Post(currentUser.name, currentUser.head, req.body.title, tags, req.body.post, req.body.sort);
+                        post = new Post(currentUser.name, currentUser.head, req.body.title, tags, req.body.post, req.body.sort,req.body.description);
                 post.save(function (err) {
                         if (err) {
                                 req.flash('error', err);
@@ -250,7 +250,7 @@ module.exports = function (app) {
                                         return res.redirect('/');
                                 }
                                 res.render('user', {
-                                        title:'lidy的个人主页-'+ user.name,
+                                        title: 'lidy的个人主页-' + user.name,
                                         posts: posts,
                                         page: page,
                                         isFirstPage: (page - 1) == 0,
@@ -289,9 +289,9 @@ module.exports = function (app) {
                                 return res.redirect('/');
                         }
                         res.render('article', {
-                                title: 'lidy的个人主页-'+req.params.title,
+                                title: 'lidy的个人主页-' + req.params.title,
                                 post: post,
-                                host:req.rawHeaders[1],
+                                host: req.rawHeaders[1],
                                 user: req.session.user,
                                 success: req.flash('success').toString(),
                                 error: req.flash('error').toString()
