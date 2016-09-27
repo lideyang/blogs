@@ -1,3 +1,4 @@
+//导入插件
 var gulp = require('gulp');
 var changed = require('gulp-changed');
 var uglify = require('gulp-uglify');
@@ -12,6 +13,7 @@ var copy = require('gulp-copy');
 // var imagemin = require('gulp-imagemin');
 // var pngquant = require('imagemin-pngquant');
 var tinypng = require('gulp-tinypng');
+//需要处理的文件配置
 var config = {
     path: {
         js:[
@@ -46,7 +48,7 @@ var config = {
         dist_images:'F:\\fsp-parent\\wap\\src\\main\\webapp\\static\\dist\\images'
     }
 };
-//uglify
+//uglify任务
 gulp.task('uglify', function () {
     return gulp.src(config.path.js)
         // `changed` 任务需要提前知道目标目录位置
@@ -54,7 +56,6 @@ gulp.task('uglify', function () {
         .pipe(changed(config.dist.js))
         // 只有被更改过的文件才会通过这里
         .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
-        //.pipe(copy(config.path.js))
         .pipe(uglify({
             output: {
                 comments:false
@@ -62,25 +63,20 @@ gulp.task('uglify', function () {
             mangle: { except: ['require', 'exports', 'module', '$'] }//排除混淆关键字
         }))
         .pipe(gulp.dest(config.dist.js))
-       // .pipe(copy(config.path.dist_js));
 });
 
-//less
+//less任务
 gulp.task('less', function () {
     gulp.src(config.path.less)
         .pipe(changed(config.path.less[0]))
-        //.pipe(watch(lessSrc))
         .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
         .pipe(less({}))
         .pipe(cssmin({
             compatibility: 'ie7'
         }))
-        // .pipe(spriter({
-        // }))
         .pipe(gulp.dest(config.dist.css))
-        //.pipe(gulp.dest('../../we-app/we-app/css'));
 });
-//css
+//css任务
 gulp.task('css', function () {
     gulp.src(config.path.css)
             .pipe(changed(config.dist.css))
@@ -93,19 +89,7 @@ gulp.task('css', function () {
             .pipe(gulp.dest(config.dist.css))
            // .pipe(gulp.dest('../../we-app/we-app/css'));
 });
-//images
-// gulp.task('images', function () {
-// gulp.src(imagesSrc)
-// .pipe(changed(imagesDest))
-// .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
-// .pipe(imagemin({
-// progressive: true,
-// svgoPlugins: [{removeViewBox: false}],//不要移除svg的viewbox属性
-// // use: [pngquant()] //使用pngquant深度压缩png图片的imagemin插件
-// }))
-// .pipe(gulp.dest(imagesDest));
-// });
-
+//图片压缩任务
 gulp.task('tinypng', function () {
     gulp.src(config.path.images)
         .pipe(changed(config.dist.images))
@@ -114,7 +98,7 @@ gulp.task('tinypng', function () {
         .pipe(gulp.dest(config.dist.images));
 });
 
-//watch
+//监视任务
 gulp.task('live', function () {
     gulp.watch(config.path.js, ['uglify']);
     gulp.watch(config.path.less, ['less']);
