@@ -36,7 +36,7 @@ Post.prototype.save = function (callback) {
                 tags: this.tags,
                 post: this.post,
                 sort: this.sort,
-                description:this.description,
+                description: this.description,
                 comments: [],
                 reprint_info: {},
                 pv: 0
@@ -217,7 +217,7 @@ Post.edit = function (name, day, title, callback) {
 };
 
 //更新一篇文章及其相关信息
-Post.update = function (name, day, title, post, callback) {
+Post.update = function (name, day, title, post, sort, callback) {
         //打开数据库
         mongodb.open(function (err, db) {
                 if (err) {
@@ -235,7 +235,7 @@ Post.update = function (name, day, title, post, callback) {
                                 "time.day": day,
                                 "title": title
                         }, {
-                                $set: {post: post}
+                                $set: {post: post, sort: sort}
                         }, function (err) {
                                 mongodb.close();
                                 if (err) {

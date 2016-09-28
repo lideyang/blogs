@@ -11,6 +11,12 @@
   <input type="text" name="tag1" value="<%= post.tags[0] %>" disabled="disabled" />
   <input type="text" name="tag2" value="<%= post.tags[1] %>" disabled="disabled" />
   <input type="text" name="tag3" value="<%= post.tags[2] %>" disabled="disabled" /><br />
+  分类：<br/>
+  <select name="sort">
+    <option <%if(post.sort=="心情"){%>selected<%}%> value="心情">心情</option>
+    <option <%if(post.sort=="技术"){%>selected<%}%> value="技术">技术</option>
+    <option <%if(post.sort=="学习"){%>selected<%}%> value="学习">学习</option>
+  </select><br/>
   正文：<br />
   <script id="editor" name="post" type="text/plain" style="width:100%;height:500px;"><%- post.post %></script><br />
   <input type="submit" value="保存修改" />
