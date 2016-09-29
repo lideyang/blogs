@@ -1,1 +1,125 @@
-define(function(t,e,i){var a,n,o,r,s=t("jquery"),h=document.getElementById("waveCanvas"),f=h.getContext("2d"),l=s(h).parent(),c=function(){n=l.height(),a=l.width(),h.setAttribute("width",Math.round(a*window.devicePixelRatio)),h.setAttribute("height",Math.round(n*window.devicePixelRatio)),h.style.width=a+"px",h.style.height=n+"px",o=h.height-h.height/2.7,r=h.height/7.5,f.strokeStyle="#fff",f.fillStyle="#fff",f.clearRect(0,0,a,n)};i.exports={wave:function(t){function e(){this.amp=10+12*Math.random(),this.freq=.0044,this.phase=2+2*Math.random(),this.offset=2+4*Math.random(),a/h<680&&(this.amp=2+6*Math.random(),this.freq=.018,this.phase=1+2*Math.random(),this.offset=1+2*Math.random()),this.point=function(t){return o-w()+this.offset+this.amp*Math.sin(this.freq*t+this.phase+d*u)}}function i(){f.clearRect(0,0,a,n),f.beginPath();for(var t=0;t<a+2;t++)f.lineTo(t,(p.point(t)*m+p.point(t))*v);u=(u-1)%l,f.lineTo(a,n),f.lineTo(0,n),f.closePath(),f.stroke(),f.fill()}c(),s(window).resize(function(){c()});var h=window.devicePixelRatio?window.devicePixelRatio:1,l=340,d=2*Math.PI/l,u=10,v=.41,m=2.5,w=function(){var t=new Date;return r/2*Math.abs(t.getSeconds()+t.getMilliseconds()/1e3-30)/30},p=new e,g=60,M=1e3/g>>0;setInterval(i,M)},navigation:function(){s.ajax({url:"/api/getNavInfo",dataType:"json",success:function(t){var e="",i=t;for(var a in t){var n=t[a];e+='<li><a href="/u/'+n.name+"/"+n.time.day+"/"+n.title+'">'+n.title+"</a>"}for(var o,r=i.length,a=0;a<r;a++)for(var h=new Date(i[a].lastTime),f=0;f<r;f++){var l=new Date(i[f].lastTime);h>l&&(o=i[f],i[f]=i[a],i[a]=o)}var c="";for(var a in i){if(a>2)break;var n=i[a];c+='<li class="recentcomments"><a href="/u/'+n.name+"/"+n.time.day+"/"+n.title+'">'+n.title+"</a>"}s("#recent-posts-2").find("ul").html(e),s("#recentcomments").html(c)}}),s(".nav-switch").on("click",function(){s("body").toggleClass("isOpen"),c()})}}});
+/**
+ * Created by lidy on 2016/9/14.
+ */
+define(function (require, exports, module) {
+        var $ = require('jquery');
+        var canvasW, canvasH, r, c;
+        var can = document.getElementById('waveCanvas');
+        var cxt = can.getContext('2d');
+        var $parent = $(can).parent();
+        var self = this;
+        var resize = function () {
+                canvasH = $parent.height();
+                canvasW = $parent.width();
+                can.setAttribute("width", Math.round(canvasW * window.devicePixelRatio));
+                can.setAttribute("height", Math.round(canvasH * window.devicePixelRatio));
+                can.style.width = canvasW + "px";
+                can.style.height = canvasH + "px";
+                r = can.height - can.height / 2.7;
+                c = can.height / 7.5;
+                cxt.strokeStyle = "#fff";
+                cxt.fillStyle = '#fff';
+                cxt.clearRect(0, 0, canvasW, canvasH);
+        }
+        module.exports = {
+                wave: function (obj) {
+                        resize();
+                        $(window).resize(function () {
+                                resize();
+                        });
+                        var devicePixelRatio = window.devicePixelRatio ? window.devicePixelRatio : 1
+                        var diff = 100;
+                        var speed = 4;
+                        var double = 50;
+                        var direction = 'up';
+                        var direction2 = 'down';
+                        var d = 340;
+                        var u = 2 * Math.PI / d;
+                        var g = 10;
+                        var h = .41;
+                        var p = 2.5;
+                        var A = function () {
+                                var e = new Date;
+                                return c / 2 * Math.abs(e.getSeconds() + e.getMilliseconds() / 1e3 - 30) / 30;
+                        }
+                        var s = new m;
+
+                        function m() {
+                                this.amp = 10 + 12 * Math.random(),
+                                        this.freq = .0044,
+                                        this.phase = 2 + 2 * Math.random(),
+                                        this.offset = 2 + 4 * Math.random(),
+                                canvasW / devicePixelRatio < 680 && (this.amp = 2 + 6 * Math.random(),
+                                        this.freq = .018,
+                                        this.phase = 1 + 2 * Math.random(),
+                                        this.offset = 1 + 2 * Math.random()),
+                                        this.point = function (e) {
+                                                return r - A() + this.offset + this.amp * Math.sin(this.freq * e + this.phase + u * g);
+                                        }
+                        }
+
+                        function draw() {
+                                cxt.clearRect(0, 0, canvasW, canvasH);
+                                cxt.beginPath();
+                                for (var e = 0; e < canvasW + 2; e++) {
+                                        //console.log((s.point(e) * p + s.point(e)) * h + '--e:' + e);
+                                        cxt.lineTo(e, (s.point(e) * p + s.point(e)) * h);
+                                        //cxt.lineTo(e, 275);
+                                }
+                                g = (g - 1) % d;
+                                cxt.lineTo(canvasW, canvasH);
+                                cxt.lineTo(0, canvasH);
+                                cxt.closePath();
+                                cxt.stroke();
+                                cxt.fill();
+                        }
+
+                        // draw();
+                        var FPS = 60;
+                        var interval = 1000 / FPS >> 0;
+                        var timer = setInterval(draw, interval);
+                },
+                navigation: function () {
+                        //侧边栏
+                        $.ajax({
+                                url: '/api/getNavInfo',
+                                dataType: 'json',
+                                success: function (data) {
+                                        var list = '';
+                                        var lastTimeArr = data;//选择三个最后的时间
+                                        for (var i in data) {
+                                                var item = data[i];
+                                                list += '<li><a href="/u/' + item.name + '/' + item.time.day + '/' + item.title + '">' + item.title + '</a>';
+                                        }
+                                        var temp;
+                                        var len = lastTimeArr.length;
+                                        for (var i = 0; i < len; i++) {
+                                                var time = new Date(lastTimeArr[i].lastTime);
+                                                for (var n = 0; n < len; n++) {
+                                                        var time2 = new Date(lastTimeArr[n].lastTime);
+                                                        if (time > time2) {
+                                                                temp = lastTimeArr[n];
+                                                                lastTimeArr[n] = lastTimeArr[i];
+                                                                lastTimeArr[i] = temp;
+                                                        }
+                                                }
+                                        }
+                                        var lastStr = '';
+                                        for (var i in lastTimeArr) {
+                                                if (i > 2) {
+                                                        break;
+                                                }
+                                                var item = lastTimeArr[i];
+                                                lastStr += '<li class="recentcomments"><a href="/u/' + item.name + '/' + item.time.day + '/' + item.title + '">' + item.title + '</a>';
+                                        }
+                                        $('#recent-posts-2').find('ul').html(list);//最近文章
+                                        $('#recentcomments').html(lastStr);//最近评论
+                                }
+                        })
+                        $('.nav-switch').on('click', function () {
+                                $('body').toggleClass('isOpen');
+                                resize();
+                        });
+                }
+        }
+});
