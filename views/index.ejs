@@ -100,6 +100,13 @@
     <script>
         seajs.use(['home/index'], function (main) {
             main.init();
-        })
+        });
+        var person = function(){};
+        var student= function(){};
+        person.age = 20;//
+        student.prototype = person;
+        var lidy = new student();
+        console.log(student.age) //undefined
+        console.log(lidy.age) // 2000
     </script>
 </div>
