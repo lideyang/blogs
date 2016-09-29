@@ -11,8 +11,8 @@ define(function (require, exports, module) {
         var resize = function () {
                 canvasH = $parent.height();
                 canvasW = $parent.width();
-                can.setAttribute("width", Math.round(canvasW * window.devicePixelRatio));
-                can.setAttribute("height", Math.round(canvasH * window.devicePixelRatio));
+                can.setAttribute("width", Math.round(canvasW));
+                can.setAttribute("height", Math.round(canvasH));
                 can.style.width = canvasW + "px";
                 can.style.height = canvasH + "px";
                 r = can.height - can.height / 2.7;
