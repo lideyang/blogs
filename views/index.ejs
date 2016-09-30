@@ -26,17 +26,19 @@
                     <!-- 滚动banner  -->
                     <div class="featured-posts" style="display: none;">
                         <% posts.forEach(function (post, index) { %>
-                        <div class="featpost">
-                            <h3>
-                                <a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a>
-                            </h3>
-                            <div class="">
-                                <%= post.description %>
-                            </div>
-                            <a class="readmore" href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">
-                                Read More
-                            </a>
-                        </div>
+                            <%if(index<3){%>
+                                <div class="featpost">
+                                    <h3>
+                                        <a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a>
+                                    </h3>
+                                    <div class="">
+                                        <%= post.description %>
+                                    </div>
+                                    <a class="readmore" href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">
+                                        Read More
+                                    </a>
+                                </div>
+                            <%}%>
                         <% }) %>
                     </div>
 
