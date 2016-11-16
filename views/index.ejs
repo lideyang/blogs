@@ -1,107 +1,12 @@
-<link rel='stylesheet' id='owl-carousel-css' href='/assets/css/owl-carousel/owl.carousel.css' type='text/css'
-      media='all'/>
-<link rel='stylesheet' id='owl-theme-css' href='/assets/css/owl-carousel/owl.theme.css' type='text/css' media='all'/>
 <style>
     #masthead {
         height: 530px;
     }
 </style>
+
 <div id="page" class="site m-header">
-    <!--头部导航-->
-    <header id="masthead" class="site-header" role="banner">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="top">
-                        <div class="site-branding">
-                            <h1 class="site-title logo">
-                                <a id="blogname" rel="home" href="/" title="<%= title %>"><%= title %></a>
-                            </h1>
-                        </div>
-                        <div class="nav-switch"><i class="fa fa-bars"></i> <i class="fa fa-times"></i></div>
-                    </div>
-                    <nav id="site-navigation" class="main-navigation" role="navigation">
-                        <!--分割线-->
-                    </nav>
-                    <!-- 滚动banner  -->
-                    <div class="featured-posts" style="display: none;">
-                        <% posts.forEach(function (post, index) { %>
-                            <%if(index<3){%>
-                                <div class="featpost">
-                                    <h3>
-                                        <a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a>
-                                    </h3>
-                                    <div class="">
-                                        <%= post.description %>
-                                    </div>
-                                    <a class="readmore" href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">
-                                        Read More
-                                    </a>
-                                </div>
-                            <%}%>
-                        <% }) %>
-                    </div>
 
-                </div>
-            </div>
-        </div>
-        <canvas id="waveCanvas"></canvas>
-    </header>
-
-    <div id="content" class="site-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="primary" class="content-area">
-                        <!--文章列表-->
-                        <main id="main" class="site-main" role="main">
-                            <% posts.forEach(function (post, index) { %>
-                            <article id="post-<%= index %>"
-                                     class="dynpost animated post-5 post type-post status-publish format-standard hentry category-uncategorized">
-                                <header class="entry-header">
-                                    <div class="cat-list">
-                                        <a href="/u/sort/<%= post.sort %>" rel="category tag"><%= post.sort %></a>
-                                    </div>
-                                    <h2 class="entry-title">
-                                        <a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"
-                                           rel="bookmark"><%= post.title %></a></h2>
-                                    <div class="entry-meta">
-                                        <span><%= post.name %> 发表于 <%= post.time.minute %> </span>
-                                    </div>
-                                </header>
-                                <div class="entry-content">
-                                    <%= post.description %>
-                                </div>
-                                <footer class="entry-footer">
-                                    <a href=" /u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"
-                                       class="read-more"> <i class="fa fa-plus"></i> 阅读详情 </a>
-                                    <ul class="sharebtn">
-                                        <li class="weibo">
-                                            <a href="http://service.weibo.com/share/share.php?url=http://<%= host %>/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>&title=<%= post.title %>"
-                                               target="_blank"><i class="fa fa-weibo"></i></a>
-                                        </li>
-                                        <li class="qqkongjian">
-                                            <a href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://<%= host %>/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>&title=<%= post.title %>"
-                                               target="_blank"><i class="fa fa-qq"></i></a>
-                                        </li>
-                                    </ul>
-                                    <div class="clear"></div>
-                                </footer>
-                            </article>
-                            <% }) %>
-                        </main>
-                        <%- include paging %>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--底部开始-->
-    <% include footer.ejs %>
-    <!--页面脚本-->
-    <script>
-        seajs.use(['home/index'], function (main) {
-            main.init();
-        });
-    </script>
 </div>
+
+<script src="/dist/js/vendor.dll.js"></script>
+<script src="/dist/js/pages/index.js"></script>

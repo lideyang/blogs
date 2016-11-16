@@ -20,6 +20,7 @@ var settings = require('./settings');
 var fs = require('fs');
 var accessLog = fs.createWriteStream('access.log', {flags: 'a'});
 var errorLog = fs.createWriteStream('error.log', {flags: 'a'});
+var port = 3000;
 
 var app = express();
 app.use('/upload', upload);
@@ -32,26 +33,20 @@ app.use(logger('dev'));
 app.use(logger({stream: accessLog}));
 app.use(partials());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use('/assets', express.static('public'));
-app.use(multer({
-        dest: './public/images',
-        rename: function (fieldname, filename) {
-                return filename;
-        }
-}));
+app.use('/dist', express.static('dist'));
 app.use(cookieParser());
 app.use(session({
-        secret: settings.cookieSecret,
-        key: settings.db,//cookie name
-        cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},//30 days
-        store: new MongoStore({
-                db: settings.db,
-                host: settings.host,
-                port: settings.port
-        })
+    secret: settings.cookieSecret,
+    key: settings.db,//cookie name
+    cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},//30 days
+    store: new MongoStore({
+        db: settings.db,
+        host: settings.host,
+        port: settings.port
+    })
 }));
 app.use(flash());
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'public')));
 
 routes(app);
 
@@ -61,16 +56,47 @@ routes(app);
 //         next();
 // });
 
-app.use(bodyParser.urlencoded({extended: false}))
-// parse application/json
-app.use(bodyParser.json())
-app.use(methodOverride());
+app.use(bodyParser.urlencoded({extended: false})) //参数处理嵌套
+//app.use(bodyParser.json()) //支持json
+app.use(methodOverride()); //路由:name:title
 app.use(function (err, req, res, next) {
-        // 业务逻辑
-        console.error(err.stack);
-        next(err);
+    // 业务逻辑
+    console.error(err.stack);
+    next(err);
 });
+var isDev = true && process.env.NODE_ENV !== 'production';
+if (isDev) {
+    //webapck
+    var webpack = require('webpack'),
+        webpackDevMiddleware = require('webpack-dev-middleware'),
+        webpackHotMiddleware = require('webpack-hot-middleware'),
+        webpackDevConfig = require('./webpack.config.js');
 
-app.listen(app.get('port'), function () {
+    var compiler = webpack(webpackDevConfig);
+
+    app.use(webpackDevMiddleware(compiler, {
+        publicPath: webpackDevConfig.output.publicPath,
+      //  noInfo: true,
+        stats: {
+            colors: true
+        }
+    }));
+    app.use(webpackHotMiddleware(compiler));
+    var bs = require('browser-sync').create();
+    app.listen(port, function () {
+        bs.init({
+            // open: false,
+            // ui: false,
+            notify: false,
+            proxy: 'localhost:3000',
+            files: ['./views/**'],
+            port: 8080
+        });
+        console.log('App (dev) is going to be running on port 8080 (by browsersync).');
+    });
+}
+else {
+    app.listen(app.get('port'), function () {
         console.log('Express server listening on port ' + app.get('port'));
-});
+    });
+}
