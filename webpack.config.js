@@ -8,20 +8,22 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var path = require("path");
 var srcDir = path.resolve(process.cwd(), 'src');
 var nodeModPath = path.resolve(__dirname, './node_modules');
-var publicPath = 'http://localhost:3000/';
+var publicPath = 'http://localhost:3000/dist/';
 var hotMiddlewareScript = 'webpack-hot-middleware/client?reload=true';
+console.log(__dirname);
 //打包入口
 var entries = {
     "pages/index": [
-        'webpack/hot/dev-server', //热部署插件
-        'webpack-hot-middleware/client?reload=true',//热部署中间件
-        './src/js/pages/index.js'
+        './src/js/pages/index.js',
+       // 'webpack/hot/dev-server', //热部署插件
+        'webpack-hot-middleware/client?reload=true'//热部署中间件
     ],
     base: [
         './src/css/bootstrap-grid.css',
         './src/css/font-awesome.css',
         './src/css/animate.css',
-        './src/less/theme.less'
+        './src/less/theme.less',
+        'webpack-hot-middleware/client?reload=true'//热部署中间件
     ]
 };
 module.exports = {
@@ -31,7 +33,7 @@ module.exports = {
     entry: entries,
 
     output: {
-        path: __dirname + '/dist',
+        path: path.resolve(__dirname, './dist'),
         filename: 'js/[name].js',
         chunkFilename: '[id].chunk.js',
         publicPath: publicPath
@@ -45,6 +47,8 @@ module.exports = {
             //在这里引入 manifest 文件
             manifest: require('./dist/js/vendor-manifest.json')
         }),
+        // 提供公共代码
+        new webpack.optimize.CommonsChunkPlugin('js/common.js'),
         new ExtractTextPlugin("css/[name].css")
         // new ExtractTextPlugin('css/[name].less')
     ],
@@ -52,9 +56,12 @@ module.exports = {
         // noParse:[path.join(__dirname, '../node_modules/react/dist/react.min.js'),path.join(__dirname, '../node_modules/react-dom/dist/react-dom.min.js')],
         loaders: [
             {
-                test: /\.js$/,
+                test: /\.js[x]?$/,
                 exclude: /(node_modules|bower_components)/,
-                loaders: ['react-hot', 'babel'] // 'babel-loader' is also a valid name to reference
+                loaders: ['babel-loader?presets[]=es2015&presets[]=react'], // 'babel-loader' is also a valid name to reference
+                include: [
+                    path.join(__dirname, 'src')
+                ]
             },
             {
                 test: /\.css$/,

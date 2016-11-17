@@ -33,6 +33,7 @@ app.use(logger('dev'));
 app.use(logger({stream: accessLog}));
 app.use(partials());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use('/assets', express.static('public'));
 app.use('/dist', express.static('dist'));
 app.use(cookieParser());
 app.use(session({
@@ -76,7 +77,7 @@ if (isDev) {
 
     app.use(webpackDevMiddleware(compiler, {
         publicPath: webpackDevConfig.output.publicPath,
-      //  noInfo: true,
+        noInfo: true,
         stats: {
             colors: true
         }
@@ -85,8 +86,8 @@ if (isDev) {
     var bs = require('browser-sync').create();
     app.listen(port, function () {
         bs.init({
-            // open: false,
-            // ui: false,
+            open: false,
+            ui: false,
             notify: false,
             proxy: 'localhost:3000',
             files: ['./views/**'],

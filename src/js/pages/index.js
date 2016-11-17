@@ -12,7 +12,7 @@ import '../../css/owl-carousel/owl.theme.css';
 const Home = React.createClass({
     renderHeader(){
         return (
-            <div>dsddsddd222dss</div>
+            <HomeHeader/>
     );
     },
     render() {
@@ -23,8 +23,6 @@ const Home = React.createClass({
         )
     }
 });
-
-
 
 //生成视图
 render(<Home />, document.getElementById('page'));

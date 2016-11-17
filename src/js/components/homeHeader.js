@@ -2,9 +2,7 @@
  * Created by Lidy on 2016/11/15.
  */
 import React from 'react';
-import {
-    Header,
-} from '../common';
+import Header from './header';
 var props = {
     title: '众筹首页',
     link: '#title-link',
@@ -30,6 +28,14 @@ var props = {
             },
             title:'3231',
             description:'3dasdasd'
+        },
+        {
+            name:'dsds2',
+            time:{
+                day:3
+            },
+            title:'3231',
+            description:'3dasdasd'
         }
     ],
     onSelect: function (nav, e) {
@@ -44,17 +50,17 @@ const HomeHeader = React.createClass({
         return (
             <Header>
                 {/*banner*/}
-                <div class="featured-posts" style="display: none;">
+                <div className="featured-posts" style={{display:'none'}}>
                     { props.banner.map(function (post, index) {
                         return (
-                            <div class="featpost" key={index}>
+                            <div className="featpost" key={index}>
                                 <h3>
-                                    <a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">{post.title}</a>
+                                    <a href="/u/">{post.title}</a>
                                 </h3>
-                                <div class="">
+                                <div className="">
                                     {post.description }
                                 </div>
-                                <a class="readmore" href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">
+                                <a className="readmore" href="/u/">
                                     Read More
                                 </a>
                             </div>

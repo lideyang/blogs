@@ -16,12 +16,8 @@
         </div>
     </div>
 </footer>
-<script src="/assets/dist/js/seajs/sea.js" id="seajsnode"></script>
 <script>
-    seajs.use(['jquery', 'common/base'], function ($, base) {
-        //波浪canvas
-        base.wave();
-        //侧边栏
-        base.navigation();
-    })
+    document.getElementById('main_loading').style.display='none';
 </script>
+<script src="/dist/js/vendor.dll.js"></script>
+<script src="/dist/js/common.js"></script>
