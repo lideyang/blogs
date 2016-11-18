@@ -3,45 +3,50 @@
  */
 import React from 'react';
 import RightMenu from './rightMenu';
+import { Grid,Row,Col } from 'react-bootstrap';
 const Header = React.createClass({
     getInitialState: function () {
         return {
             rightIsOpen: false
         }
     },
-    toggleMenu(){
+    onToggleMenu(){
         this.setState({
             rightIsOpen: !this.state.rightIsOpen
         })
         console.log(this.state.rightIsOpen);
     },
     render() {
-        console.log(this.state.rightIsOpen);
+        var leftMenuIcon;
+        if (this.state.rightIsOpen) {
+            leftMenuIcon = <i className="fa fa-times"></i>;
+        } else {
+            leftMenuIcon = <i className="fa fa-bars"></i>;
+        }
         return (
             <div className="top-boxer">
-                <RightMenu isOpen={this.state.rightIsOpen} />
+                <RightMenu isOpen={this.state.rightIsOpen} onToggleMenu={this.onToggleMenu}/>
                 <header id="masthead" className="site-header" role="banner">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-md-12">
+                    <Grid>
+                        <Row>
+                            <Col md={12}>
                                 <div className="top">
                                     <div className="site-branding">
                                         <h1 className="site-title logo">
                                             <a id="blogname" rel="home" href="/" title="">d332sd</a>
                                         </h1>
                                     </div>
-                                    <div className="nav-switch" onClick={this.toggleMenu}>
-                                        <i className="fa fa-bars"></i>
-                                        <i className="fa fa-times"></i>
+                                    <div className="nav-switch" onClick={this.onToggleMenu}>
+                                        {leftMenuIcon}
                                     </div>
                                 </div>
                                 <nav id="site-navigation" className="main-navigation" role="navigation">
                                     {/*分割线*/}
                                 </nav>
                                 {this.props.children}
-                            </div>
-                        </div>
-                    </div>
+                            </Col>
+                        </Row>
+                    </Grid>
                 </header>
             </div>
         );

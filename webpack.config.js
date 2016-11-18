@@ -19,7 +19,7 @@ var entries = {
         'webpack-hot-middleware/client?reload=true'//热部署中间件
     ],
     base: [
-        './src/css/bootstrap-grid.css',
+        './src/css/bootstrap.css',
         './src/css/font-awesome.css',
         './src/css/animate.css',
         './src/less/theme.less',

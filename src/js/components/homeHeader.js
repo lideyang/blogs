@@ -3,6 +3,8 @@
  */
 import React from 'react';
 import Header from './header';
+import { Carousel } from 'react-bootstrap';
+
 var props = {
     title: '众筹首页',
     link: '#title-link',
@@ -50,23 +52,21 @@ const HomeHeader = React.createClass({
         return (
             <Header>
                 {/*banner*/}
-                <div className="featured-posts" style={{display:'none'}}>
+                <Carousel className="home-banner" interval={4000000} controls={false}>
                     { props.banner.map(function (post, index) {
                         return (
-                            <div className="featpost" key={index}>
-                                <h3>
-                                    <a href="/u/">{post.title}</a>
-                                </h3>
-                                <div className="">
-                                    {post.description }
-                                </div>
-                                <a className="readmore" href="/u/">
-                                    Read More
-                                </a>
-                            </div>
+                            <Carousel.Item key={index}>
+                                <Carousel.Caption>
+                                    <h3><a href="/u/">{post.title}</a></h3>
+                                    <div>{post.description }</div>
+                                    <a className="readmore" href="/u/">
+                                        Read More
+                                    </a>
+                                </Carousel.Caption>
+                            </Carousel.Item>
                         );
                     })}
-                </div>
+                </Carousel>
             </Header>
         );
     }
