@@ -11,10 +11,12 @@ const Header = React.createClass({
         }
     },
     onToggleMenu(){
-        this.setState({
-            rightIsOpen: !this.state.rightIsOpen
-        })
-        console.log(this.state.rightIsOpen);
+        setTimeout(function(){
+            this.setState({
+                rightIsOpen: !this.state.rightIsOpen
+            })
+        }.bind(this),0);
+        //console.log(this.state.rightIsOpen);
     },
     render() {
         var leftMenuIcon;

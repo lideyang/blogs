@@ -2,7 +2,7 @@
  * Created by Lidy on 2016/11/17.
  */
 import React from 'react';
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
 const RightMenu = React.createClass({
     getInitialState: function () {
         return {
@@ -16,7 +16,7 @@ const RightMenu = React.createClass({
         console.log(this.state.menuClass);
         return (
             // 右侧导航
-            <ReactCSSTransitionGroup className="{this.state.menuClass}" transitionName="active">
+            <div className={this.state.menuClass}>
                 <div className="stmenu-bg" onClick={this.props.onToggleMenu}>
                 </div>
                 <div className={this.state.menuBarClass}>
@@ -82,7 +82,7 @@ const RightMenu = React.createClass({
                         </section>
                     </aside>
                 </div>
-            </ReactCSSTransitionGroup>
+            </div>
         );
     }
 });

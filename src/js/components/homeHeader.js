@@ -3,7 +3,8 @@
  */
 import React from 'react';
 import Header from './header';
-import { Carousel } from 'react-bootstrap';
+import {Carousel} from 'react-bootstrap';
+import 'whatwg-fetch';
 
 var props = {
     title: '众筹首页',
@@ -22,22 +23,22 @@ var props = {
             }
         ]
     },
-    banner:[
+    banner: [
         {
-            name:'dsds',
-            time:{
-                day:3
+            name: 'dsds',
+            time: {
+                day: 3
             },
-            title:'3231',
-            description:'3dasdasd'
+            title: '3231',
+            description: '3dasdasd'
         },
         {
-            name:'dsds2',
-            time:{
-                day:3
+            name: 'dsds2',
+            time: {
+                day: 3
             },
-            title:'3231',
-            description:'3dasdasd'
+            title: '3231',
+            description: '3dasdasd'
         }
     ],
     onSelect: function (nav, e) {
@@ -48,27 +49,50 @@ var props = {
 };
 
 const HomeHeader = React.createClass({
+    getInitialState: function () {
+        return {loading: true, error: null, data: null};
+    },
+    componentDidMount: function () {
+        var that=this;
+        fetch('/api/getNavInfo').then(function (response) {
+            response.json().then(function(data) {
+                console.log(data);
+                if (that.isMounted()) {
+                    that.setState({
+                        loading: false,
+                        data: data
+                    });
+                }
+            });
+        });
+    },
     render() {
-        return (
-            <Header>
-                {/*banner*/}
-                <Carousel className="home-banner" interval={4000000} controls={false}>
-                    { props.banner.map(function (post, index) {
-                        return (
-                            <Carousel.Item key={index}>
-                                <Carousel.Caption>
-                                    <h3><a href="/u/">{post.title}</a></h3>
-                                    <div>{post.description }</div>
-                                    <a className="readmore" href="/u/">
-                                        Read More
-                                    </a>
-                                </Carousel.Caption>
-                            </Carousel.Item>
-                        );
-                    })}
-                </Carousel>
-            </Header>
-        );
+        console.log(this.state.data);
+        console.log(this.state.loading);
+        if(this.state.loading){
+            return <span>加载中...</span>
+        }else{
+            return (
+                <Header>
+                    {/*banner*/}
+                    <Carousel className="home-banner" interval={4000000} controls={false}>
+                        { this.state.data.map(function (post, index) {
+                            return (
+                                <Carousel.Item key={index}>
+                                    <Carousel.Caption>
+                                        <h3><a href="/u/">{post.title}</a></h3>
+                                        <div>{post.description }</div>
+                                        <a className="readmore" href="/u/">
+                                            Read More
+                                        </a>
+                                    </Carousel.Caption>
+                                </Carousel.Item>
+                            );
+                        })}
+                    </Carousel>
+                </Header>
+            );
+        }
     }
 });
 
