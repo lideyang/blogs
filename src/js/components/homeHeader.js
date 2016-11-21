@@ -54,46 +54,32 @@ const HomeHeader = React.createClass({
     getInitialState: function () {
         return {loading: true, error: null, data: null};
     },
-    componentDidMount: function () {
-        var that=this;
-        fetch('/api/getNavInfo').then(function (response) {
-            response.json().then(function(data) {
-                console.log(data);
-                if (that.isMounted()) {
-                    that.setState({
-                        loading: false,
-                        data: data
-                    });
-                }
-            });
-        });
-    },
     render() {
-        console.log(this.state.data);
-        console.log(this.state.loading);
-        if(this.state.loading){
-            return <span>加载中...</span>
-        }else{
+        if(this.props.data){
             return (
                 <Header>
                     {/*banner*/}
                     <Carousel className="home-banner" interval={4000000} controls={false}>
-                        { this.state.data.map(function (post, index) {
-                            return (
-                                <Carousel.Item key={index}>
-                                    <Carousel.Caption>
-                                        <h3><a href="/u/">{post.title}</a></h3>
-                                        <div>{post.description }</div>
-                                        <a className="readmore" href="/u/">
-                                            Read More
-                                        </a>
-                                    </Carousel.Caption>
-                                </Carousel.Item>
-                            );
+                        { this.props.data.map(function (post, index) {
+                            if(index<3){
+                                return (
+                                    <Carousel.Item key={index}>
+                                        <Carousel.Caption>
+                                            <h3><a href="/u/">{post.title}</a></h3>
+                                            <div>{post.description }</div>
+                                            <a className="readmore" href="/u/">
+                                                Read More
+                                            </a>
+                                        </Carousel.Caption>
+                                    </Carousel.Item>
+                                );
+                            }
                         })}
                     </Carousel>
                 </Header>
             );
+        }else{
+            return <span>加载中...</span>
         }
     }
 });

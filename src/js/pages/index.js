@@ -3,22 +3,47 @@
  */
 import React from 'react';
 import {render} from 'react-dom';
-import {HomeHeader} from '../components';
+import {HomeHeader, ArticleList} from '../components';
 
 // style
 import '../../css/owl-carousel/owl.carousel.css';
 import '../../css/owl-carousel/owl.theme.css';
 
 const Home = React.createClass({
+    getInitialState: function () {
+        return {
+            ArticleList: false,
+            menuBarClass: 'stmenu-bar'
+        };
+    },
     renderHeader(){
         return (
-            <HomeHeader/>
-    );
+            <HomeHeader data={this.state.ArticleList}/>
+        );
+    },
+    renderArticleList(){
+        return (
+            <ArticleList data={this.state.ArticleList} />
+        )
+    },
+    componentDidMount: function () {
+        var that = this;
+        fetch('/api/getNavInfo').then(function (response) {
+            response.json().then(function (data) {
+                if (that.isMounted()) {
+                    console.log(data);
+                    that.setState({
+                        ArticleList: data
+                    });
+                }
+            });
+        });
     },
     render() {
-        return(
+        return (
             <div>
                 {this.renderHeader()}
+                {this.renderArticleList()}
             </div>
         )
     }

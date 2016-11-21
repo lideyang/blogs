@@ -125,9 +125,10 @@ Post.getTopArticle = function (n, sort, callback) {
                                 name: 1,
                                 time: 1,
                                 title: 1,
-                                lastTime: 1
+                                lastTime: 1,
+                                description:1
                         }).limit(n).sort({
-                                sort: -1
+                                obj: -1
                         }).toArray(function (err, docs) {
                                 mongodb.close();
                                 if (err) {
