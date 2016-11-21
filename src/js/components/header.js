@@ -4,6 +4,7 @@
 import React from 'react';
 import RightMenu from './rightMenu';
 import { Grid,Row,Col } from 'react-bootstrap';
+import { WaveCanvas } from '../plugins/waveCanvas';
 const Header = React.createClass({
     getInitialState: function () {
         return {
@@ -17,6 +18,9 @@ const Header = React.createClass({
             })
         }.bind(this),0);
         //console.log(this.state.rightIsOpen);
+    },
+    componentDidMount:function(){
+        WaveCanvas('waveCanvas');
     },
     render() {
         var leftMenuIcon;
@@ -49,6 +53,7 @@ const Header = React.createClass({
                             </Col>
                         </Row>
                     </Grid>
+                    <canvas id="waveCanvas"></canvas>
                 </header>
             </div>
         );

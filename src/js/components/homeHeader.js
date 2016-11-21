@@ -58,7 +58,7 @@ const HomeHeader = React.createClass({
         var that=this;
         fetch('/api/getNavInfo').then(function (response) {
             response.json().then(function(data) {
-                console.log(data);
+                data=data.slice(0,3);
                 if (that.isMounted()) {
                     that.setState({
                         loading: false,
@@ -69,8 +69,6 @@ const HomeHeader = React.createClass({
         });
     },
     render() {
-        console.log(this.state.data);
-        console.log(this.state.loading);
         if(this.state.loading){
             return <span>加载中...</span>
         }else{

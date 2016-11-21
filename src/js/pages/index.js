@@ -13,7 +13,10 @@ const Home = React.createClass({
     renderHeader(){
         return (
             <HomeHeader/>
-    );
+        );
+    },
+    renderArticleList(){
+
     },
     render() {
         return(
