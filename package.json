@@ -2,7 +2,7 @@
   "name": "lidy-blog",
   "version": "1.0.0",
   "private": true,
-  "description": "lidy-blog for express4.x",
+  "description": "lidy-blog for express react",
   "scripts": {
     "start": "node app",
     "build:dll": "webpack --config webpack.dll.config.js",

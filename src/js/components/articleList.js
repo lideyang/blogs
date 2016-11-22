@@ -6,12 +6,10 @@ import {Grid, Row, Col} from 'react-bootstrap';
 
 const ArticleList = React.createClass({
     getInitialState: function () {
-        return {
-
-        };
+        return {};
     },
     render() {
-        if(this.props.data){
+        if (this.props.data) {
             return (
                 // 首页列表
                 <div id="content" className="site-content">
@@ -40,12 +38,13 @@ const ArticleList = React.createClass({
                                                             {item.description}
                                                         </div>
                                                         <footer className="entry-footer clearfix">
-                                                            <a href=" /u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"
-                                                               className="read-more"> <i className="fa fa-plus"></i> 阅读详情 </a>
+                                                            <a href={'/u/' + item.name + '/' + item._id} className="read-more">
+                                                                <i className="fa fa-plus"></i>阅读详情</a>
                                                             <ul className="sharebtn">
                                                                 <li className="weibo">
                                                                     <a href="http://service.weibo.com/share/share.php?url=http://<%= host %>/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>&title=<%= post.title %>"
-                                                                       target="_blank"><i className="fa fa-weibo"></i></a>
+                                                                       target="_blank"><i
+                                                                        className="fa fa-weibo"></i></a>
                                                                 </li>
                                                                 <li className="qqkongjian">
                                                                     <a href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://<%= host %>/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>&title=<%= post.title %>"
@@ -64,7 +63,7 @@ const ArticleList = React.createClass({
                     </div>
                 </div>
             );
-        }else{
+        } else {
             return (
                 <div className="container">
                     loading...

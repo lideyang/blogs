@@ -282,14 +282,14 @@ module.exports = function (app) {
                         });
                 });
         });
-        app.get('/u/:name/:day/:title', function (req, res) {
-                Post.getOne(req.params.name, req.params.day, req.params.title, function (err, post) {
+        app.get('/u/:name/:id', function (req, res) {
+                Post.getOne(req.params.id, function (err, post) {
                         if (err) {
                                 req.flash('error', err);
                                 return res.redirect('/');
                         }
                         res.render('article', {
-                                title: 'lidy的个人主页-' + req.params.title,
+                                title: 'lidy的个人主页-' + post.title,
                                 post: post,
                                 host: req.rawHeaders[1],
                                 user: req.session.user,

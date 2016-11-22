@@ -3,11 +3,13 @@
  */
 import React from 'react';
 import {render} from 'react-dom';
-import {HomeHeader, ArticleList} from '../components';
+import {Header,ArticleList} from '../components';
+import {Carousel} from 'react-bootstrap';
 
 // style
 import '../../css/owl-carousel/owl.carousel.css';
 import '../../css/owl-carousel/owl.theme.css';
+
 
 const Home = React.createClass({
     getInitialState: function () {
@@ -17,13 +19,36 @@ const Home = React.createClass({
         };
     },
     renderHeader(){
-        return (
-            <HomeHeader data={this.state.ArticleList}/>
-        );
+        if (this.state.ArticleList) {
+            return (
+                <Header>
+                    {/*banner*/}
+                    <Carousel className="home-banner" interval={4000000} controls={false}>
+                        { this.state.ArticleList.map(function (post, index) {
+                            if (index < 3) {
+                                return (
+                                    <Carousel.Item key={index}>
+                                        <Carousel.Caption>
+                                            <h3><a href="/u/">{post.title}</a></h3>
+                                            <div>{post.description }</div>
+                                            <a className="readmore" href="/u/">
+                                                Read More
+                                            </a>
+                                        </Carousel.Caption>
+                                    </Carousel.Item>
+                                );
+                            }
+                        })}
+                    </Carousel>
+                </Header>
+            );
+        } else {
+            return <span>加载中...</span>
+        }
     },
     renderArticleList(){
         return (
-            <ArticleList data={this.state.ArticleList} />
+            <ArticleList data={this.state.ArticleList}/>
         )
     },
     componentDidMount: function () {

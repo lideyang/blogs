@@ -3,23 +3,28 @@
  */
 import React from 'react';
 import RightMenu from './rightMenu';
-import { Grid,Row,Col } from 'react-bootstrap';
-import { WaveCanvas } from '../plugins/waveCanvas';
+import {Grid, Row, Col} from 'react-bootstrap';
+import {WaveCanvas} from '../plugins/waveCanvas';
 const Header = React.createClass({
+    getDefaultProps: function () {
+        return {
+            title: '首页'
+        }
+    },
     getInitialState: function () {
         return {
             rightIsOpen: false
         }
     },
     onToggleMenu(){
-        setTimeout(function(){
+        setTimeout(function () {
             this.setState({
                 rightIsOpen: !this.state.rightIsOpen
             })
-        }.bind(this),0);
+        }.bind(this), 0);
         //console.log(this.state.rightIsOpen);
     },
-    componentDidMount:function(){
+    componentDidMount: function () {
         WaveCanvas('waveCanvas');
     },
     render() {
@@ -39,7 +44,7 @@ const Header = React.createClass({
                                 <div className="top">
                                     <div className="site-branding">
                                         <h1 className="site-title logo">
-                                            <a id="blogname" rel="home" href="/" title="">lidy的个人主页</a>
+                                            <a id="blogname" rel="home" href="/" title="">{this.props.title}</a>
                                         </h1>
                                     </div>
                                     <div className="nav-switch" onClick={this.onToggleMenu}>
