@@ -33,8 +33,6 @@ app.use(logger('dev'));
 app.use(logger({stream: accessLog}));
 app.use(partials());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use('/assets', express.static('public'));
-app.use('/dist', express.static('dist'));
 app.use(cookieParser());
 app.use(session({
     secret: settings.cookieSecret,
@@ -48,6 +46,8 @@ app.use(session({
     })
 }));
 app.use(flash());
+app.use('/assets', express.static('public'));
+app.use('/dist', express.static('dist'));
 //app.use(express.static(path.join(__dirname, 'public')));
 
 routes(app);

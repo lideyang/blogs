@@ -3,8 +3,9 @@
  */
 import React from 'react';
 import {render} from 'react-dom';
-import {Header,ArticleList} from '../components';
+import {Header,ArticleList,Footer} from '../components';
 import {Carousel} from 'react-bootstrap';
+import 'whatwg-fetch';
 
 // style
 import '../../css/owl-carousel/owl.carousel.css';
@@ -24,14 +25,14 @@ const Home = React.createClass({
                 <Header>
                     {/*banner*/}
                     <Carousel className="home-banner" interval={4000000} controls={false}>
-                        { this.state.ArticleList.map(function (post, index) {
+                        { this.state.ArticleList.map(function (item, index) {
                             if (index < 3) {
                                 return (
                                     <Carousel.Item key={index}>
                                         <Carousel.Caption>
-                                            <h3><a href="/u/">{post.title}</a></h3>
-                                            <div>{post.description }</div>
-                                            <a className="readmore" href="/u/">
+                                            <h3><a href={'/u/' + item.name + '/' + item._id}>{item.title}</a></h3>
+                                            <div>{item.description }</div>
+                                            <a className="readmore" href={'/u/' + item.name + '/' + item._id}>
                                                 Read More
                                             </a>
                                         </Carousel.Caption>
@@ -51,6 +52,11 @@ const Home = React.createClass({
             <ArticleList data={this.state.ArticleList}/>
         )
     },
+    renderFooter(){
+      return (
+          <Footer/>
+      )
+    },
     componentDidMount: function () {
         var that = this;
         fetch('/api/getNavInfo').then(function (response) {
@@ -69,6 +75,7 @@ const Home = React.createClass({
             <div>
                 {this.renderHeader()}
                 {this.renderArticleList()}
+                {this.renderFooter()}
             </div>
         )
     }

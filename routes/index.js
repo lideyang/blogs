@@ -289,7 +289,7 @@ module.exports = function (app) {
                                 return res.redirect('/');
                         }
                         res.render('article', {
-                                title: 'lidy的个人主页-' + post.title,
+                                title: 'lidy的个人主页-文章详情',
                                 post: post,
                                 host: req.rawHeaders[1],
                                 user: req.session.user,

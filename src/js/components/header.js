@@ -8,7 +8,7 @@ import {WaveCanvas} from '../plugins/waveCanvas';
 const Header = React.createClass({
     getDefaultProps: function () {
         return {
-            title: '首页'
+            title: ''
         }
     },
     getInitialState: function () {

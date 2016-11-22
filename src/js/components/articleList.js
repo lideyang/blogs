@@ -25,10 +25,10 @@ const ArticleList = React.createClass({
                                                              className="dynpost animated post-5 post type-post status-publish format-standard hentry category-uncategorized">
                                                         <header className="entry-header">
                                                             <div className="cat-list">
-                                                                <a href="u">{item.sort}</a>
+                                                                <a href={'/u/' + item.name + '/' + item._id}>{item.sort}</a>
                                                             </div>
                                                             <h2 className="entry-title">
-                                                                <a href="u">{item.title}</a>
+                                                                <a href={'/u/' + item.name + '/' + item._id}>{item.title}</a>
                                                             </h2>
                                                             <div className="entry-meta">
                                                                 <span>{item.name} 发表于 {item.time.minute}</span>
