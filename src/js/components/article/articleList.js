@@ -21,8 +21,7 @@ const ArticleList = React.createClass({
                                         <main>
                                             {this.props.data.map(function (item, index) {
                                                 return (
-                                                    <article id={"post" + index} key={index}
-                                                             className="dynpost animated post-5 post type-post status-publish format-standard hentry category-uncategorized">
+                                                    <article id={"post" + index} key={index} className="dynpost animated post-5 post type-post status-publish format-standard hentry category-uncategorized">
                                                         <header className="entry-header">
                                                             <div className="cat-list">
                                                                 <a href={'/u/' + item.name + '/' + item._id}>{item.sort}</a>
@@ -42,13 +41,16 @@ const ArticleList = React.createClass({
                                                                 <i className="fa fa-plus"></i>阅读详情</a>
                                                             <ul className="sharebtn">
                                                                 <li className="weibo">
-                                                                    <a href="http://service.weibo.com/share/share.php?url=http://<%= host %>/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>&title=<%= post.title %>"
-                                                                       target="_blank"><i
-                                                                        className="fa fa-weibo"></i></a>
+                                                                    <a href={'http://service.weibo.com/share/share.php?url=' + window.location.host + '/u/' + item._id + '&title=' + item.title}
+                                                                       target="_blank">
+                                                                        <i className="fa fa-weibo"></i>
+                                                                    </a>
                                                                 </li>
                                                                 <li className="qqkongjian">
-                                                                    <a href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://<%= host %>/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>&title=<%= post.title %>"
-                                                                       target="_blank"><i className="fa fa-qq"></i></a>
+                                                                    <a href={'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + window.location.host + '/u/' + item._id + '&title=' + item.title}
+                                                                       target="_blank">
+                                                                        <i className="fa fa-qq"></i>
+                                                                    </a>
                                                                 </li>
                                                             </ul>
                                                         </footer>

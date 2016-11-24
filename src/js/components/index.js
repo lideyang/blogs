@@ -5,4 +5,7 @@ export Header from './header';
 export Footer from './footer';
 export Loading from './loading';
 export RightMenu from './rightMenu';
-export ArticleList from './ArticleList';
+export ArticleList from './article/articleList';
+export ArticleInfo from './article/articleInfo';
+export Comment from './article/comment';
+export CommentList from './article/commentList';
