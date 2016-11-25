@@ -15,7 +15,10 @@ const Comment = React.createClass({
     submitHandle(e){
         e.preventDefault();
         console.log(this.refs.content.value + 'dd');
-        if (!this.refs.content.value) return;
+        if (!this.refs.content.value){
+            //气泡提示
+            return;
+        }
         let newComment = {
             content: this.refs.content.value,
             name: this.refs.nickName.value||'游客',

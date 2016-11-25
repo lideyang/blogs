@@ -11,7 +11,8 @@ var methodOverride = require('method-override');
 var MongoStore = require('connect-mongo')(session);
 var flash = require('connect-flash');
 var multer = require('multer');
-
+var app = express();
+app.use(bodyParser.urlencoded({extended: false})) //参数处理嵌套
 var routes = require('./routes/index');
 var upload = require('./routes/upload');
 var api = require('./routes/api');
@@ -21,8 +22,6 @@ var fs = require('fs');
 var accessLog = fs.createWriteStream('access.log', {flags: 'a'});
 var errorLog = fs.createWriteStream('error.log', {flags: 'a'});
 var port = 3000;
-
-var app = express();
 app.use('/upload', upload);
 app.use('/api', api);
 app.set('port', process.env.PORT || 3002);
@@ -57,9 +56,6 @@ routes(app);
 //         errorLog.write(meta + err.stack + '\n');
 //         next();
 // });
-
-app.use(bodyParser.urlencoded({extended: false})) //参数处理嵌套
-//app.use(bodyParser.json()) //支持json
 app.use(methodOverride()); //路由:name:title
 app.use(function (err, req, res, next) {
     // 业务逻辑

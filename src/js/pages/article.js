@@ -19,23 +19,29 @@ const Article = React.createClass({
         };
     },
     onAddComment(newComment){
-        fetch('/api/getArticleInfo?id=' + this.state.articleId).then(function (response) {
+        let newCommentStr='';
+        for(let item in newComment){
+            newCommentStr+=item+'='+newComment[item]+'&';
+        }
+        newCommentStr=newCommentStr.substring(0,newCommentStr.length-1);
+        console.log(newCommentStr);
+        fetch('/api/postArticleComment',{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body:newCommentStr
+        }).then(function (response) {
             response.json().then(function (data) {
                 if (that.isMounted()) {
                     console.log(data);
-                    that.setState({
-                        articleInfo: data,
-                        articleTitle: data.title,
-                        comments: data.comments,
-                        articleId: data._id
-                    });
+                    let newComments = this.state.comments.concat(newComment);
+                    this.setState({
+                        comments: newComments
+                    })
                 }
             });
         });
-        let newComments = this.state.comments.concat(newComment);
-        this.setState({
-            comments: newComments
-        })
     },
     renderHeader(){
         return (
