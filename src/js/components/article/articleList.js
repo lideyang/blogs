@@ -24,10 +24,10 @@ const ArticleList = React.createClass({
                                                     <article id={"post" + index} key={index} className="dynpost animated post-5 post type-post status-publish format-standard hentry category-uncategorized">
                                                         <header className="entry-header">
                                                             <div className="cat-list">
-                                                                <a href={'/u/' + item.name + '/' + item._id}>{item.sort}</a>
+                                                                <a href={'/u/' +  item._id}>{item.sort}</a>
                                                             </div>
                                                             <h2 className="entry-title">
-                                                                <a href={'/u/' + item.name + '/' + item._id}>{item.title}</a>
+                                                                <a href={'/u/' +  item._id}>{item.title}</a>
                                                             </h2>
                                                             <div className="entry-meta">
                                                                 <span>{item.name} 发表于 {item.time.minute}</span>
@@ -37,7 +37,7 @@ const ArticleList = React.createClass({
                                                             {item.description}
                                                         </div>
                                                         <footer className="entry-footer clearfix">
-                                                            <a href={'/u/' + item.name + '/' + item._id} className="read-more">
+                                                            <a href={'/u/' +  item._id} className="read-more">
                                                                 <i className="fa fa-plus"></i>阅读详情</a>
                                                             <ul className="sharebtn">
                                                                 <li className="weibo">

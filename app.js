@@ -22,17 +22,6 @@ var fs = require('fs');
 var accessLog = fs.createWriteStream('access.log', {flags: 'a'});
 var errorLog = fs.createWriteStream('error.log', {flags: 'a'});
 var port = 3000;
-app.use('/upload', upload);
-app.use('/api', api);
-app.set('port', process.env.PORT || 3002);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-app.use(favicon(__dirname + '/public/images/favicon.ico'));
-app.use(logger('dev'));
-app.use(logger({stream: accessLog}));
-app.use(partials());
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());
 app.use(session({
     secret: settings.cookieSecret,
     key: settings.db,//cookie name
@@ -45,6 +34,17 @@ app.use(session({
     })
 }));
 app.use(flash());
+app.use('/upload', upload);
+app.use('/api', api);
+app.set('port', process.env.PORT || 3000);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
+app.use(logger('dev'));
+app.use(logger({stream: accessLog}));
+app.use(partials());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(cookieParser());
 app.use('/assets', express.static('public'));
 app.use('/dist', express.static('dist'));
 //app.use(express.static(path.join(__dirname, 'public')));
@@ -62,7 +62,7 @@ app.use(function (err, req, res, next) {
     console.error(err.stack);
     next(err);
 });
-var isDev = true && process.env.NODE_ENV !== 'production';
+var isDev = false && process.env.NODE_ENV !== 'production';
 if (isDev) {
     //webapck
     var webpack = require('webpack'),

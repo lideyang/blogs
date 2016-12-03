@@ -3,15 +3,13 @@
  */
 import React from 'react';
 import {render} from 'react-dom';
-import {Header,ArticleList,Footer} from '../components';
+import {Header, ArticleList, Footer} from '../components';
 import {Carousel} from 'react-bootstrap';
 import 'whatwg-fetch';
 
 // style
 import '../../css/owl-carousel/owl.carousel.css';
 import '../../css/owl-carousel/owl.theme.css';
-
-
 const Home = React.createClass({
     getInitialState: function () {
         return {
@@ -30,9 +28,9 @@ const Home = React.createClass({
                                 return (
                                     <Carousel.Item key={index}>
                                         <Carousel.Caption>
-                                            <h3><a href={'/u/' + item.name + '/' + item._id}>{item.title}</a></h3>
+                                            <h3><a href={'/u/' + item._id}>{item.title}</a></h3>
                                             <div>{item.description }</div>
-                                            <a className="readmore" href={'/u/' + item.name + '/' + item._id}>
+                                            <a className="readmore" href={'/u/' + item._id}>
                                                 Read More
                                             </a>
                                         </Carousel.Caption>
@@ -53,16 +51,15 @@ const Home = React.createClass({
         )
     },
     renderFooter(){
-      return (
-          <Footer/>
-      )
+        return (
+            <Footer/>
+        )
     },
     componentDidMount: function () {
         var that = this;
         fetch('/api/getNavInfo').then(function (response) {
             response.json().then(function (data) {
                 if (that.isMounted()) {
-                    console.log(data);
                     that.setState({
                         ArticleList: data
                     });

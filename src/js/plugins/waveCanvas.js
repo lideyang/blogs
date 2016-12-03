@@ -2,7 +2,6 @@
  * Created by Lidy on 2016/11/21.
  */
 const WaveCanvas = function (obj) {
-    console.log(obj);
     var canvasW, canvasH, r, c;
     var can = document.getElementById(obj);
     var cxt = can.getContext('2d');
@@ -59,9 +58,7 @@ const WaveCanvas = function (obj) {
         cxt.clearRect(0, 0, canvasW, canvasH);
         cxt.beginPath();
         for (var e = 0; e < canvasW + 2; e++) {
-            //console.log((s.point(e) * p + s.point(e)) * h + '--e:' + e);
             cxt.lineTo(e, (s.point(e) * p + s.point(e)) * h);
-            //cxt.lineTo(e, 275);
         }
         g = (g - 1) % d;
         cxt.lineTo(canvasW, canvasH);

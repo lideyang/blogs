@@ -1,57 +1,57 @@
-'use strict';
+var path = require('path')
+var express = require('express')
+var proxy = require("express-http-proxy")
+var webpack = require('webpack')
+var webpackConfig = require('./webpack.config.js')
+// default port where dev server listens for incoming traffic
+var port = 8080;
+// Define HTTP proxies to your custom API backend
 
-// https://github.com/BrowserSync/recipes/tree/master/recipes/webpack.react-hot-loader
-// https://github.com/BrowserSync/browser-sync/issues/246
+//proxy port:80
+var hosts = "http://localhost:3000/";
 
-var path = require('path');
+var app = express()
+var compiler = webpack(webpackConfig)
 
-/**
- * Require Browsersync along with webpack and middleware for it
- */
-var browserSync = require('browser-sync').create('Examples');
-var webpack = require('webpack');
-var webpackDevMiddleware = require('webpack-dev-middleware');
-var webpackHotMiddleware = require('webpack-hot-middleware');
+var devMiddleware = require('webpack-dev-middleware')(compiler, {
+    publicPath: webpackConfig.output.publicPath,
+    stats: {
+        colors: true,
+        chunks: false
+    }
+})
 
-/**
- * Require ./webpack.config.js and make a bundler from it
- */
-var webpackConfig = require('./webpack.config');
-var bundler = webpack(webpackConfig);
+var hotMiddleware = require('webpack-hot-middleware')(compiler)
 
-/**
- * Run Browsersync and use middleware for Hot Module Replacement
- */
-browserSync.init({
-  server: {
-    baseDir: __dirname,
 
-    routes: {
-      '/lib': path.join(__dirname, '../node_modules')
-    },
+// serve webpack bundle output
+app.use(devMiddleware)
 
-    middleware: [
-      webpackDevMiddleware(bundler, {
-        // IMPORTANT: dev middleware can't access config, so we should
-        // provide publicPath by ourselves
-        publicPath: webpackConfig.output.publicPath,
+// enable hot-reload and state-preserving
+// compilation error display
+app.use(hotMiddleware)
 
-        // pretty colored output
-        stats: {colors: true}
+// app.get("/", function(req, res) {
+//     res.sendFile(__dirname + '/index.html');
+// });
 
-        // for other settings see
-        // http://webpack.github.io/docs/webpack-dev-middleware.html
-      }),
+//设置 proxy http://www.zdpin.cn =>配置host
+var apiProxy = proxy(hosts, {
+    forwardPath:function(req,res){
+        return req._parsedUrl.path
+    }
+})
 
-      // bundler should be the same as above
-      webpackHotMiddleware(bundler)
-    ]
-  },
+app.get("/*", apiProxy);
+app.post("/*", apiProxy);
 
-  // no need to watch '*.js' here, webpack will take care of it for us,
-  // including full page reloads if HMR won't work
-  files: [
-    '**/*.html'
-  ]
-}, function(err, bs) {
-});
+// serve pure static assets
+// var staticPath = path.posix.join(config.build.assetsPublicPath, config.build.assetsSubDirectory)
+// app.use(staticPath, express.static('./static'))
+
+module.exports = app.listen(port, function (err) {
+    if(err){
+        return console.log(err)
+    }
+    console.log('Listening at http://localhost:' + port + '\n')
+})

@@ -9,3 +9,5 @@ export ArticleList from './article/articleList';
 export ArticleInfo from './article/articleInfo';
 export Comment from './article/comment';
 export CommentList from './article/commentList';
+export SearchList from './search/list';
+export Ueditor from './ueditor';

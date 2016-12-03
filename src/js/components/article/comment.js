@@ -8,13 +8,11 @@ import CommentList from './commentList'
 const Comment = React.createClass({
     getDefaultProps(){
         return {
-            data: [],
-            articleId: ''
+            data: []
         }
     },
     submitHandle(e){
         e.preventDefault();
-        console.log(this.refs.content.value + 'dd');
         if (!this.refs.content.value){
             //气泡提示
             return;
@@ -74,7 +72,6 @@ const Comment = React.createClass({
                         </Row>
                         <p className="form-submit">
                             <input name="submit" type="submit" className="submit" value="发表评论"/>
-                            <input type='hidden' name='comment_post_ID' value={this.props.articleId}/>
                             <input type='hidden' name='comment_parent' value='0'/>
                         </p>
                     </form>

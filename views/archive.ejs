@@ -1,24 +1,4 @@
-<div class="container">
-    <ul class="archive">
-        <% var lastYear = 0 %>
-        <% posts.forEach(function (post, index) { %>
-        <% if (lastYear != post.time.year) { %>
-        <li><h2><%= post.time.year %></h2></li>
-        <% lastYear = post.time.year } %>
-        <li class="post">
-            <h3>
-            <span>
-                <a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a>
-            </span>
-                <div class="post-time">
-                    <%= post.time.day %>
-                </div>
-            </h3>
-        </li>
-        <% }) %>
-    </ul>
-</div>
-<div id="page" class="site m-header">
+<div id="page" class="site">
 
 </div>
 <%- include footer %>

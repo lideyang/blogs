@@ -2,50 +2,112 @@
  * Created by lidy on 2016/9/22.
  */
 var express = require('express'),
-        Post = require('../models/post.js'),
-        crypto = require('crypto'),
-        Comment = require('../models/comment.js');
+    Post = require('../models/post.js'),
+    crypto = require('crypto'),
+    Comment = require('../models/comment.js'),
+    User = require('../models/user.js');
 var router = express.Router();
 //获取文章列表
 router.get('/getNavInfo', function (req, res, next) {
-        Post.getTopArticle(10, 'time', function (err, posts) {
-                if (err) {
-                        req.flash('error', err);
-                        return res.redirect('/');
-                }
-                res.json(posts);
-        });
-});
-//获取一篇文章信息
-router.get('/getArticleInfo', function (req, res, next) {
-    Post.getOne(req.query.id,function (err, posts) {
+    Post.getTopArticle(10, 'time', function (err, posts) {
         if (err) {
             req.flash('error', err);
             return res.redirect('/');
         }
-        res.json(posts);
+        return res.json(posts);
     });
 });
+//获取一篇文章信息及评论
+router.get('/getArticleInfo', function (req, res, next) {
+    Post.getOne(req.query.id, function (err, posts) {
+        if (err) {
+            req.flash('error', err);
+            return res.redirect('/');
+        }
+        return res.json(posts);
+    });
+});
+//提交评论
 router.post('/postArticleComment', function (req, res, next) {
+    if (!req.body.id) {
+        return res.json({success: false});
+    }
     var date = new Date(),
         time = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +
             date.getHours() + ":" + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
     var comment = {
-        name: req.body.name||'游客',
+        name: req.body.name || '游客',
         head: '',
-        email: req.body.email||'',
-        website: req.body.website||'',
+        email: req.body.email || '',
+        website: req.body.website || '',
         time: time,
         content: req.body.content
     };
-    var newComment = new Comment(req.params.name, req.params.day, req.params.title, comment);
+    var newComment = new Comment(req.body.id, comment);
     newComment.save(function (err) {
         if (err) {
-            req.flash('error', err);
-            return res.redirect('back');
+            return res.json({success: false, msg: err});
         }
-        req.flash('success', '留言成功!');
-        res.redirect('back');
+        return res.json({success: true});
+    });
+});
+//获取一个用户文章列表
+router.get('/getUserArticleList', function (req, res, next) {
+    var page = req.query.p ? parseInt(req.query.p) : 1;
+    //检查用户是否存在
+    User.get(req.query.name, function (err, user) {
+        if (err) {
+            req.flash('error', err);
+            return res.redirect('/');
+        }
+        if (!user) {
+            req.flash('error', '用户不存在!');
+            return res.redirect('/');
+        }
+        //查询并返回该用户第 page 页的 10 篇文章
+        Post.getTen(user.name, page, function (err, posts, total) {
+            if (err) {
+                req.flash('error', err);
+                return res.redirect('/');
+            }
+            return res.json(posts);
+        });
+    });
+});
+//获取查询分类列表
+router.get('/getSortArticleList', function (req, res, next) {
+    var page = req.query.p ? parseInt(req.query.p) : 1;
+    //检查用户是否存在
+    Post.getSort(req.query.sort,page, function (err, posts, total) {
+        if (err) {
+            req.flash('error', err);
+            return res.redirect('/');
+        }
+        if (!posts) {
+            req.flash('error', '分类不存在!');
+            return res.redirect('/');
+        }
+        return res.json(posts);
+    });
+});
+//获取所有存档
+router.get('/getArchiveList', function (req, res, next) {
+    Post.getArchive(function (err, posts) {
+        if (err) {
+            req.flash('error', err);
+            return res.redirect('/');
+        }
+        return res.json(posts);
+    });
+});
+//编辑文章内容
+router.get('/getArchiveContent', function (req, res, next) {
+    Post.edit(req.query.id, function (err, post) {
+        if (err) {
+            req.flash('error', err);
+            return res.redirect('/');
+        }
+        return res.json(post);
     });
 });
 module.exports = router;

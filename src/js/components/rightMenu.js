@@ -13,7 +13,6 @@ const RightMenu = React.createClass({
     render() {
         this.state.menuClass = this.props.isOpen ? 'stmenu active' : 'stmenu';
         this.state.menuBarClass = this.props.isOpen ? 'stmenu-bar active' : 'stmenu-bar';
-        console.log(this.state.menuClass);
         return (
             // 右侧导航
             <div className={this.state.menuClass}>

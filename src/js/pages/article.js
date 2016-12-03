@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import {render} from 'react-dom';
+import update from 'react-addons-update';
 import {Header, Footer, ArticleInfo, Comment} from '../components';
 import {Grid, Row, Col} from 'react-bootstrap';
 import 'whatwg-fetch';
@@ -11,48 +12,46 @@ import 'whatwg-fetch';
 const Article = React.createClass({
     getInitialState() {
         return {
-            articleInfo: false,
-            title: document.title,
-            articleTitle: '',
-            comments: [],
-            articleId: ''
+            articleInfo: false
         };
     },
     onAddComment(newComment){
-        let newCommentStr='';
-        for(let item in newComment){
-            newCommentStr+=item+'='+newComment[item]+'&';
+        var that = this;
+        let newCommentStr = '';
+        for (let item in newComment) {
+            newCommentStr += item + '=' + newComment[item] + '&';
         }
-        newCommentStr=newCommentStr.substring(0,newCommentStr.length-1);
-        console.log(newCommentStr);
-        fetch('/api/postArticleComment',{
+        newCommentStr += 'id=' + this.state.articleInfo._id;
+        fetch('/api/postArticleComment', {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            body:newCommentStr
+            body: newCommentStr
         }).then(function (response) {
             response.json().then(function (data) {
                 if (that.isMounted()) {
-                    console.log(data);
-                    let newComments = this.state.comments.concat(newComment);
-                    this.setState({
-                        comments: newComments
-                    })
+                    if (data.success) {
+                        that.setState({
+                            articleInfo: update(that.state.articleInfo, {comments: {$push: [newComment]}})
+                        })
+                    }
                 }
             });
         });
     },
     renderHeader(){
+        let articleTitle = this.state.articleInfo ? this.state.articleInfo.title : '';
         return (
-            <Header title={this.state.title}>
+            <Header>
                 <header className="page-header">
-                    <h1>{this.state.articleTitle}</h1>
+                    <h1>{articleTitle}</h1>
                 </header>
             </Header>
         );
     },
     renderArticleInfo(){
+        var comments = this.state.articleInfo ? this.state.articleInfo.comments : [];
         return (
             <div id="content" className="site-content">
                 <Grid>
@@ -63,7 +62,7 @@ const Article = React.createClass({
                                     {/*文章详情*/}
                                     <ArticleInfo data={this.state.articleInfo}/>
                                     {/*留言开始*/}
-                                    <Comment data={this.state.comments} articleId={this.state.articleId} onAddComment={this.onAddComment}/>
+                                    <Comment data={comments} onAddComment={this.onAddComment}/>
                                 </main>
                             </div>
                         </Col>
@@ -84,12 +83,8 @@ const Article = React.createClass({
         fetch('/api/getArticleInfo?id=' + id).then(function (response) {
             response.json().then(function (data) {
                 if (that.isMounted()) {
-                    console.log(data);
                     that.setState({
-                        articleInfo: data,
-                        articleTitle: data.title,
-                        comments: data.comments,
-                        articleId: data._id
+                        articleInfo: data
                     });
                 }
             });

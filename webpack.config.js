@@ -8,29 +8,33 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var path = require("path");
 var srcDir = path.resolve(process.cwd(), 'src');
 var nodeModPath = path.resolve(__dirname, './node_modules');
-var publicPath = 'http://localhost:3000/dist/';
-var hotMiddlewareScript = 'webpack-hot-middleware/client?reload=true';
-console.log(__dirname);
-//打包入口
-var entries = {
-    "pages/index": [
-        './src/js/pages/index.js',
-       // 'webpack/hot/dev-server', //热部署插件
-        'webpack-hot-middleware/client?reload=true'//热部署中间件
-    ],
-    "pages/article": [
-        './src/js/pages/article.js',
-        // 'webpack/hot/dev-server', //热部署插件
-        'webpack-hot-middleware/client?reload=true'//热部署中间件
-    ],
-    base: [
-        './src/css/bootstrap.css',
-        './src/css/font-awesome.css',
-        './src/css/animate.css',
-        './src/less/theme.less',
-        'webpack-hot-middleware/client?reload=true'//热部署中间件
-    ]
-};
+var publicPath = 'http://localhost:8080/dist/';
+var entryBase = ['webpack-hot-middleware/client?reload=true']; //热部署中间件
+var pageStr = __dirname + '/src/js/pages';
+var entries = {};
+var walk = function (src) { //递归遍历pages目录所有文件
+    var dirList = fs.readdirSync(src);
+    dirList.forEach(function (item) {
+        if (fs.statSync(src + '/' + item).isDirectory()) {
+            walk(src + '/' + item);
+        } else {
+            var entryPath = './src/js/pages/' + item;
+            var jsName = item.substring(0, item.lastIndexOf('.'));
+            entries['pages/' + jsName] = entryBase.concat(entryPath);
+        }
+    });
+}
+walk(pageStr);
+var baseCss = [
+    './src/less/bootstrap/bootstrap.less',
+    './src/css/font-awesome.css',
+    './src/css/animate.css',
+    './src/less/theme.less'
+];
+baseCss.unshift(entryBase[0]);
+//公用样式入口（以后研究优化）
+entries['base'] = baseCss;
+console.log(entries);
 module.exports = {
     devtool: 'source-map',//cheap-module-eval-source-map,eval,cheap-module-source-map,source-map
     // context: path.join(__dirname, 'app', 'js'),
