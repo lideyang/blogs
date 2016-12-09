@@ -208,7 +208,7 @@ Post.edit = function (id, callback) {
                         sort: 1,
                         description: 1,
                         name: 1,
-                        post:1
+                        post: 1
                     }
                 },
                 function (err, doc) {
@@ -223,7 +223,7 @@ Post.edit = function (id, callback) {
 };
 
 //更新一篇文章及其相关信息
-Post.update = function (name, day, title, post, sort, callback) {
+Post.update = function (posts, callback) {
     //打开数据库
     mongodb.open(function (err, db) {
         if (err) {
@@ -237,11 +237,15 @@ Post.update = function (name, day, title, post, sort, callback) {
             }
             //更新文章内容
             collection.update({
-                "name": name,
-                "time.day": day,
-                "title": title
+                _id: ObjectID(posts.id)
             }, {
-                $set: {post: post, sort: sort}
+                $set: {
+                    title: posts.title,
+                    ags: [posts.tags.tag1, posts.tags.tag2, posts.tags.tag3],
+                    post: posts.post,
+                    sort: posts.sort,
+                    description: posts.description
+                }
             }, function (err) {
                 mongodb.close();
                 if (err) {

@@ -78,7 +78,7 @@ router.get('/getUserArticleList', function (req, res, next) {
 router.get('/getSortArticleList', function (req, res, next) {
     var page = req.query.p ? parseInt(req.query.p) : 1;
     //检查用户是否存在
-    Post.getSort(req.query.sort,page, function (err, posts, total) {
+    Post.getSort(req.query.sort, page, function (err, posts, total) {
         if (err) {
             req.flash('error', err);
             return res.redirect('/');
@@ -100,7 +100,7 @@ router.get('/getArchiveList', function (req, res, next) {
         return res.json(posts);
     });
 });
-//编辑文章内容
+//编辑获取文章内容
 router.get('/getArchiveContent', function (req, res, next) {
     Post.edit(req.query.id, function (err, post) {
         if (err) {
@@ -108,6 +108,28 @@ router.get('/getArchiveContent', function (req, res, next) {
             return res.redirect('/');
         }
         return res.json(post);
+    });
+});
+//编辑保存文章内容
+router.post('/setArchiveContent', function (req, res, next) {
+    var posts = {
+        id: req.query.id,
+        title: req.body.title,
+        tags: [req.body.tag1, req.body.tag2, req.body.tag3],
+        post: req.body.post,
+        sort: req.body.sort,
+        description: req.body.description
+    }
+    Post.update(posts, function (err) {
+        if (err) {
+            req.flash('error', err);
+            return res.redirect(url);//出错！返回文章页
+        }
+        var url = encodeURI('/u/' + req.query.id);
+        res.json({//成功！返回文章页
+            success: true,
+            msg: url
+        });
     });
 });
 module.exports = router;

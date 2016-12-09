@@ -3,19 +3,20 @@
  */
 import React from 'react';
 import {render} from 'react-dom';
-import {Header, Footer, Ueditor} from '../components';
-import {Form, FormGroup, FormControl, ControlLabel, Grid, Col, Button} from 'react-bootstrap';
+import {Header, Footer, Post} from '../components';
+import {objectParamToStr, getUrlToId} from '../utils';
 
 const Edit = React.createClass({
     getInitialState() {
         return {
             data: {
-                name: '',
+                id: '',
+                title: '',
                 tags: '',
-                sort: 0,
-                post: ''
-            },
-            sort: ['心情', '学习', '技术']
+                post: '',
+                sort: '',
+                description: ''
+            }
         };
     },
     renderHeader(){
@@ -30,55 +31,7 @@ const Edit = React.createClass({
     renderContent(){
         var that = this;
         return (
-            <Grid>
-                <Form horizontal onSubmit={this.submitHandle}>
-                    <FormGroup>
-                        <Col componentClass={ControlLabel} sm={2}>
-                            标题
-                        </Col>
-                        <Col sm={10}>
-                            <FormControl value={this.state.data.name} placeholder="文章标题"/>
-                        </Col>
-                    </FormGroup>
-                    <FormGroup>
-                        <Col componentClass={ControlLabel} sm={2}>
-                            标签
-                        </Col>
-                        <Col sm={10}>
-                            <FormControl value={this.state.data.tags} placeholder="文章标签"/>
-                        </Col>
-                    </FormGroup>
-                    <FormGroup>
-                        <Col componentClass={ControlLabel} sm={2}>
-                            分类
-                        </Col>
-                        <Col sm={10}>
-                            <FormControl componentClass="select" placeholder="分类" value={that.state.data.sort}>
-                                {this.state.sort.map(function (item, index) {
-                                    return (
-                                        <option key={index} value={item}>{item}</option>
-                                    )
-                                })}
-                            </FormControl>
-                        </Col>
-                    </FormGroup>
-                    <FormGroup>
-                        <Col componentClass={ControlLabel} sm={2}>
-                            正文
-                        </Col>
-                        <Col sm={10}>
-                            <Ueditor content={this.state.data.post}/>
-                        </Col>
-                    </FormGroup>
-                    <FormGroup>
-                        <Col smOffset={2} sm={10}>
-                            <Button type="submit">
-                                发表
-                            </Button>
-                        </Col>
-                    </FormGroup>
-                </Form>
-            </Grid>
+            <Post data={this.state.data}/>
         )
     },
     renderFooter(){
@@ -86,17 +39,31 @@ const Edit = React.createClass({
             <Footer/>
         )
     },
-    getUeMethod:function(){
+    onSubmit(formParams){
+        var that = this;
+        let formParamsStr = objectParamToStr(formParams);
 
-    },
-    submitHandle(e){
-        e.preventDefault();
-
+        fetch('/api/setArchiveContent', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: formParamsStr
+        }).then(function (response) {
+            response.json().then(function (data) {
+                if (that.isMounted()) {
+                    if (data.success) {
+                        that.setState({
+                            articleInfo: update(that.state.articleInfo, {comments: {$push: [newComment]}})
+                        })
+                    }
+                }
+            });
+        });
     },
     componentDidMount: function () {
         var that = this;
-        var url = window.location.pathname;
-        var id = url.substring(url.lastIndexOf('/') + 1);
+        var id = getUrlToId();
         fetch('/api/getArchiveContent?id=' + id).then(function (response) {
             response.json().then(function (data) {
                 if (that.isMounted()) {

@@ -306,11 +306,12 @@ module.exports = function (app) {
         });
     });
 
-    app.post('/edit/:name/:day/:title', checkLogin);
-    app.post('/edit/:name/:day/:title', function (req, res) {
-        var currentUser = req.session.user;
-        //console.log(req.body.title);
-        Post.update(currentUser.name, req.params.day, req.params.title, req.body.post, req.body.sort, function (err) {
+    app.post('/edit/:id', checkLogin);
+    app.post('/edit/:id', function (req, res) {
+        var currentUser = req.session.user,
+            tags = [req.body.tag1, req.body.tag2, req.body.tag3],
+            post = new Post(currentUser.name, currentUser.head, req.body.title, tags, req.body.post, req.body.sort, req.body.description);
+        Post.update(req.params.id, post, function (err) {
             var url = encodeURI('/u/' + req.params.name + '/' + req.params.day + '/' + req.params.title);
             if (err) {
                 req.flash('error', err);

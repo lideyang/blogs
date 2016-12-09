@@ -34,7 +34,7 @@ var baseCss = [
 baseCss.unshift(entryBase[0]);
 //公用样式入口（以后研究优化）
 entries['base'] = baseCss;
-console.log(entries);
+//console.log(entries);
 module.exports = {
     devtool: 'source-map',//cheap-module-eval-source-map,eval,cheap-module-source-map,source-map
     // context: path.join(__dirname, 'app', 'js'),
@@ -57,7 +57,11 @@ module.exports = {
             manifest: require('./dist/js/vendor-manifest.json')
         }),
         // 提供公共代码
-        new webpack.optimize.CommonsChunkPlugin('js/common.js'),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'common',
+            filename: './js/common.js',
+            minChunks: 2
+        }),
         new ExtractTextPlugin("css/[name].css")
         // new ExtractTextPlugin('css/[name].less')
     ],

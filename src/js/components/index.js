@@ -10,4 +10,5 @@ export ArticleInfo from './article/articleInfo';
 export Comment from './article/comment';
 export CommentList from './article/commentList';
 export SearchList from './search/list';
+export Post from './article/post';
 export Ueditor from './ueditor';
