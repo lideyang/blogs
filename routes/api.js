@@ -132,4 +132,29 @@ router.post('/setArchiveContent', function (req, res, next) {
         });
     });
 });
+//新增文章
+router.post('/addArchive', function (req, res, next) {
+    var currentUser = req.session.user;
+    var posts = {
+        name: currentUser.name,
+        head: currentUser.head,
+        title: req.body.title,
+        tags: req.body.tags,
+        post: req.body.post,
+        sort: req.body.sort,
+        description: req.body.description
+    }
+    Post.save(posts, function (err, doc) {
+        if (err) {
+            req.flash('error', err);
+            return res.redirect(url);//出错！返回文章页
+        }
+        console.log(doc);
+        var url = '/u/' + doc.insertedIds;
+        res.json({//成功！返回文章页
+            success: true,
+            msg: url
+        });
+    });
+});
 module.exports = router;

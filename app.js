@@ -34,8 +34,6 @@ app.use(session({
     })
 }));
 app.use(flash());
-app.use('/upload', upload);
-app.use('/api', api);
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -48,8 +46,10 @@ app.use(cookieParser());
 app.use('/assets', express.static('public'));
 app.use('/dist', express.static('dist'));
 //app.use(express.static(path.join(__dirname, 'public')));
-
+app.use('/upload', upload);
+app.use('/api', api);
 routes(app);
+
 
 // app.use(function (err, req, res, next) {
 //         var meta = '[' + new Date() + '] ' + req.url + '\n';

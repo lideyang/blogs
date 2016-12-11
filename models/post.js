@@ -15,7 +15,7 @@ function Post(name, head, title, tags, post, sort, description) {
 module.exports = Post;
 
 //存储一篇文章及其相关信息
-Post.prototype.save = function (callback) {
+Post.save = function (post, callback) {
     var date = new Date();
     //存储各种时间格式，方便以后扩展
     var time = {
@@ -29,18 +29,18 @@ Post.prototype.save = function (callback) {
     var listTime = time.minute;
     //要存入数据库的文档
     var post = {
-        name: this.name,
-        head: this.head,
+        name: post.name,
+        head: post.head,
         time: time,
         lastTime: listTime,
-        title: this.title,
-        tags: this.tags,
-        post: this.post,
-        sort: this.sort,
-        description: this.description,
+        title: post.title,
+        tags: post.tags,
+        post: post.post,
+        sort: post.sort,
+        description: post.description,
         comments: [],
         reprint_info: {},
-        pv: 0
+        pv: Math.random() * 50 + 50
     };
     //打开数据库
     mongodb.open(function (err, db) {
@@ -56,12 +56,12 @@ Post.prototype.save = function (callback) {
             //将文档插入 posts 集合
             collection.insert(post, {
                 safe: true
-            }, function (err) {
+            }, function (err, doc) {
                 mongodb.close();
                 if (err) {
                     return callback(err);//失败！返回 err
                 }
-                callback(null);//返回 err 为 null
+                callback(err,doc);//返回 err 为 null
             });
         });
     });

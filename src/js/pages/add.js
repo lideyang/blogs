@@ -1,16 +1,14 @@
 /**
- * Created by Lidy on 2016/12/2.
+ * Created by lidy on 2016/12/11.
  */
 import React from 'react';
 import {render} from 'react-dom';
 import {Header, Footer, Post} from '../components';
 import {ObjectParamToStr, GetUrlToId} from '../utils';
-import 'whatwg-fetch';
 
-const Edit = React.createClass({
+const Add = React.createClass({
     getInitialState() {
         return {
-            loading: true,
             data: {
                 id: '',
                 title: '',
@@ -25,7 +23,7 @@ const Edit = React.createClass({
         return (
             <Header>
                 <header className="page-header">
-                    <h1>编辑文章</h1>
+                    <h1>新增文章</h1>
                 </header>
             </Header>
         );
@@ -33,7 +31,7 @@ const Edit = React.createClass({
     renderContent(){
         var that = this;
         return (
-            <Post data={this.state.data} loading={this.state.loading} onSubmit={this.onSubmit}/>
+            <Post onSubmit={this.onSubmit}/>
         )
     },
     renderFooter(){
@@ -45,7 +43,7 @@ const Edit = React.createClass({
         var that = this;
         let formParamsStr = ObjectParamToStr(formParams);
 
-        fetch('/api/setArchiveContent?id=' + this.state.data._id, {
+        fetch('/api/addArchive', {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -62,20 +60,6 @@ const Edit = React.createClass({
             });
         });
     },
-    componentDidMount: function () {
-        var that = this;
-        var id = GetUrlToId();
-        fetch('/api/getArchiveContent?id=' + id).then(function (response) {
-            response.json().then(function (data) {
-                if (that.isMounted()) {
-                    that.setState({
-                        data: data,
-                        loading: false
-                    });
-                }
-            });
-        });
-    },
     render() {
         return (
             <div>
@@ -86,4 +70,4 @@ const Edit = React.createClass({
         )
     }
 })
-render(<Edit />, document.getElementById('page'));
+render(<Add />, document.getElementById('page'));

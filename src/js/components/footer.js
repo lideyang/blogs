@@ -6,6 +6,9 @@ import {render} from 'react-dom';
 import {Grid, Row, Col} from 'react-bootstrap';
 
 const Footer=React.createClass({
+    componentDidMount(){
+        document.getElementById('main_loading').style.display='none';
+    },
     render:function(){
         return (
             <footer id="colophon" className="site-footer" role="contentinfo">

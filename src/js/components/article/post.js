@@ -2,9 +2,9 @@
  * Created by Lidy on 2016/12/9.
  */
 import React from 'react';
-import {render} from 'react-dom';
-import {Header, Footer, Ueditor} from '../../components';
-import {Form, FormGroup, FormControl, ControlLabel, Grid, Col, Button} from 'react-bootstrap';
+import {ReactDOM,render} from 'react-dom';
+import {Header, Footer, Loading, Ueditor} from '../../components';
+import {Form, FormGroup, ControlLabel, Grid, Col, Button} from 'react-bootstrap';
 
 const Post = React.createClass({
     getInitialState() {
@@ -14,6 +14,7 @@ const Post = React.createClass({
     },
     getDefaultProps(){
         return {
+            loading: false,
             data: {
                 title: '',
                 tags: '',
@@ -42,6 +43,9 @@ const Post = React.createClass({
     },
     render() {
         var that = this;
+        if (this.props.loading) {
+            return <Loading/>
+        }
         return (
             <Grid>
                 <Form horizontal onSubmit={this.submitHandle}>
@@ -50,7 +54,7 @@ const Post = React.createClass({
                             标题
                         </Col>
                         <Col sm={10}>
-                            <FormControl ref="title" value={this.props.data.title} placeholder="文章标题"/>
+                            <input className="form-control" ref="title" defaultValue={this.props.data.title} placeholder="文章标题"/>
                         </Col>
                     </FormGroup>
                     <FormGroup>
@@ -58,7 +62,7 @@ const Post = React.createClass({
                             标签
                         </Col>
                         <Col sm={10}>
-                            <FormControl ref="tags" value={this.props.data.tags} placeholder="文章标签"/>
+                            <input className="form-control" ref="tags" defaultValue={this.props.data.tags} placeholder="文章标签"/>
                         </Col>
                     </FormGroup>
                     <FormGroup>
@@ -66,13 +70,13 @@ const Post = React.createClass({
                             分类
                         </Col>
                         <Col sm={10}>
-                            <FormControl ref="sort" componentClass="select" placeholder="分类" value={that.props.data.sort}>
+                            <select className="form-control" ref="sort" placeholder="分类" defaultValue={that.props.data.sort}>
                                 {this.state.sort.map(function (item, index) {
                                     return (
                                         <option key={index} value={item}>{item}</option>
                                     )
                                 })}
-                            </FormControl>
+                            </select>
                         </Col>
                     </FormGroup>
                     <FormGroup>

@@ -9,16 +9,12 @@ const Loading = React.createClass({
         };
     },
     componentWillMount(){
-        window.onload=function(){
-            this.setState({
-                display:'none'
-            })
-        }.bind(this);
+
     },
     render() {
         return (
-            <div id="main_loading"  style={{display: this.state.display}}>
-                <p id="loading-one">载入中</p>
+            <div>
+                载入中...
             </div>
         );
     }

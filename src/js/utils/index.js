@@ -1,5 +1,5 @@
 /**
  * Created by Lidy on 2016/12/9.
  */
-export objectParamToStr from './objectParamToStr';
-export getUrlToId from './getUrlToId';
+export ObjectParamToStr from './objectParamToStr';
+export GetUrlToId from './getUrlToId';

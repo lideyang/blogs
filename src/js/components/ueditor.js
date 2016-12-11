@@ -22,7 +22,6 @@ var Ueditor = React.createClass({
             if (this.props.content) {
                 editor.setContent(this.props.content);
             }
-
         }.bind(this));
         this.setState({
             editorDOM: editor
