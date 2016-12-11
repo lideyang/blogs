@@ -23,6 +23,11 @@ var entries = {
         // 'webpack/hot/dev-server', //热部署插件
         'webpack-hot-middleware/client?reload=true'//热部署中间件
     ],
+    "vue/test": [ //vue测试
+        './src/vue/test.js',
+        // 'webpack/hot/dev-server', //热部署插件
+        'webpack-hot-middleware/client?reload=true'//热部署中间件
+    ],
     base: [
         './src/css/bootstrap.css',
         './src/css/font-awesome.css',

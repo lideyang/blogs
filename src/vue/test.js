@@ -1,0 +1,62 @@
+/**
+ * Created by lidy on 2016/11/26.
+ */
+import Vue from '../../node_modules/vue/dist/vue.min';
+/*组件*/
+Vue.component('my-component',{
+    template:'<div>组件</div>'
+});
+var example=new Vue({
+    el:'#example',
+    data:{
+        data:{
+            name:'ddssd',
+            sex:'one',
+            interest:['book']
+        },
+        msg:'ggg',
+        parentMsg:'暴雪游戏',
+        items:[
+            {
+                msg:'魔兽'
+            },
+            {
+                msg:'星际'
+            },
+            {
+                msg:'炉石'
+            }
+        ],
+        items2:{
+            name:'lidy',
+            age:27,
+            email:'193010@qq.com'
+        },
+        isActive:true,
+        textInfo:true,
+        todo:[
+            'dsdsd',
+            'fgff',
+            'ggg'
+        ],
+        newTodoText:''
+    },
+    computed:{
+        classObj:function(){
+            return{
+                active:this.isActive,
+                "text-info":this.textInfo
+            }
+        }
+    },
+    methods:{
+        addNewTodo:function(){
+            this.todo.push(this.newTodoText);
+            this.newTodoText='';
+        },
+        clickText:function(msg,e){
+            console.log(msg);
+            console.log(e.target.tagName);
+        }
+    }
+})

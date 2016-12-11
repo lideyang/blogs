@@ -1,0 +1,50 @@
+<style>
+	div.active{
+		background: #888;
+	}
+	div.text-info{
+		color:red;
+	}
+</style>
+<div id="example" class="site">
+	<!--表单绑定-->
+	<form>
+		<input v-model.lazy="msg" lazy debouncd="3000" />
+		<input type="radio" value="one" v-model="data.sex">
+		<input type="radio" value="two" v-model="data.sex">
+		<input type="checkbox" value="book" v-model="data.interest">
+		<input type="checkbox" value="game" v-model="data.interest">
+		<p>{{msg}}</p>
+	</form>
+	<!--列表遍历-->
+	<ul id="ulFor">
+		<li v-for="(item,index) in items" v:index="index" class="{{index}}">
+			{{index}}- {{parentMsg}} - {{item.msg}}
+		</li>
+	</ul>
+	<ul id="ulFor2">
+		<li v-for="(value,key,index) in items2" class={{'item'+index}}>
+			{{index}}- {{parentMsg}} -{{key}} :{{value}}
+		</li>
+	</ul>
+	<!-- class绑定 -->
+	<div v-bind:class="classObj">
+		ccc
+	</div>
+	<!--元素事件-->
+	<input v-model="newTodoText" v-on:keyup.enter="addNewTodo" />
+	<ul id="ulFor3">
+		<li v-for="(item,index) in todo">
+			{{index}}- {{parentMsg}} -{{item}}
+		</li>
+	</ul>
+	<button v-on:click="clickText('hello,world',$event)" >test</button>
+	<a v-on:click.prevent.self="clickText('hello,world',$event)" href="#333">
+		<p style="margin: 10px">test</p>
+	</a>
+	<!--组件-->
+	<my-component></my-component>
+</div>
+
+<%- include footer %>
+<script src="/dist/js/vue/test.js"></script>

@@ -392,7 +392,10 @@ module.exports = function (app) {
                         });
                 });
         });
-
+        //vue
+    app.get('/vue', function (req, res) {
+        res.render('vue',{title:'vue'});
+    });
         // app.use(function (req, res) {
         //         res.render("404");
         // });
