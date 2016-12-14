@@ -1,0 +1,283 @@
+@import "variables";
+
+html {
+  box-sizing: border-box;
+  font-family: 'Microsoft Yahei', serif;
+  background: @bodycolor;
+  padding: 0px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+
+audio,
+canvas,
+progress,
+video {
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+[hidden],
+template {
+  display: none;
+}
+
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+
+b,
+strong {
+  font-weight: bold;
+}
+
+dfn {
+  font-style: italic;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+mark {
+  background: #ff0;
+  color: @bodycolor;
+}
+
+small {
+  font-size: 80%;
+}
+
+textarea {
+  overflow: auto;
+}
+
+optgroup {
+  font-weight: bold;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+hr {
+  background-color: #ccc;
+  border: 0;
+  height: 1px;
+  margin-bottom: 1.5em;
+}
+
+ul,
+ol {
+  margin: 0 0 1.5em 3em;
+}
+
+ul {
+  list-style: disc;
+}
+
+ol {
+  list-style: decimal;
+}
+
+li > ul,
+li > ol {
+  margin-bottom: 0;
+  margin-left: 1.5em;
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  margin: 0 1.5em 1.5em;
+}
+
+img {
+  height: auto; /* Make sure images are scaled correctly. */
+  max-width: 100%; /* Adhere to container width. */
+}
+
+table {
+  margin: 0 0 1.5em;
+  width: 100%;
+}
+pre {
+  background: #eee;
+  font-family: "Courier 10 Pitch",Courier,monospace;
+  font-size: 15px;
+  font-size: .9375rem;
+  line-height: 1.6;
+  margin-bottom: 1.6em;
+  padding: 1.6em;
+}
+/*--------------------------------------------------------------
+## Links
+--------------------------------------------------------------*/
+a {
+  color: @linkcolor;
+  text-decoration: none;
+  transition: all .3s ease-in;
+}
+
+a:hover,
+a:focus,
+a:active {
+  color: @linkhovercolor;
+  text-decoration: none;
+}
+
+
+a:visited {
+  color: @linkcolor;
+}
+
+/*--------------------------------------------------------------
+# Clearings
+--------------------------------------------------------------*/
+.clear:before,
+.clear:after,
+.entry-content:before,
+.entry-content:after,
+.comment-content:before,
+.comment-content:after,
+.site-header:before,
+.site-header:after,
+.site-content:before,
+.site-content:after,
+.site-footer:before,
+.site-footer:after {
+  content: "";
+  display: table;
+  table-layout: fixed;
+}
+
+.clear:after,
+.entry-content:after,
+.comment-content:after,
+.site-header:after,
+.site-content:after,
+.site-footer:after {
+  clear: both;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  color: @bodytextcolor;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+/*辅助类*/
+.inline-block{
+  display: inline-block;
+}
+/* loading */
+#main_loading {
+  position: fixed !important;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 999;
+  background: #000 url(../images/loading.gif) no-repeat center;
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+#loading-one {
+  color: #888;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 50px 0 0 -32px;
+  padding: 3px 10px;
+}
+
+//波浪canvas
+#waveCanvas {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+//自适应全屏高度
+.site, .height-full {
+  min-height: 100%;
+}
+
+.site {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  padding-bottom: 20px;
+  margin-bottom: -251px;
+}
+
+.site:after {
+  display: block;
+  content: '';
+  height: 251px;
+}
+/* page页头 */
+.page-header{
+  padding-bottom: 0;
+  color:#000;
+  small{
+    color:#333;
+  }
+}
+/* 分页 */

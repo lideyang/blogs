@@ -13,7 +13,7 @@ const Page404 = React.createClass({
     renderHeader(){
         return (
             <Header>
-                <header className="page-header">
+                <header className="header-title">
                     <h1>404</h1>
                 </header>
             </Header>
@@ -25,11 +25,6 @@ const Page404 = React.createClass({
                 <h2>404</h2>
                 <p>请求出错啦，{this.state.countdown}秒后跳转回首页^_^</p>
             </div>
-        )
-    },
-    renderFooter(){
-        return (
-            <Footer/>
         )
     },
     componentDidMount: function () {
@@ -52,7 +47,6 @@ const Page404 = React.createClass({
             <div>
                 {this.renderHeader()}
                 {this.renderContent()}
-                {this.renderFooter()}
             </div>
         )
     }

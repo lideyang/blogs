@@ -1,1 +1,0 @@
-define(function(n,i,e){$=n("jquery"),e.exports={init:function(){}}});

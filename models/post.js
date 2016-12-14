@@ -61,7 +61,7 @@ Post.save = function (post, callback) {
                 if (err) {
                     return callback(err);//失败！返回 err
                 }
-                callback(err,doc);//返回 err 为 null
+                callback(err, doc);//返回 err 为 null
             });
         });
     });
@@ -416,7 +416,7 @@ Post.getSort = function (sort, page, callback) {
     });
 };
 //返回含有特定标签的所有文章
-Post.getTag = function (tag, callback) {
+Post.getTag = function (tag, page, callback) {
     mongodb.open(function (err, db) {
         if (err) {
             return callback(err);
@@ -431,9 +431,8 @@ Post.getTag = function (tag, callback) {
             collection.find({
                 "tags": tag
             }, {
-                "name": 1,
-                "time": 1,
-                "title": 1
+                skip: (page - 1) * 10,
+                limit: 10
             }).sort({
                 time: -1
             }).toArray(function (err, docs) {
@@ -448,7 +447,7 @@ Post.getTag = function (tag, callback) {
 };
 
 //返回通过标题关键字查询的所有文章信息
-Post.search = function (keyword, callback) {
+Post.search = function (keyword, page, callback) {
     mongodb.open(function (err, db) {
         if (err) {
             return callback(err);
@@ -462,9 +461,8 @@ Post.search = function (keyword, callback) {
             collection.find({
                 "title": pattern
             }, {
-                "name": 1,
-                "time": 1,
-                "title": 1
+                skip: (page - 1) * 10,
+                limit: 10
             }).sort({
                 time: -1
             }).toArray(function (err, docs) {

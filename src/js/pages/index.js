@@ -6,14 +6,12 @@ import {render} from 'react-dom';
 import {Header, ArticleList, Footer} from '../components';
 import {Carousel} from 'react-bootstrap';
 import 'whatwg-fetch';
-
-// style
-import '../../css/owl-carousel/owl.carousel.css';
-import '../../css/owl-carousel/owl.theme.css';
+import '../../less/pages/home.less';
 const Home = React.createClass({
     getInitialState: function () {
         return {
             ArticleList: false,
+            total: 0,
             menuBarClass: 'stmenu-bar'
         };
     },
@@ -47,32 +45,33 @@ const Home = React.createClass({
     },
     renderArticleList(){
         return (
-            <ArticleList data={this.state.ArticleList}/>
+            <ArticleList data={this.state.ArticleList} total={this.state.total} onChangePage={this.onChangePage}/>
         )
     },
-    renderFooter(){
-        return (
-            <Footer/>
-        )
-    },
-    componentDidMount: function () {
+    getArticleList(pageIndex){
         var that = this;
-        fetch('/api/getNavInfo').then(function (response) {
+        fetch('/api/getNavInfo?p=' + pageIndex).then(function (response) {
             response.json().then(function (data) {
                 if (that.isMounted()) {
                     that.setState({
-                        ArticleList: data
+                        ArticleList: data.data,
+                        total: data.total
                     });
                 }
             });
         });
+    },
+    onChangePage(index){
+        this.getArticleList(index);
+    },
+    componentDidMount() {
+        this.getArticleList(1);
     },
     render() {
         return (
             <div>
                 {this.renderHeader()}
                 {this.renderArticleList()}
-                {this.renderFooter()}
             </div>
         )
     }

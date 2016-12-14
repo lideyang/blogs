@@ -3,8 +3,8 @@
  */
 import React from 'react';
 import {render} from 'react-dom';
-import {Header, Footer, Post} from '../components';
-import {ObjectParamToStr, GetUrlToId} from '../utils';
+import {Header, Post} from '../components';
+import {ObjectParamToStr} from '../utils';
 
 const Add = React.createClass({
     getInitialState() {
@@ -22,7 +22,7 @@ const Add = React.createClass({
     renderHeader(){
         return (
             <Header>
-                <header className="page-header">
+                <header className="header-title">
                     <h1>新增文章</h1>
                 </header>
             </Header>
@@ -32,11 +32,6 @@ const Add = React.createClass({
         var that = this;
         return (
             <Post onSubmit={this.onSubmit}/>
-        )
-    },
-    renderFooter(){
-        return (
-            <Footer/>
         )
     },
     onSubmit(formParams){
@@ -65,7 +60,6 @@ const Add = React.createClass({
             <div>
                 {this.renderHeader()}
                 {this.renderContent()}
-                {this.renderFooter()}
             </div>
         )
     }

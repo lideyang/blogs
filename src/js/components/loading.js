@@ -13,7 +13,7 @@ const Loading = React.createClass({
     },
     render() {
         return (
-            <div>
+            <div className="height-full">
                 载入中...
             </div>
         );

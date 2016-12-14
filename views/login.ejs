@@ -1,13 +1,5 @@
-<%- include header %>
-<form method="post" style="text-align: center;margin:10px 0;">
-  用户名：<input type="text" name="name"/><br />
-    <br />
-  密码：  <input type="password" name="password"/><br /><br />
-          <input type="submit" value="登录"/>
-</form>
+<!--登录页-->
+<div id="page" class="site">
+</div>
 <%- include footer %>
-<script>
-    seajs.use(['article'], function (main) {
-        main.init();
-    })
-</script>
+<script src="/dist/js/pages/login.js"></script>

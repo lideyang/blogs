@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import {render} from 'react-dom';
-import {Header, Footer, Post} from '../components';
+import {Header, Post} from '../components';
 import {ObjectParamToStr, GetUrlToId} from '../utils';
 import 'whatwg-fetch';
 
@@ -24,7 +24,7 @@ const Edit = React.createClass({
     renderHeader(){
         return (
             <Header>
-                <header className="page-header">
+                <header className="header-title">
                     <h1>编辑文章</h1>
                 </header>
             </Header>
@@ -36,15 +36,10 @@ const Edit = React.createClass({
             <Post data={this.state.data} loading={this.state.loading} onSubmit={this.onSubmit}/>
         )
     },
-    renderFooter(){
-        return (
-            <Footer/>
-        )
-    },
+
     onSubmit(formParams){
         var that = this;
         let formParamsStr = ObjectParamToStr(formParams);
-
         fetch('/api/setArchiveContent?id=' + this.state.data._id, {
             method: "POST",
             headers: {
@@ -81,7 +76,6 @@ const Edit = React.createClass({
             <div>
                 {this.renderHeader()}
                 {this.renderContent()}
-                {this.renderFooter()}
             </div>
         )
     }

@@ -27,13 +27,14 @@ var walk = function (src) { //递归遍历pages目录所有文件
 walk(pageStr);
 var baseCss = [
     './src/less/bootstrap/bootstrap.less',
-    './src/css/font-awesome.css',
-    './src/css/animate.css',
-    './src/less/theme.less'
+    './src/less/theme.less',
+    './src/fonts/iconfont.css',
+    './src/less/fonts.less'
 ];
 baseCss.unshift(entryBase[0]);
 //公用样式入口（以后研究优化）
 entries['base'] = baseCss;
+console.log(entries);
 //console.log(entries);
 module.exports = {
     devtool: 'source-map',//cheap-module-eval-source-map,eval,cheap-module-source-map,source-map
@@ -93,7 +94,7 @@ module.exports = {
             },
             {
                 test: /\.(woff|woff2|svg|eot|ttf|otf)\??.*$/,
-                loader: 'url-loader?limit=50000&name=font/[name].[ext]'
+                loader: 'url-loader?limit=50000&name=fonts/[name].[ext]'
             }
         ]
     },

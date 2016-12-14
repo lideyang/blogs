@@ -1,26 +1,5 @@
-<%- include header %>
-<div class="container">
-    <% if(posts.length){ %>
-        <ul class="archive">
-        <% var lastYear = 0 %>
-        <% posts.forEach(function (post, index) { %>
-        <% if(lastYear != post.time.year) { %>
-        <li><h2><%= post.time.year %></h2></li>
-        <% lastYear = post.time.year } %>
-        <li class="post">
-            <h3>
-            <span>
-                <a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a>
-            </span>
-                <div class="post-time">
-                    <%= post.time.day %>
-                </div>
-            </h3>
-        </li>
-        <% }) %>
-    </ul>
-    <% }else{ %>
-        <p>没有查询结果</p>
-    <% } %>
+<!--搜索页-->
+<div id="page" class="site">
 </div>
 <%- include footer %>
+<script src="/dist/js/pages/search.js"></script>

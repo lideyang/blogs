@@ -1,0 +1,40 @@
+@import "variables";
+.search-box {
+  margin: 40px 20px;
+  .search-field {
+    width: 240px;
+    border-color: #111;
+    background: #777;
+    font-size: 14px;
+    color: #fff;
+    padding: 10px 5px;
+  }
+  .search-submit {
+    display: none;
+  }
+}
+.search-list-item{
+  padding-bottom: 10px;
+  border-bottom: 1px dotted #ddd;
+  &:last-child{
+    border-bottom:none;
+  }
+  div.info{
+    margin: 15px 0;
+    >a{
+      color:@bodytextcolor;
+    }
+    i.iconfont{
+      font-size: 20px;
+      margin-right: 10px;
+      &.icon-zuozhe{
+        font-size: 18px;
+      }
+    }
+    .tag-list{
+      a{
+        margin-right: 5px;
+      }
+    }
+  }
+}

@@ -5,9 +5,6 @@ function Comment(id, comment) {
     this.id = id;
     this.comment = comment;
 }
-
-module.exports = Comment;
-
 //存储一条留言信息
 Comment.prototype.save = function (callback) {
     var date = new Date();
@@ -44,3 +41,4 @@ Comment.prototype.save = function (callback) {
         });
     });
 };
+module.exports = Comment;

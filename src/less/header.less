@@ -1,0 +1,101 @@
+// Header
+
+#masthead {
+  position: relative;
+  background: #fff url('../images/header.jpg') center center;
+  background-size: cover;
+  .top {
+    border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+    //padding-top:40px;
+    position: relative;
+    .site-branding {
+      h1 {
+        font-size: 36px;
+        margin: 20px 0px 10px 0px;
+        a {
+          color: #fff;
+        }
+      }
+    }
+    .nav-switch {
+      width: 28px;
+      height: 28px;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      position: absolute;
+      right: 0px;
+      bottom: 25px;
+      color: #fff;
+      text-align: center;
+      line-height: 24px;
+      cursor: pointer;
+    }
+  }
+}
+
+.header-title {
+  margin: 60px 0px;
+  h1 {
+    font-size: 42px;
+    margin: 0;
+    color: #fff;
+    font-weight: 400;
+    text-align: center;
+  }
+}
+.entry-header {
+  text-align: center;
+  margin-top: 20px;
+  .cat-list {
+    font-size: 14px;
+    a {
+      color: @primecolor;
+      padding: 5px 10px;
+      border-radius: 10px;
+    }
+  }
+  h2.entry-title, h1.entry-title {
+    font-size: 32px;
+    font-weight: 400;
+    padding: 0px 15%;
+    line-height: 1.2;
+    margin: 10px 0px 20px 0px;
+    color: @titlecolor;
+    a {
+      color: @titlecolor;
+      a:hover{
+        color:@linkhovercolor;
+      }
+    }
+  }
+  .entry-meta {
+    font-size: 14px;
+    position: relative;
+    margin-bottom: 15px;
+    &:after {
+      content: "";
+      position: absolute;
+      height: 1px;
+      width: 90%;
+      border-bottom: 1px dotted @bordercolor;
+      left: 5%;
+      top: 10px;
+      z-index: 10;
+    }
+    span {
+      background: @bodycolor;
+      z-index: 100;
+      padding: 0px 10px;
+      display: inline-block;
+      position: relative;
+      i.iconfont{
+        margin: 0 5px;
+        &.icon-zuozhe{
+          font-size: 14px;
+        }
+        &.icon-riqi{
+          margin-left: 15px;
+        }
+      }
+    }
+  }
+}

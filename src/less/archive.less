@@ -1,0 +1,59 @@
+/* 存档 */
+.archive {
+  h2{
+    color:#222;
+  }
+  li.post {
+    list-style: none;
+    position: relative;
+    h3 {
+      position: relative;
+      overflow: hidden;
+      color:#666;
+      span {
+        display: inline-block;
+        vertical-align: baseline;
+        zoom: 1;
+        position: relative;
+        padding: 0 10px 0 0;
+        &:after{
+          content: '';
+          display: block;
+          width: 800px;
+          position: absolute;
+          top: .73em;
+          border-top: 1px dotted #ddd;
+          left: 100%;
+        }
+        a{
+          color:#666;
+          &:hover{
+            color:#333;
+          }
+        }
+      }
+      .post-time {
+        font-size: 11px;
+
+        letter-spacing: 1px;
+        color: #777;
+        max-width: 50%;
+        font-weight: 400;
+        line-height: 28px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: #fff;
+        padding-left: 10px;
+      }
+    }
+    .post-author {
+      font-size: 11px;
+
+      letter-spacing: 1px;
+      color: #777;
+      height: 30px;
+      margin-top: 10px;
+    }
+  }
+}

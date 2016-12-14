@@ -145,9 +145,13 @@ mark,
 // -------------------------
 
 .page-header {
-  padding-bottom: ((@line-height-computed / 2) - 1);
+  padding-bottom: 0;
   margin: (@line-height-computed * 2) 0 @line-height-computed;
-  border-bottom: 1px solid @page-header-border-color;
+  border-bottom: 1px dotted @page-header-border-color;
+  color:@gray-base;
+  small{
+    color:@gray-dark;
+  }
 }
 
 
@@ -225,7 +229,6 @@ dd {
   }
 }
 
-
 // Misc
 // -------------------------
 
@@ -258,7 +261,7 @@ blockquote {
 
   // Note: Deprecated small and .small as of v3.1.0
   // Context: https://github.com/twbs/bootstrap/issues/11660
-  footer,
+
   small,
   .small {
     display: block;
@@ -284,7 +287,7 @@ blockquote.pull-right {
   text-align: right;
 
   // Account for citation
-  footer,
+
   small,
   .small {
     &:before { content: ''; }

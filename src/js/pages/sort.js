@@ -3,17 +3,17 @@
  */
 import React from 'react';
 import {render} from 'react-dom';
-import {Header, Footer, SearchList} from '../components';
+import {Header, SearchList} from '../components';
 const Sort = React.createClass({
     getInitialState() {
         return {
-            userInfo: []
+            list: []
         };
     },
     renderHeader(){
         return (
             <Header>
-                <header className="page-header">
+                <header className="header-title">
                     <h1>文章分类</h1>
                 </header>
             </Header>
@@ -21,34 +21,31 @@ const Sort = React.createClass({
     },
     renderUserArticle(){
         return (
-            <SearchList data={this.state.userInfo}/>
-        )
-    },
-    renderFooter(){
-        return (
-            <Footer/>
+            <SearchList data={this.state.list}/>
         )
     },
     componentDidMount: function () {
-        var that = this;
-        var url = window.location.pathname;
-        var name = url.substring(url.lastIndexOf('/') + 1);
-        fetch('/api/getSortArticleList?sort=' + name).then(function (response) {
-            response.json().then(function (data) {
-                if (that.isMounted()) {
-                    that.setState({
-                        userInfo: data
-                    });
-                }
+        let that = this;
+        let url = window.location.pathname;
+        let index = url.lastIndexOf('sort/');
+        if(index){
+            let sort = url.substring(index + 5);
+            fetch('/api/getSortArticleList?sort=' + sort).then(function (response) {
+                response.json().then(function (data) {
+                    if (that.isMounted()) {
+                        that.setState({
+                            list: data
+                        });
+                    }
+                });
             });
-        });
+        }
     },
     render() {
         return (
             <div>
                 {this.renderHeader()}
                 {this.renderUserArticle()}
-                {this.renderFooter()}
             </div>
         )
     }

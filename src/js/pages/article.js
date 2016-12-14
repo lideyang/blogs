@@ -4,7 +4,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import update from 'react-addons-update';
-import {Header, Footer, ArticleInfo, Comment} from '../components';
+import {Header, ArticleInfo, Comment} from '../components';
 import {Grid, Row, Col} from 'react-bootstrap';
 import 'whatwg-fetch';
 
@@ -44,7 +44,7 @@ const Article = React.createClass({
         let articleTitle = this.state.articleInfo ? this.state.articleInfo.title : '';
         return (
             <Header>
-                <header className="page-header">
+                <header className="header-title">
                     <h1>{articleTitle}</h1>
                 </header>
             </Header>
@@ -57,7 +57,7 @@ const Article = React.createClass({
                 <Grid>
                     <Row>
                         <Col md={12}>
-                            <div id="primary" className="content-area">
+                            <div id="" className="article-content content-area">
                                 <main id="main" className="site-main" role="main">
                                     {/*文章详情*/}
                                     <ArticleInfo data={this.state.articleInfo}/>
@@ -70,11 +70,6 @@ const Article = React.createClass({
                 </Grid>
             </div>
         );
-    },
-    renderFooter(){
-        return (
-            <Footer/>
-        )
     },
     componentDidMount: function () {
         var that = this;
@@ -95,7 +90,6 @@ const Article = React.createClass({
             <div>
                 {this.renderHeader()}
                 {this.renderArticleInfo()}
-                {this.renderFooter()}
             </div>
         )
     }

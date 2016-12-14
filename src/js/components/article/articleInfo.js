@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import {render} from 'react-dom';
-import {Grid, Row, Col} from 'react-bootstrap';
 
 const ArticleInfo = React.createClass({
     getDefaultProps(){
@@ -22,7 +21,7 @@ const ArticleInfo = React.createClass({
                         </div>
                         <h1 className="entry-title">{data.title}</h1>
                         <div className="entry-meta">
-                            <span>{data.name} 发表于 { data.time.minute } </span>
+                            <span><i className="iconfont icon-zuozhe"></i> {data.name} <i className="iconfont icon-riqi"></i> { data.time.minute } </span>
                         </div>
                     </header>
                     <div className="entry-content" dangerouslySetInnerHTML={{__html: data.post}}>
@@ -31,24 +30,24 @@ const ArticleInfo = React.createClass({
                     <span><a className="edit" href={'/remove/' + data._id}>删除</a></span>
                     <footer className="entry-footer">
                         <div className="com-box">
-                            <i className="fa fa-comment"></i>{ data.comments.length }条留言
+                            <i className="iconfont icon-comment"></i>{ data.comments.length }条留言
                         </div>
                         <ul className="sharebtn">
                             <li className="weibo">
                                 <a href={'http://service.weibo.com/share/share.php?url=' + window.location.host + '/u/' + data._id + '&title=' + data.title} target="_blank">
-                                    <i className="fa fa-weibo"></i>
+                                    <i className="iconfont icon-weibo"></i>
                                 </a>
                             </li>
                             <li className="qqkongjian">
                                 <a href={'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + window.location.host + '/u/' + data._id + '&title=' + data.title} target="_blank">
-                                    <i className="fa fa-qq"></i>
+                                    <i className="iconfont icon-qq"></i>
                                 </a>
                             </li>
                         </ul>
                         <div className="clear"></div>
                     </footer>
                     <div id="authorarea">
-                        <img alt='头像' src="/assets/dist/images/lidy.png" className='avatar avatar-100 photo' height='100' width='100'/>
+                        <img alt='头像' src={require('../../../images/lidy.png')} className='avatar avatar-100 photo' height='100' width='100'/>
                         <h3>关于 { data.name }</h3>
                         <div className="authorinfo">
                             <a className="author-link" href={'/u/name/' + data.name} rel="author">

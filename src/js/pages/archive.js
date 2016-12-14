@@ -14,7 +14,7 @@ const Archive = React.createClass({
     renderHeader(){
         return (
             <Header>
-                <header className="page-header">
+                <header className="header-title">
                     <h1>lidy的存档</h1>
                 </header>
             </Header>
@@ -51,11 +51,6 @@ const Archive = React.createClass({
             </Grid>
         )
     },
-    renderFooter(){
-        return (
-            <Footer/>
-        )
-    },
     componentDidMount: function () {
         var that = this;
         fetch('/api/getArchiveList').then(function (response) {
@@ -73,7 +68,6 @@ const Archive = React.createClass({
             <div>
                 {this.renderHeader()}
                 {this.renderArchiveList()}
-                {this.renderFooter()}
             </div>
         )
     }

@@ -2,8 +2,7 @@
  * Created by Lidy on 2016/12/9.
  */
 import React from 'react';
-import {ReactDOM,render} from 'react-dom';
-import {Header, Footer, Loading, Ueditor} from '../../components';
+import {Loading, Ueditor} from '../../components';
 import {Form, FormGroup, ControlLabel, Grid, Col, Button} from 'react-bootstrap';
 
 const Post = React.createClass({

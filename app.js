@@ -15,7 +15,7 @@ var app = express();
 app.use(bodyParser.urlencoded({extended: false})) //参数处理嵌套
 var routes = require('./routes/index');
 var upload = require('./routes/upload');
-var api = require('./routes/api');
+var api = require('./routes/api/');
 var settings = require('./settings');
 
 var fs = require('fs');
@@ -37,7 +37,7 @@ app.use(flash());
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use(favicon(__dirname + '/public/images/favicon.ico'));
+app.use(favicon(__dirname + '/src/images/favicon.ico'));
 app.use(logger('dev'));
 app.use(logger({stream: accessLog}));
 app.use(partials());
@@ -47,7 +47,13 @@ app.use('/assets', express.static('public'));
 app.use('/dist', express.static('dist'));
 //app.use(express.static(path.join(__dirname, 'public')));
 app.use('/upload', upload);
-app.use('/api', api);
+app.use('/api', api.account);
+app.use('/api', api.article);
+app.use('/api', api.archive);
+app.use('/api', api.comment);
+app.use('/api', api.search);
+app.use('/api', api.link);
+app.use('/api', api.tag);
 routes(app);
 
 

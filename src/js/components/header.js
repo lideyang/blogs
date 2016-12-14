@@ -25,13 +25,14 @@ const Header = React.createClass({
     },
     componentDidMount: function () {
         WaveCanvas('waveCanvas');
+        document.getElementById('main_loading').style.display='none';
     },
     render() {
         var leftMenuIcon;
         if (this.state.rightIsOpen) {
-            leftMenuIcon = <i className="fa fa-times"></i>;
+            leftMenuIcon = <i className="iconfont icon-cha"></i>;
         } else {
-            leftMenuIcon = <i className="fa fa-bars"></i>;
+            leftMenuIcon = <i className="iconfont icon-bars"></i>;
         }
         return (
             <div className="top-boxer">
@@ -50,9 +51,6 @@ const Header = React.createClass({
                                         {leftMenuIcon}
                                     </div>
                                 </div>
-                                <nav id="site-navigation" className="main-navigation" role="navigation">
-                                    {/*分割线*/}
-                                </nav>
                                 {this.props.children}
                             </Col>
                         </Row>
