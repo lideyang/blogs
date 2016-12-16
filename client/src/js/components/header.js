@@ -8,7 +8,7 @@ import {WaveCanvas} from '../plugins/waveCanvas';
 const Header = React.createClass({
     getDefaultProps: function () {
         return {
-            title: document.title
+            title: 'lidy'//document.title
         }
     },
     getInitialState: function () {

@@ -1,12 +1,29 @@
 /**
  * Created by Lidy on 2016/11/15.
  */
-import React from 'react';
-import {render} from 'react-dom';
+import React, { PureComponent } from 'react';
+import { observer } from 'mobx-react';
+import { Link } from 'react-router';
 import {Header, ArticleList, Footer} from '../components';
 import {Carousel} from 'react-bootstrap';
 import 'whatwg-fetch';
-import '../../less/pages/home.less';
+//import '../../less/pages/home.less';
+
+export default class Home extends PureComponent {
+    constructor() {
+        super();
+    }
+    render() {
+        return (
+            <div>
+                <Link to="/todo" >Todo</Link>
+                gogogo
+                { this.props.children }
+            </div>
+        )
+    }
+}
+
 const Home = React.createClass({
     getInitialState: function () {
         return {
@@ -76,6 +93,8 @@ const Home = React.createClass({
         )
     }
 });
-
-//生成视图
-render(<Home />, document.getElementById('page'));
+//
+// //生成视图
+// //render(<Home />, document.getElementById('page'));
+//
+// module.exports = Home;

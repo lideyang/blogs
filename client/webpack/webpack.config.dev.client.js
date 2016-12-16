@@ -6,41 +6,17 @@ var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');//加样式游览器兼容前缀
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var path = require("path");
-var srcDir = path.resolve(process.cwd(), 'src');
-var nodeModPath = path.resolve(__dirname, './node_modules');
 var publicPath = 'http://localhost:8080/dist/';
 var entryBase = ['webpack-hot-middleware/client?reload=true']; //热部署中间件
-var pageStr = __dirname + '/src/js/pages';
-var entries = {};
-var walk = function (src) { //递归遍历pages目录所有文件
-    var dirList = fs.readdirSync(src);
-    dirList.forEach(function (item) {
-        if (fs.statSync(src + '/' + item).isDirectory()) {
-            walk(src + '/' + item);
-        } else {
-            var entryPath = './src/js/pages/' + item;
-            var jsName = item.substring(0, item.lastIndexOf('.'));
-            entries['pages/' + jsName] = entryBase.concat(entryPath);
-        }
-    });
-}
-walk(pageStr);
-var baseCss = [
-    './src/less/bootstrap/bootstrap.less',
-    './src/less/theme.less',
-    './src/fonts/iconfont.css',
-    './src/less/fonts.less'
-];
-baseCss.unshift(entryBase[0]);
-//公用样式入口（以后研究优化）
-entries['base'] = baseCss;
 console.log(entries);
 //console.log(entries);
 module.exports = {
     devtool: 'source-map',//cheap-module-eval-source-map,eval,cheap-module-source-map,source-map
     // context: path.join(__dirname, 'app', 'js'),
 
-    entry: entries,
+    entry: {
+        app: [ path.join(__dirname, 'app.js') ]
+    },
 
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -71,7 +47,7 @@ module.exports = {
         loaders: [
             {
                 test: /\.js[x]?$/,
-                exclude: /(node_modules|bower_components)/,
+                exclude: /(node_modules)/,
                 loaders: ['babel-loader?presets[]=es2015&presets[]=react'], // 'babel-loader' is also a valid name to reference
                 include: [
                     path.join(__dirname, 'src')
@@ -97,17 +73,6 @@ module.exports = {
                 loader: 'url-loader?limit=50000&name=fonts/[name].[ext]'
             }
         ]
-    },
-    // resolve: {
-    //     extensions: ['', '.js'],
-    //     root: [srcDir, nodeModPath],
-    //     alias: {
-    //
-    //     },
-    //     publicPath: '/'
-    // },
-    resolveLoader: {
-        root: path.join(__dirname, '../node_modules')
     },
     postcss: [autoprefixer({browsers: ['> 1%', 'last 2 versions']})]
 };

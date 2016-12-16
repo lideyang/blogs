@@ -1,27 +1,25 @@
-var path = require('path');
-
-var express = require('express');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var partials = require('express-partials');
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var methodOverride = require('method-override');
-var MongoStore = require('connect-mongo')(session);
-var flash = require('connect-flash');
-var multer = require('multer');
-var app = express();
+const path = require('path');
+const express = require('express');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const partials = require('express-partials');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const methodOverride = require('method-override');
+const MongoStore = require('connect-mongo')(session);
+const flash = require('connect-flash');
+const app = express();
 app.use(bodyParser.urlencoded({extended: false})) //参数处理嵌套
-var routes = require('./routes/index');
-var upload = require('./routes/upload');
-var api = require('./routes/api/');
-var settings = require('./settings');
-
-var fs = require('fs');
-var accessLog = fs.createWriteStream('access.log', {flags: 'a'});
-var errorLog = fs.createWriteStream('error.log', {flags: 'a'});
-var port = 3000;
+const routes = require('./routes/index');
+const upload = require('./routes/upload');
+const api = require('./routes/api/');
+const settings = require('./settings');
+const reactView = require('./server/reactview/app.js');
+const fs = require('fs');
+const accessLog = fs.createWriteStream('access.log', {flags: 'a'});
+const errorLog = fs.createWriteStream('error.log', {flags: 'a'});
+const port = 3000;
 app.use(session({
     secret: settings.cookieSecret,
     key: settings.db,//cookie name
@@ -55,7 +53,20 @@ app.use('/api', api.search);
 app.use('/api', api.link);
 app.use('/api', api.tag);
 routes(app);
+// 注入reactview
+const viewpath = path.join(__dirname, 'src/js/pages');
 
+app.config = {
+    reactview: {
+        viewpath: viewpath, // the root directory of view files
+        doctype: '<!DOCTYPE html>',
+        extname: '.js', // view层直接渲染文件名后缀
+        beautify: false, // 是否需要对dom结构进行格式化
+        writeResp: false, // 是否需要在view层直接输出
+    }
+};
+// 为app提供服务端渲染的能力
+reactView(app);
 
 // app.use(function (err, req, res, next) {
 //         var meta = '[' + new Date() + '] ' + req.url + '\n';

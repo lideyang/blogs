@@ -6,7 +6,7 @@ const webpack = require('webpack');
 
 module.exports = {
     entry: {
-        vendor: ['react', 'react-dom']
+        vendor: ['react', 'react-dom', 'mobx', 'mobx-react', 'react-router']
     },
     output: {
         path: path.join(__dirname, 'dist/js'),
