@@ -7,7 +7,7 @@ import { observer } from 'mobx-react';
 import React, { PureComponent } from 'react';
 import { render } from 'react-dom';
 import routes from './routes.js';
-
+import { $indexStore } from './js/store/indexStore';
 
 
 render(

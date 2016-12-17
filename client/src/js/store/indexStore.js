@@ -3,7 +3,7 @@
  */
 import { observable, computed, autorun, action } from 'mobx';
 
-export default class indexStore {
+export default class IndexStore {
     @observable todos = [];
 
     @computed get todoCount() {
@@ -24,7 +24,7 @@ export default class indexStore {
         )
     }
 
-    subscribeTodoStore() {
+    subscribeIndexStore() {
         autorun(() => {
             let todo = this.todos;
             console.log(`store change: ${this.todos.length}`);
@@ -33,19 +33,24 @@ export default class indexStore {
 
     @action addTodo(name) {
         // return a promise ---> which means this can be await.
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                this.todos.push({
-                    name: name,
-                    completed: false
-                })
-                resolve();
-            }, 16)
-        })
+        // return new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //         this.todos.push({
+        //             name: name,
+        //             completed: false
+        //         })
+        //         resolve();
+        //     }, 16)
+        // })
+        return  this.todos.push({
+            name: name,
+            completed: false
+        });
     }
 
     static init() {
-        return new indexStore();
+        console.log('indexStore')
+        return new IndexStore();
     }
 
 }

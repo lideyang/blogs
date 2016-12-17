@@ -3,11 +3,6 @@
  */
 import React from 'react';
 const Loading = React.createClass({
-    getInitialState: function () {
-        return {
-            display:'block'
-        };
-    },
     componentWillMount(){
 
     },

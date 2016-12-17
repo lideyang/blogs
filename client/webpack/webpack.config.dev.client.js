@@ -15,7 +15,7 @@ module.exports = {
     // context: path.join(__dirname, 'app', 'js'),
 
     entry: {
-        app: [ path.join(__dirname, 'app.js') ]
+        app: [entryBase, path.join(__dirname, 'app.js')]
     },
 
     output: {

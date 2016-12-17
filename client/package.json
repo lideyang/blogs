@@ -9,7 +9,7 @@
     "build:dll": "webpack --config webpack.dll.config.js",
     "build:server": "webpack --colors --config webpack.config.dev.server.js",
     "build:client": "webpack --colors --config webpack.config.dev.client.js",
-    "start-dev":"node src/server.bundle.js"
+    "start-dev": "node src/server.bundle.js"
   },
   "dependencies": {
     "babel-runtime": "^6.11.6",
@@ -30,10 +30,10 @@
     "babel-core": "^6.13.2",
     "babel-jest": "^14.1.0",
     "babel-loader": "^6.2.5",
-    "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "babel-plugin-transform-async-to-generator": "^6.8.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-plugin-transform-runtime": "^6.12.0",
+    "babel-plugin-transform-object-rest-spread": "^6.8.0",
+    "babel-plugin-transform-runtime": "^6.15.0",
     "babel-polyfill": "^6.9.1",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
@@ -60,7 +60,7 @@
   "babel": {
     "presets": [
       "es2015",
-      "stage-0",
+      "stage-1",
       "react"
     ],
     "plugins": [

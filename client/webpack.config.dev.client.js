@@ -13,13 +13,13 @@ module.exports = {
     // context: path.join(__dirname, 'app', 'js'),
 
     entry: {
-        app: [ path.join(__dirname, 'src/client.js') ]
+        app: ['webpack-hot-middleware/client?reload=true', path.join(__dirname, 'src/client.js')]
     },
 
     output: {
-        path: path.resolve(__dirname, './dist/js'),
-        filename: 'client.bundle.js'
-        //publicPath: publicPath
+        path: '/',
+        filename: 'js/client.bundle.js',
+        publicPath: publicPath
     },
     plugins: [
         new webpack.optimize.OccurenceOrderPlugin(),
@@ -36,8 +36,12 @@ module.exports = {
         //     filename: './js/common.js',
         //     minChunks: 2
         // }),
-        new ExtractTextPlugin("css/[name].css")
+        new ExtractTextPlugin("css/[name].css"),
         // new ExtractTextPlugin('css/[name].less')
+        new webpack.DefinePlugin({
+            'isServer': false,
+            'isClient': true
+        })
     ],
     module: {
         // noParse:[path.join(__dirname, '../node_modules/react/dist/react.min.js'),path.join(__dirname, '../node_modules/react-dom/dist/react-dom.min.js')],
@@ -45,7 +49,11 @@ module.exports = {
             {
                 test: /\.js[x]?$/,
                 exclude: /(node_modules)/,
-                loaders: ['babel-loader?presets[]=es2015&presets[]=react'], // 'babel-loader' is also a valid name to reference
+                loader: ['babel-loader'], // 'babel-loader' is also a valid name to reference
+                query: {
+                    presets: ["es2015", "react", "stage-1"],
+                    plugins: ['transform-decorators-legacy']
+                },
                 include: [
                     path.join(__dirname, 'src')
                 ]

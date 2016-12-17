@@ -2,13 +2,13 @@ var path = require('path')
 var express = require('express')
 var proxy = require("express-http-proxy")
 var webpack = require('webpack')
-var webpackConfig = require('./webpack.config.js')
+var webpackConfig = require('./webpack.config.dev.client.js')
 // default port where dev server listens for incoming traffic
 var port = 8080;
 // Define HTTP proxies to your custom API backend
 
 //proxy port:80
-var hosts = "http://localhost:3000/";
+var hosts = "http://localhost:4000/";
 
 var app = express()
 var compiler = webpack(webpackConfig)

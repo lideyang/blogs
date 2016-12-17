@@ -3,6 +3,7 @@
  */
 import { Route } from 'react-router';
 import React from 'react';
+import {Loading} from './js/components';
 import Home from './js/pages/index';
 
 module.exports = (

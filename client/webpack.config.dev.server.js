@@ -4,17 +4,18 @@
 var fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
+require("babel-polyfill");
 
 module.exports = {
-    entry: path.resolve(__dirname, 'src/server.js'),
+    entry: path.resolve(__dirname, 'server.js'),
     output: {
         filename: 'server.bundle.js',
-        path: path.resolve(__dirname, 'src/')
+        path: path.resolve(__dirname, '')
     },
     plugins: [
         new webpack.DefinePlugin({
-            '__isServer__': true,
-            '__isClient__': false
+            'isServer': true,
+            'isClient': false
         })
     ],
     target: 'node',
@@ -36,7 +37,7 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'babel',
                 query: {
-                    presets: ['es2015', 'react', 'stage-0'],
+                    presets: ['es2015', 'react', 'stage-1'],
                     plugins: [
                         'transform-decorators-legacy',
                         'transform-runtime'
