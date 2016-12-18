@@ -14,7 +14,7 @@ const CommentList = React.createClass({
                                 <article id={'div-comment--' + index} className="comment-body">
                                     <footer className="comment-meta">
                                         <div className="comment-author vcard">
-                                            <img alt='头像' src={require('../../../images/header.png')} className="avatar avatar-80 photo avatar-default" height="80" width="80"/>
+                                            <img alt='头像' src={require('../../../../public/images/header.png')} className="avatar avatar-80 photo avatar-default" height="80" width="80"/>
                                             <b className="fn">
                                                 <a href={'/u/name/' + item.name} rel='external nofollow' className='url'>
                                                     {item.name}

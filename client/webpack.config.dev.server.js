@@ -1,48 +1,42 @@
-/**
- * Created by Lidy on 2016/12/16.
- */
-var fs = require('fs');
-var path = require('path');
-var webpack = require('webpack');
-require("babel-polyfill");
+var path = require('path')
+var webpack = require('webpack')
 
 module.exports = {
-    entry: path.resolve(__dirname, 'server.js'),
+    name: "server-side rendering",
+    target: "node",
+    entry: {
+        server: ['babel-polyfill','./src/server.js']
+    },
     output: {
-        filename: 'server.bundle.js',
-        path: path.resolve(__dirname, '')
+        path: './dist',
+        filename: "server.js",
+        publicPath: "/",
+        libraryTarget: "commonjs2"
     },
     plugins: [
         new webpack.DefinePlugin({
-            'isServer': true,
-            'isClient': false
-        })
+            __DEVCLIENT__: false,
+            __DEVSERVER__: true,
+            'process.env':{
+                'NODE_ENV': JSON.stringify('development')
+            }
+        }),
+        new webpack.IgnorePlugin(/vertx/)
     ],
-    target: 'node',
-    // keep node_module paths out of the bundle
-    externals: fs.readdirSync(path.resolve(__dirname, './node_modules')).concat([
-        'react-dom/server', 'react/addons',
-    ]).reduce(function (ext, mod) {
-        ext[mod] = 'commonjs ' + mod;
-        return ext;
-    }, {}),
-    node: {
-        __filename: true,
-        __dirname: true
-    },
     module: {
         loaders: [
             {
-                test: /\.js$/,
-                exclude: /node_modules/,
+                test: /\.js$|\.jsx$/,
                 loader: 'babel',
                 query: {
-                    presets: ['es2015', 'react', 'stage-1'],
-                    plugins: [
-                        'transform-decorators-legacy',
-                        'transform-runtime'
-                    ]
-                }
+                    "presets": ["es2015", "react", "stage-0"],
+                    "plugins":["transform-decorators-legacy","syntax-async-functions"]
+                },
+                include: path.join(__dirname,'src'),
+                exclude: /node_modules/
+            },
+            {
+                test: /\.json$/, loader: "json-loader"
             },
             {
                 test: /\.(gif|jpg|png)\??.*$/,
@@ -50,7 +44,10 @@ module.exports = {
             }
         ]
     },
-    resolveLoader: {
-        root: path.join(__dirname, '/node_modules')
-    },
-};
+    resolve: {
+        extensions: ['', '.js', '.jsx', '.css'],
+        modulesDirectories: [
+            "src", "node_modules"
+        ]
+    }
+}

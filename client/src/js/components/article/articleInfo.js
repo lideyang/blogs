@@ -47,7 +47,7 @@ const ArticleInfo = React.createClass({
                         <div className="clear"></div>
                     </footer>
                     <div id="authorarea">
-                        <img alt='头像' src={require('../../../images/lidy.png')} className='avatar avatar-100 photo' height='100' width='100'/>
+                        <img alt='头像' src={require('../../../../public/images/lidy.png')} className='avatar avatar-100 photo' height='100' width='100'/>
                         <h3>关于 { data.name }</h3>
                         <div className="authorinfo">
                             <a className="author-link" href={'/u/name/' + data.name} rel="author">

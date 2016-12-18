@@ -46,10 +46,11 @@ export default class IndexStore {
             name: name,
             completed: false
         });
+
     }
 
     static init() {
-        console.log('indexStore')
+        console.log('indexStore');
         return new IndexStore();
     }
 

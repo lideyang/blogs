@@ -8,17 +8,26 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var path = require("path");
 var publicPath = 'http://localhost:8080/dist/';
 var entryBase = ['webpack-hot-middleware/client?reload=true']; //热部署中间件
+var entries = {
+    app: [entryBase[0], path.join(__dirname, 'src/client.js')]
+};
+var baseStyle = [
+    './src/less/bootstrap/bootstrap.less',
+    './src/less/theme.less',
+    './public/fonts/iconfont.css',
+    './src/less/fonts.less'
+];
+baseStyle.unshift(entryBase[0]);
+entries['base'] = baseStyle;
 module.exports = {
     devtool: 'source-map',//cheap-module-eval-source-map,eval,cheap-module-source-map,source-map
     // context: path.join(__dirname, 'app', 'js'),
 
-    entry: {
-        app: ['webpack-hot-middleware/client?reload=true', path.join(__dirname, 'src/client.js')]
-    },
+    entry: entries,
 
     output: {
         path: '/',
-        filename: 'js/client.bundle.js',
+        filename: 'js/[name].js',
         publicPath: publicPath
     },
     plugins: [
@@ -39,8 +48,13 @@ module.exports = {
         new ExtractTextPlugin("css/[name].css"),
         // new ExtractTextPlugin('css/[name].less')
         new webpack.DefinePlugin({
-            'isServer': false,
-            'isClient': true
+            __DEVCLIENT__: true,
+            __DEVSERVER__: false,
+            __DEVTOOLS__: false,
+            __DEVLOGGER__: true,
+            'process.env':{
+                'NODE_ENV': JSON.stringify('development')
+            }
         })
     ],
     module: {
@@ -60,7 +74,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+                loader: ExtractTextPlugin.extract("style-loader", "css-loader?sourceMap")
             },
             {
                 test: /\.less$/,

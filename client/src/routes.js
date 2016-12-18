@@ -1,13 +1,16 @@
 /**
  * Created by Lidy on 2016/12/16.
  */
-import { Route } from 'react-router';
+import { Route, IndexRoute } from 'react-router';
 import React from 'react';
 import {Loading} from './js/components';
-import Home from './js/pages/index';
+import App from './js/pages/app';
+import Home from './js/pages/home';
 
-module.exports = (
-    <Route path="/" component={ Home } >
 
+export default () => (
+
+    <Route path="/" component={ App }>
+        {/*<IndexRoute component={Home}/>*/}
     </Route>
 )

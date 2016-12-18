@@ -1,32 +1,35 @@
 /**
  * Created by Lidy on 2016/11/15.
  */
-import React from 'react';
+import React, { PropTypes, Component } from 'react';
 import RightMenu from './rightMenu';
 import {Grid, Row, Col} from 'react-bootstrap';
 import {WaveCanvas} from '../plugins/waveCanvas';
-const Header = React.createClass({
-    getDefaultProps: function () {
-        return {
-            title: 'lidy'//document.title
-        }
-    },
-    getInitialState: function () {
-        return {
+import headerPic from '../../../public/images/header.jpg'
+export default class Header extends Component{
+    constructor() {
+        super();
+        this.state = {
             rightIsOpen: false
-        }
-    },
+        };
+    }
+    static defaultProps = {
+        title: 'lidy'//document.title
+    }
     onToggleMenu(){
         setTimeout(function () {
             this.setState({
                 rightIsOpen: !this.state.rightIsOpen
             })
         }.bind(this), 0);
-    },
-    componentDidMount: function () {
-        WaveCanvas('waveCanvas');
-        document.getElementById('main_loading').style.display='none';
-    },
+    }
+    componentWillMount(){
+        console.log('loading')
+        if (isClient) {
+            WaveCanvas('waveCanvas');
+            document.getElementById('main_loading').style.display = 'none';
+        }
+    }
     render() {
         var leftMenuIcon;
         if (this.state.rightIsOpen) {
@@ -60,6 +63,4 @@ const Header = React.createClass({
             </div>
         );
     }
-});
-
-export default Header;
+};
