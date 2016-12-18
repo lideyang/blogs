@@ -25,12 +25,16 @@ export default class Header extends Component{
     }
     componentWillMount(){
         console.log('loading')
-        if (isClient) {
+        if (__DEVCLIENT__) {
             WaveCanvas('waveCanvas');
             document.getElementById('main_loading').style.display = 'none';
         }
     }
     render() {
+        console.log(__DEVCLIENT__);
+        if(__DEVCLIENT__){
+
+        }
         var leftMenuIcon;
         if (this.state.rightIsOpen) {
             leftMenuIcon = <i className="iconfont icon-cha"></i>;

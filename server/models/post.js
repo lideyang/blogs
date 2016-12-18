@@ -1,6 +1,5 @@
 var mongodb = require('./db'),
     ObjectID = require('mongodb').ObjectID;
-markdown = require('markdown').markdown;
 
 function Post(name, head, title, tags, post, sort, description) {
     this.name = name;

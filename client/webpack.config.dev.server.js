@@ -5,11 +5,11 @@ module.exports = {
     name: "server-side rendering",
     target: "node",
     entry: {
-        server: ['babel-polyfill','./src/server.js']
+        server: ['babel-polyfill','./routes.js']
     },
     output: {
         path: './dist',
-        filename: "server.js",
+        filename: "routes.js",
         publicPath: "/",
         libraryTarget: "commonjs2"
     },
@@ -21,7 +21,7 @@ module.exports = {
                 'NODE_ENV': JSON.stringify('development')
             }
         }),
-        new webpack.IgnorePlugin(/vertx/)
+        new webpack.IgnorePlugin(/\.less$/)
     ],
     module: {
         loaders: [
@@ -32,7 +32,6 @@ module.exports = {
                     "presets": ["es2015", "react", "stage-0"],
                     "plugins":["transform-decorators-legacy","syntax-async-functions"]
                 },
-                include: path.join(__dirname,'src'),
                 exclude: /node_modules/
             },
             {

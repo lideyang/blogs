@@ -1,117 +1,49 @@
-const path = require('path');
-const express = require('express');
-const favicon = require('serve-favicon');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const partials = require('express-partials');
-const bodyParser = require('body-parser');
-const session = require('express-session');
-const methodOverride = require('method-override');
-const MongoStore = require('connect-mongo')(session);
-const flash = require('connect-flash');
-const app = express();
-app.use(bodyParser.urlencoded({extended: false})) //参数处理嵌套
-const routes = require('./routes/index');
-const upload = require('./routes/upload');
-const api = require('./routes/api/');
-const settings = require('./settings');
-const reactView = require('./server/reactview/app.js');
-const fs = require('fs');
-const accessLog = fs.createWriteStream('access.log', {flags: 'a'});
-const errorLog = fs.createWriteStream('error.log', {flags: 'a'});
-const port = 3000;
-app.use(session({
-    secret: settings.cookieSecret,
-    key: settings.db,//cookie name
-    cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},//30 days
-    store: new MongoStore({
-        // db: settings.db,
-        host: settings.host,
-        port: settings.port,
-        url: 'mongodb://localhost/blog'
-    })
-}));
-app.use(flash());
-app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-app.use(favicon(__dirname + '/src/images/favicon.ico'));
-app.use(logger('dev'));
-app.use(logger({stream: accessLog}));
-app.use(partials());
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());
-app.use('/assets', express.static('public'));
-app.use('/dist', express.static('dist'));
-//app.use(express.static(path.join(__dirname, 'public')));
-app.use('/upload', upload);
-app.use('/api', api.account);
-app.use('/api', api.article);
-app.use('/api', api.archive);
-app.use('/api', api.comment);
-app.use('/api', api.search);
-app.use('/api', api.link);
-app.use('/api', api.tag);
-routes(app);
-// 注入reactview
-const viewpath = path.join(__dirname, 'src/js/pages');
+'use strict';
 
-app.config = {
-    reactview: {
-        viewpath: viewpath, // the root directory of view files
-        doctype: '<!DOCTYPE html>',
-        extname: '.js', // view层直接渲染文件名后缀
-        beautify: false, // 是否需要对dom结构进行格式化
-        writeResp: false, // 是否需要在view层直接输出
-    }
-};
-// 为app提供服务端渲染的能力
-reactView(app);
+// 设置默认环境变量
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+var express = require('express');
+var mongoose = require('mongoose');
+var config = require('./config/env');
+var path = require('path');
+var fs = require('fs');
+var errorHandler = require('errorhandler');
 
-// app.use(function (err, req, res, next) {
-//         var meta = '[' + new Date() + '] ' + req.url + '\n';
-//         errorLog.write(meta + err.stack + '\n');
-//         next();
+// 连接数据库.
+mongoose.connect(config.mongo.uri, config.mongo.options);
+// var modelsPath = path.join(__dirname, 'model');
+// fs.readdirSync(modelsPath).forEach(function (file) {
+//     if (/(.*)\.(js$|coffee$)/.test(file)) {
+//         require(modelsPath + '/' + file);
+//     }
 // });
-app.use(methodOverride()); //路由:name:title
+//mongoose promise 风格
+mongoose.Promise = global.Promise;
+
+// 初始化数据
+//if(config.seedDB) { require('./config/seed'); }
+
+var app = express();
+
+require('./config/express')(app);
+require('./routes')(app);
+
+if ('development' === config.env) {
+    app.use(errorHandler());
+}else{
+    app.use(function (err, req, res, next) {
+        console.error(err.stack);
+        return res.status(500).send();
+    });
+}
 app.use(function (err, req, res, next) {
     // 业务逻辑
     console.error(err.stack);
     next(err);
 });
-var isDev = false && process.env.NODE_ENV !== 'production';
-if (isDev) {
-    //webapck
-    var webpack = require('webpack'),
-        webpackDevMiddleware = require('webpack-dev-middleware'),
-        webpackHotMiddleware = require('webpack-hot-middleware'),
-        webpackDevConfig = require('./webpack.config.js');
+// Start server
+app.listen(config.port, function () {
+    console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
+});
 
-    var compiler = webpack(webpackDevConfig);
-
-    app.use(webpackDevMiddleware(compiler, {
-        publicPath: webpackDevConfig.output.publicPath,
-        noInfo: true,
-        stats: {
-            colors: true
-        }
-    }));
-    app.use(webpackHotMiddleware(compiler));
-    var bs = require('browser-sync').create();
-    app.listen(port, function () {
-        bs.init({
-            open: false,
-            ui: false,
-            notify: false,
-            proxy: 'localhost:3000',
-            files: ['./views/**'],
-            port: 8080
-        });
-        console.log('App (dev) is going to be running on port 8080 (by browsersync).');
-    });
-}
-else {
-    app.listen(app.get('port'), function () {
-        console.log('Express server listening on port ' + app.get('port'));
-    });
-}
+exports = module.exports = app;

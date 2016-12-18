@@ -2,29 +2,35 @@
  * Created by lidy on 2016/12/18.
  */
 import React, {PropTypes, Component} from 'react'
-import {Link} from 'react-router'
+import {Header, ArticleList, Loading} from '../components';
+import {Carousel} from 'react-bootstrap';
+import '../../less/pages/home.less';
 
-export default class Header extends Component {
+export default class Home extends Component {
     constructor(props) {
         super(props);
         this.onChangePage = this.onChangePage.bind(this);
     }
 
     static propTypes = {
-        ArticleList: PropTypes.bool.isRequired,
         total: PropTypes.object.number,
         menuBarClass: PropTypes.string.isRequired
     }
 
     render() {
-        const {ArticleList, total, menuBarClass} = this.props
-        if (this.state.ArticleList) {
+        const {articleList, total, menuBarClass} = this.props
+        console.log(__DEVCLIENT__);
+        console.log(articleList);
+        if(__DEVCLIENT__){
+
+        }
+        if (articleList) {
             return (
                 <div>
                     <Header>
                         {/*banner*/}
-                        <Carousel className="home-banner" interval={4000000} controls={false}>
-                            { ArticleList.map(function (item, index) {
+                        <Carousel className="home-banner" interval={5000} controls={false}>
+                            { articleList.map(function (item, index) {
                                 if (index < 3) {
                                     return (
                                         <Carousel.Item key={index}>
@@ -41,17 +47,17 @@ export default class Header extends Component {
                             })}
                         </Carousel>
                     </Header>
-                    <ArticleList data={ArticleList} total={total} onChangePage={this.onChangePage}/>
+                    <ArticleList data={articleList} total={total} onChangePage={this.onChangePage}/>
                 </div>
             );
         } else {
-            return <span>加载中...</span>
+            return <Loading />
         }
     }
 
     getArticleList(pageIndex) {
         var that = this;
-        fetch('/api/getNavInfo?p=' + pageIndex).then(function (response) {
+        fetch('/api/ArticleList?p=' + pageIndex).then(function (response) {
             response.json().then(function (data) {
                 if (that.isMounted()) {
                     that.setState({
@@ -68,6 +74,6 @@ export default class Header extends Component {
     }
 
     componentDidMount() {
-        this.getArticleList(1);
+       // this.getArticleList(1);
     }
 }

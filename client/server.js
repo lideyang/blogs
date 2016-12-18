@@ -1,32 +1,31 @@
 /**
  * Created by lidy on 2016/12/17.
  */
-var path = require('path')
-var express = require('express')
-var cookieParser = require('cookie-parser')
-var session = require('express-session')
-var serverRender = require('./dist/server.js')
-var favicon = require('serve-favicon')
-
-var app = express()
-var isDev = true||process.env.NODE_ENV === 'development'
-var defaultPort = isDev? 4000 : 8300
-var port = process.env.PORT || defaultPort
+const path = require('path')
+const express = require('express')
+const cookieParser = require('cookie-parser')
+const session = require('express-session')
+const favicon = require('serve-favicon')
+const partials = require('express-partials');
+const app = express()
+const isDev = true||process.env.NODE_ENV === 'development'
+const defaultPort = isDev? 4000 : 8300
+const port = process.env.PORT || defaultPort
 app.use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')))
 app.use(cookieParser());
+app.use(partials());
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true,
     cookie: { secure: true }
 }));
-
+app.set('views', './views')
+app.set('view engine', 'ejs')
 app.use('/assets', express.static('public')); //静态资源
 app.use('/dist', express.static('dist'));
 
-app.get('/', function (req, res, next) {
-    serverRender.default(req, res);
-})
+require('./dist/routes')(app);
 
 app.listen(port, function(err) {
     if (err) {

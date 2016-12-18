@@ -46,13 +46,13 @@ const ArticleList = React.createClass({
                                                                 <i className="iconfont icon-read"></i>阅读详情</a>
                                                             <ul className="sharebtn">
                                                                 <li className="weibo">
-                                                                    <a href={'http://service.weibo.com/share/share.php?url=' + window.location.host + '/u/' + item._id + '&title=' + item.title}
+                                                                    <a href={'http://service.weibo.com/share/share.php?url=' + '/u/' + item._id + '&title=' + item.title}
                                                                        target="_blank">
                                                                         <i className="iconfont icon-weibo"></i>
                                                                     </a>
                                                                 </li>
                                                                 <li className="qqkongjian">
-                                                                    <a href={'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + window.location.host + '/u/' + item._id + '&title=' + item.title}
+                                                                    <a href={'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' +  '/u/' + item._id + '&title=' + item.title}
                                                                        target="_blank">
                                                                         <i className="iconfont icon-qq"></i>
                                                                     </a>

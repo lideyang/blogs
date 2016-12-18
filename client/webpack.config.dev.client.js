@@ -8,9 +8,21 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var path = require("path");
 var publicPath = 'http://localhost:8080/dist/';
 var entryBase = ['webpack-hot-middleware/client?reload=true']; //热部署中间件
-var entries = {
-    app: [entryBase[0], path.join(__dirname, 'src/client.js')]
-};
+var pageStr = __dirname + '/src/js/pages';
+var entries = {};
+var walk = function (src) { //递归遍历pages目录所有文件
+    var dirList = fs.readdirSync(src);
+    dirList.forEach(function (item) {
+        if (fs.statSync(src + '/' + item).isDirectory()) {
+            walk(src + '/' + item);
+        } else {
+            var entryPath = './src/js/pages/' + item;
+            var jsName = item.substring(0, item.lastIndexOf('.'));
+            entries['pages/' + jsName] = entryBase.concat(entryPath);
+        }
+    });
+}
+walk(pageStr);
 var baseStyle = [
     './src/less/bootstrap/bootstrap.less',
     './src/less/theme.less',
@@ -40,11 +52,11 @@ module.exports = {
             manifest: require('./dist/js/vendor-manifest.json')
         }),
         // 提供公共代码
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     name: 'common',
-        //     filename: './js/common.js',
-        //     minChunks: 2
-        // }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'common',
+            filename: './js/common.js',
+            minChunks: 2
+        }),
         new ExtractTextPlugin("css/[name].css"),
         // new ExtractTextPlugin('css/[name].less')
         new webpack.DefinePlugin({

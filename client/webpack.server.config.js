@@ -11,12 +11,6 @@ module.exports = {
         filename: 'server.bundle.js',
         path: path.resolve(__dirname, 'src/server/')
     },
-    plugins: [
-        new webpack.DefinePlugin({
-            '__isServer__': true,
-            '__isClient__': false
-        })
-    ],
     target: 'node',
     // keep node_module paths out of the bundle
     externals: fs.readdirSync(path.resolve(__dirname, './node_modules')).concat([
