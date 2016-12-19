@@ -16,9 +16,11 @@ var walk = function (src) { //递归遍历pages目录所有文件
         if (fs.statSync(src + '/' + item).isDirectory()) {
             walk(src + '/' + item);
         } else {
-            var entryPath = './src/js/pages/' + item;
-            var jsName = item.substring(0, item.lastIndexOf('.'));
-            entries['pages/' + jsName] = entryBase.concat(entryPath);
+            if(item!=='index.js'){
+                var entryPath = './src/js/pages/' + item;
+                var jsName = item.substring(0, item.lastIndexOf('.'));
+                entries['pages/' + jsName] = entryBase.concat(entryPath);
+            }
         }
     });
 }
@@ -58,7 +60,7 @@ module.exports = {
             minChunks: 2
         }),
         new ExtractTextPlugin("css/[name].css"),
-        // new ExtractTextPlugin('css/[name].less')
+        new ExtractTextPlugin('css/[name].less'),
         new webpack.DefinePlugin({
             __DEVCLIENT__: true,
             __DEVSERVER__: false,

@@ -1,9 +1,13 @@
 var path = require('path')
 var webpack = require('webpack')
-
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
     name: "server-side rendering",
     target: "node",
+    node: {
+        __filename: true,
+        __dirname: true
+    },
     entry: {
         server: ['babel-polyfill','./routes.js']
     },
@@ -21,7 +25,6 @@ module.exports = {
                 'NODE_ENV': JSON.stringify('development')
             }
         }),
-        new webpack.IgnorePlugin(/\.less$/)
     ],
     module: {
         loaders: [
@@ -38,8 +41,20 @@ module.exports = {
                 test: /\.json$/, loader: "json-loader"
             },
             {
+                test: /\.css$/,
+                loader: 'ignore-loader'
+            },
+            {
+                test: /\.less$/,
+                loader: 'ignore-loader'
+            },
+            {
                 test: /\.(gif|jpg|png)\??.*$/,
-                loader: 'url-loader?limit=50000&name=images/[name].[ext]'
+                loader: 'ignore-loader'
+            },
+            {
+                test: /\.(woff|woff2|svg|eot|ttf|otf)\??.*$/,
+                loader: 'ignore-loader'
             }
         ]
     },

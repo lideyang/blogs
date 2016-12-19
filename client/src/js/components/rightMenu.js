@@ -1,15 +1,18 @@
 /**
  * Created by Lidy on 2016/11/17.
  */
-import React from 'react';
+import React, {PropTypes, Component} from 'react';
 
-const RightMenu = React.createClass({
-    getInitialState: function () {
-        return {
+export default class RightMenu extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
             menuClass: 'stmenu',
             menuBarClass: 'stmenu-bar'
         };
-    },
+    }
+
     render() {
         this.state.menuClass = this.props.isOpen ? 'stmenu active' : 'stmenu';
         this.state.menuBarClass = this.props.isOpen ? 'stmenu-bar active' : 'stmenu-bar';
@@ -84,5 +87,4 @@ const RightMenu = React.createClass({
             </div>
         );
     }
-});
-export default RightMenu;
+}

@@ -7,7 +7,7 @@ var express = require('express'),
 var router = express.Router();
 //获取文章列表
 router.get('/list', function (req, res, next) {
-    console.log('list');
+    console.log(req.query.p);
     //判断是否是第一页，并把请求的页数转换成 number 类型
     var page = req.query.p ? parseInt(req.query.p) : 1;
     //查询并返回第 page 页的 10 篇文章

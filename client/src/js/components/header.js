@@ -1,40 +1,41 @@
 /**
  * Created by Lidy on 2016/11/15.
  */
-import React, { PropTypes, Component } from 'react';
+import React, {PropTypes, Component} from 'react';
 import RightMenu from './rightMenu';
 import {Grid, Row, Col} from 'react-bootstrap';
 import {WaveCanvas} from '../plugins/waveCanvas';
-import headerPic from '../../../public/images/header.jpg'
-export default class Header extends Component{
-    constructor() {
-        super();
+
+export default class Header extends Component {
+
+    constructor(props) {
+        super(props);
         this.state = {
             rightIsOpen: false
         };
+        this.onToggleMenu = this.onToggleMenu.bind(this);
     }
+
     static defaultProps = {
         title: 'lidy'//document.title
+
     }
-    onToggleMenu(){
+    onToggleMenu() {
         setTimeout(function () {
             this.setState({
                 rightIsOpen: !this.state.rightIsOpen
             })
         }.bind(this), 0);
     }
-    componentWillMount(){
-        console.log('loading')
+
+    componentWillMount() {
         if (__DEVCLIENT__) {
             WaveCanvas('waveCanvas');
             document.getElementById('main_loading').style.display = 'none';
         }
     }
-    render() {
-        console.log(__DEVCLIENT__);
-        if(__DEVCLIENT__){
 
-        }
+    render() {
         var leftMenuIcon;
         if (this.state.rightIsOpen) {
             leftMenuIcon = <i className="iconfont icon-cha"></i>;
@@ -43,7 +44,7 @@ export default class Header extends Component{
         }
         return (
             <div className="top-boxer">
-                <RightMenu isOpen={this.state.rightIsOpen} onToggleMenu={this.onToggleMenu}/>
+                <RightMenu isOpen={this.state.rightIsOpen} onToggleMenu={this.onToggleMenu.bind(this)}/>
                 <header id="masthead" className="site-header" role="banner">
                     <Grid>
                         <Row>

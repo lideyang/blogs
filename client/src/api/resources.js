@@ -32,7 +32,5 @@ axios.interceptors.response.use(function (response) {
 })
 
 export const ArticleResource = (method, id, data, api = 'article') => {
-    console.log(method);
-    console.log(api + (id ? ('/' + id) : ''));
     return axios[method](api + (id ? ( '/' + id) : ''), data)
 }

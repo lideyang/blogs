@@ -2,6 +2,7 @@
  * Created by lidy on 2016/12/18.
  */
 import React, {PropTypes, Component} from 'react'
+import ReactDOM from 'react-dom';
 import {Header, ArticleList, Loading} from '../components';
 import {Carousel} from 'react-bootstrap';
 import '../../less/pages/home.less';
@@ -10,20 +11,16 @@ export default class Home extends Component {
     constructor(props) {
         super(props);
         this.onChangePage = this.onChangePage.bind(this);
+        this.getArticleList = this.getArticleList.bind(this);
     }
 
     static propTypes = {
-        total: PropTypes.object.number,
-        menuBarClass: PropTypes.string.isRequired
+        total: PropTypes.number.isRequired,
+        articleList: PropTypes.array.isRequired
     }
 
     render() {
         const {articleList, total, menuBarClass} = this.props
-        console.log(__DEVCLIENT__);
-        console.log(articleList);
-        if(__DEVCLIENT__){
-
-        }
         if (articleList) {
             return (
                 <div>
@@ -57,7 +54,7 @@ export default class Home extends Component {
 
     getArticleList(pageIndex) {
         var that = this;
-        fetch('/api/ArticleList?p=' + pageIndex).then(function (response) {
+        fetch('/api/article/List?p=' + pageIndex).then(function (response) {
             response.json().then(function (data) {
                 if (that.isMounted()) {
                     that.setState({
@@ -74,6 +71,13 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-       // this.getArticleList(1);
+        // this.getArticleList(1);
     }
+}
+//游览器数据
+if (__DEVCLIENT__) {
+    ReactDOM.render(
+        React.createElement(Home, initialState),
+        document.getElementById('root')
+    );
 }
