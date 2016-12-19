@@ -119,20 +119,7 @@ module.exports = function (app) {
     });
 
     app.get('/u/:id', function (req, res) {
-        Post.getOne(req.params.id, function (err, post) {
-            if (err) {
-                req.flash('error', err);
-                return res.redirect('/');
-            }
-            res.render('article', {
-                title: 'lidy的个人主页-文章详情',
-                post: post,
-                host: req.rawHeaders[1],
-                user: req.session.user,
-                success: req.flash('success').toString(),
-                error: req.flash('error').toString()
-            });
-        });
+        Pages.ArticleController(req,res);
     });
 
     app.get('/u/name/:name', function (req, res) {

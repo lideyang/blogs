@@ -7,8 +7,13 @@ import Home from '../js/pages/home';
 import Action from '../api';
 export default (req, res) => {
     var page = req.query.p ? parseInt(req.query.p) : 1;
-    GetArticleList(page).then(
+    Action.ArticleList({
+        params: {
+            p: page
+        }
+    }).then(
         data => {
+            var data = data.data;
             try {
                 if (!data.success) {
                     return res.render('home', {
@@ -37,12 +42,4 @@ export default (req, res) => {
             }
         }
     );
-}
-const GetArticleList = async(page) => {
-    const response = await Action.ArticleList({
-        params: {
-            p: page
-        }
-    });
-    return response.data;
 }

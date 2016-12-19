@@ -2,16 +2,23 @@
  * Created by lidy on 2016/12/18.
  */
 import React, {PropTypes, Component} from 'react'
-import ReactDOM from 'react-dom';
-import {Header, ArticleList, Loading} from '../components';
-import {Carousel} from 'react-bootstrap';
-import '../../less/pages/home.less';
+import ReactDOM from 'react-dom'
+import {Header, ArticleList, Loading} from '../components'
+import Action from '../../api';
+import {Carousel} from 'react-bootstrap'
+import '../../less/pages/home.less'
 
 export default class Home extends Component {
     constructor(props) {
         super(props);
+        this.state = this.props;
         this.onChangePage = this.onChangePage.bind(this);
         this.getArticleList = this.getArticleList.bind(this);
+    }
+
+    static defaultProps = {
+        autoPlay: false,
+        maxLoops: 10,
     }
 
     static propTypes = {
@@ -20,7 +27,7 @@ export default class Home extends Component {
     }
 
     render() {
-        const {articleList, total, menuBarClass} = this.props
+        const {articleList, total, menuBarClass} = this.state;
         if (articleList) {
             return (
                 <div>
@@ -53,25 +60,23 @@ export default class Home extends Component {
     }
 
     getArticleList(pageIndex) {
-        var that = this;
-        fetch('/api/article/List?p=' + pageIndex).then(function (response) {
-            response.json().then(function (data) {
-                if (that.isMounted()) {
-                    that.setState({
-                        ArticleList: data.data,
-                        total: data.total
-                    });
-                }
-            });
-        });
+        return Action.ArticleList({
+            params: {
+                p: pageIndex
+            }
+        })
     }
 
     onChangePage(index) {
-        this.getArticleList(index);
-    }
-
-    componentDidMount() {
-        // this.getArticleList(1);
+        var that = this;
+        this.getArticleList(index).then(
+            data => {
+                that.setState({
+                    articleList: data.data.data,
+                    total: data.data.total
+                })
+            }
+        );
     }
 }
 //游览器数据

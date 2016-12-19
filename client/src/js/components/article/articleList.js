@@ -1,10 +1,11 @@
 /**
  * Created by Lidy on 2016/11/21.
  */
-import React from 'react';
-import {Grid, Row, Col} from 'react-bootstrap';
+import React from 'react'
+import {Grid, Row, Col} from 'react-bootstrap'
 import PaginationAdvanced from '../pagination'
-import Loading  from '../loading'
+import Loading from '../loading'
+import {Host} from '../../../config'
 
 const ArticleList = React.createClass({
     getInitialState: function () {
@@ -26,7 +27,8 @@ const ArticleList = React.createClass({
                                         <main>
                                             {this.props.data.map(function (item, index) {
                                                 return (
-                                                    <article id={"post" + index} key={index} className="dynpost animated post-5 post type-post status-publish format-standard hentry category-uncategorized">
+                                                    <article id={"post" + index} key={index}
+                                                             className="dynpost animated post-5 post type-post status-publish format-standard hentry category-uncategorized">
                                                         <header className="entry-header">
                                                             <div className="cat-list">
                                                                 <a href={'/u/' + item._id}>{item.sort}</a>
@@ -35,7 +37,9 @@ const ArticleList = React.createClass({
                                                                 <a href={'/u/' + item._id}>{item.title}</a>
                                                             </h2>
                                                             <div className="entry-meta">
-                                                                <span><i className="iconfont icon-zuozhe"></i>{item.name}<i className="iconfont icon-riqi"></i>{item.time.minute}</span>
+                                                                <span><i
+                                                                    className="iconfont icon-zuozhe"></i>{item.name}<i
+                                                                    className="iconfont icon-riqi"></i>{item.time.minute}</span>
                                                             </div>
                                                         </header>
                                                         <div className="entry-content">
@@ -46,13 +50,13 @@ const ArticleList = React.createClass({
                                                                 <i className="iconfont icon-read"></i>阅读详情</a>
                                                             <ul className="sharebtn">
                                                                 <li className="weibo">
-                                                                    <a href={'http://service.weibo.com/share/share.php?url=' + '/u/' + item._id + '&title=' + item.title}
+                                                                    <a href={'http://service.weibo.com/share/share.php?url=' + Host + 'u/' + item._id + '&title=' + item.title}
                                                                        target="_blank">
                                                                         <i className="iconfont icon-weibo"></i>
                                                                     </a>
                                                                 </li>
                                                                 <li className="qqkongjian">
-                                                                    <a href={'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' +  '/u/' + item._id + '&title=' + item.title}
+                                                                    <a href={'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + Host + 'u/' + item._id + '&title=' + item.title}
                                                                        target="_blank">
                                                                         <i className="iconfont icon-qq"></i>
                                                                     </a>

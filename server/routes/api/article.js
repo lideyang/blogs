@@ -26,7 +26,14 @@ router.get('/list', function (req, res, next) {
     });
 });
 //获取一篇文章信息及评论
-router.get('/getArticleInfo', function (req, res, next) {
+router.get('/detail', function (req, res, next) {
+    console.log(req.query.id);
+    if(!req.query.id){
+        return res.json({
+            success: false,
+            msg: '查询失败'
+        });
+    }
     Post.getOne(req.query.id, function (err, posts) {
         if (err) {
             return res.json({

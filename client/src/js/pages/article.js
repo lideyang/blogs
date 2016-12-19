@@ -1,99 +1,86 @@
 /**
  * Created by Lidy on 2016/11/22.
  */
-import React from 'react';
-import {render} from 'react-dom';
-import update from 'react-addons-update';
-import {Header, ArticleInfo, Comment} from '../components';
-import {Grid, Row, Col} from 'react-bootstrap';
-import 'whatwg-fetch';
+import React, {PropTypes, Component} from 'react'
+import ReactDOM from 'react-dom'
+import update from 'react-addons-update'
+import {Header, ArticleInfo, Comment} from '../components'
+import {Grid, Row, Col} from 'react-bootstrap'
 
+export default class Article extends Component {
 
-const Article = React.createClass({
-    getInitialState() {
-        return {
-            articleInfo: false
-        };
-    },
-    onAddComment(newComment){
-        var that = this;
-        let newCommentStr = '';
-        for (let item in newComment) {
-            newCommentStr += item + '=' + newComment[item] + '&';
-        }
-        newCommentStr += 'id=' + this.state.articleInfo._id;
-        fetch('/api/postArticleComment', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: newCommentStr
-        }).then(function (response) {
-            response.json().then(function (data) {
-                if (that.isMounted()) {
-                    if (data.success) {
-                        that.setState({
-                            articleInfo: update(that.state.articleInfo, {comments: {$push: [newComment]}})
-                        })
-                    }
-                }
-            });
-        });
-    },
-    renderHeader(){
-        let articleTitle = this.state.articleInfo ? this.state.articleInfo.title : '';
-        return (
-            <Header>
-                <header className="header-title">
-                    <h1>{articleTitle}</h1>
-                </header>
-            </Header>
-        );
-    },
-    renderArticleInfo(){
-        var comments = this.state.articleInfo ? this.state.articleInfo.comments : [];
-        return (
-            <div id="content" className="site-content">
-                <Grid>
-                    <Row>
-                        <Col md={12}>
-                            <div id="" className="article-content content-area">
-                                <main id="main" className="site-main" role="main">
-                                    {/*文章详情*/}
-                                    <ArticleInfo data={this.state.articleInfo}/>
-                                    {/*留言开始*/}
-                                    <Comment data={comments} onAddComment={this.onAddComment}/>
-                                </main>
-                            </div>
-                        </Col>
-                    </Row>
-                </Grid>
-            </div>
-        );
-    },
-    componentDidMount: function () {
-        var that = this;
-        var url = window.location.pathname;
-        var id = url.substring(url.lastIndexOf('/') + 1);
-        fetch('/api/getArticleInfo?id=' + id).then(function (response) {
-            response.json().then(function (data) {
-                if (that.isMounted()) {
-                    that.setState({
-                        articleInfo: data
-                    });
-                }
-            });
-        });
-    },
+    constructor(props) {
+        super(props);
+        this.state = this.props;
+        this.onAddComment = this.onAddComment.bind(this);
+    }
+
+    static defaultProps = {
+        autoPlay: false,
+        maxLoops: 10,
+    }
+
+    onAddComment(newComment) {
+        // var that = this;
+        // let newCommentStr = '';
+        // for (let item in newComment) {
+        //     newCommentStr += item + '=' + newComment[item] + '&';
+        // }
+        // newCommentStr += 'id=' + this.state.articleInfo._id;
+        // fetch('/api/postArticleComment', {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/x-www-form-urlencoded"
+        //     },
+        //     body: newCommentStr
+        // }).then(function (response) {
+        //     response.json().then(function (data) {
+        //         if (that.isMounted()) {
+        //             if (data.success) {
+        //                 that.setState({
+        //                     articleInfo: update(that.state.articleInfo, {comments: {$push: [newComment]}})
+        //                 })
+        //             }
+        //         }
+        //     });
+        // });
+    }
+
     render() {
+        console.log(this.state);
+        const {articleTitle} = this.state.articleDetail.title;
+        const {comments}=this.state.articleDetail.comments;
         return (
             <div>
-                {this.renderHeader()}
-                {this.renderArticleInfo()}
+                <Header>
+                    <header className="header-title">
+                        <h1>{articleTitle}</h1>
+                    </header>
+                </Header>
+                <div id="content" className="site-content">
+                    <Grid>
+                        <Row>
+                            <Col md={12}>
+                                <div id="" className="article-content content-area">
+                                    <main id="main" className="site-main" role="main">
+                                        {/*文章详情*/}
+                                        <ArticleInfo data={this.state.articleDetail}/>
+                                        {/*留言开始*/}
+                                        <Comment data={comments} onAddComment={this.onAddComment}/>
+                                    </main>
+                                </div>
+                            </Col>
+                        </Row>
+                    </Grid>
+                </div>
             </div>
         )
     }
-});
+}
 
-
-render(<Article />, document.getElementById('page'));
+if (__DEVCLIENT__) {
+    ReactDOM.render(
+        React.createElement(Article, initialState),
+        document.getElementById('root')
+    );
+}

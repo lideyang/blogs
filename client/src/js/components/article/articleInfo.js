@@ -1,18 +1,20 @@
 /**
  * Created by Lidy on 2016/11/23.
  */
-import React from 'react';
-import {render} from 'react-dom';
+import React from 'react'
+import {render} from 'react-dom'
+import Loading  from '../loading'
+import {Host} from '../../../config'
 
 const ArticleInfo = React.createClass({
     getDefaultProps(){
         return {
-            data: false
+            // data: false
         }
     },
     render(){
         if (this.props.data) {
-            let data = this.props.data;
+            var data = this.props.data;
             return (
                 <article id="post-1" className="post-1 post type-post status-publish format-standard hentry category-uncategorized">
                     <header className="entry-header">
@@ -34,12 +36,12 @@ const ArticleInfo = React.createClass({
                         </div>
                         <ul className="sharebtn">
                             <li className="weibo">
-                                <a href={'http://service.weibo.com/share/share.php?url=' + window.location.host + '/u/' + data._id + '&title=' + data.title} target="_blank">
+                                <a href={'http://service.weibo.com/share/share.php?url=' + Host + 'u/' + data._id + '&title=' + data.title} target="_blank">
                                     <i className="iconfont icon-weibo"></i>
                                 </a>
                             </li>
                             <li className="qqkongjian">
-                                <a href={'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + window.location.host + '/u/' + data._id + '&title=' + data.title} target="_blank">
+                                <a href={'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=' + Host + 'u/' + data._id + '&title=' + data.title} target="_blank">
                                     <i className="iconfont icon-qq"></i>
                                 </a>
                             </li>
@@ -47,7 +49,7 @@ const ArticleInfo = React.createClass({
                         <div className="clear"></div>
                     </footer>
                     <div id="authorarea">
-                        <img alt='头像' src={require('../../../../public/images/lidy.png')} className='avatar avatar-100 photo' height='100' width='100'/>
+                        <img alt='头像' src="" className='avatar avatar-100 photo' height='100' width='100'/>
                         <h3>关于 { data.name }</h3>
                         <div className="authorinfo">
                             <a className="author-link" href={'/u/name/' + data.name} rel="author">
@@ -59,7 +61,7 @@ const ArticleInfo = React.createClass({
                 </article>
             )
         } else {
-            return <div>loading...</div>
+            return <Loading/>
         }
     }
 })
