@@ -4,32 +4,22 @@
 'use strict';
 
 import path from 'path';
-import * as Pages from './src/controller';
+import * as Controller from './src/controller';
 
 
 module.exports = function (app) {
     app.get('/', function (req, res) {
-        Pages.HomeController(req,res);
+        Controller.HomeController(req, res);
     });
 
     app.get('/reg', checkNotLogin);
     app.get('/reg', function (req, res) {
-        res.render('reg', {
-            title: 'lidy的个人主页-注册',
-            user: req.session.user,
-            success: req.flash('success').toString(),
-            error: req.flash('error').toString()
-        });
+        Controller.RegisterController(req, res);
     });
 
     app.get('/login', checkNotLogin);
     app.get('/login', function (req, res) {
-        res.render('login', {
-            title: 'lidy的个人主页-登录',
-            user: req.session.user,
-            success: req.flash('success').toString(),
-            error: req.flash('error').toString()
-        });
+        Controller.LoginController(req, res);
     });
 
     app.get('/post', checkLogin);
@@ -119,7 +109,7 @@ module.exports = function (app) {
     });
 
     app.get('/u/:id', function (req, res) {
-        Pages.ArticleController(req,res);
+        Pages.ArticleController(req, res);
     });
 
     app.get('/u/name/:name', function (req, res) {

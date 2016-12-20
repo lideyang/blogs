@@ -7,14 +7,16 @@ var express = require('express'),
     User = require('../../models/user.js');
 var router = express.Router();
 //注册帐号
-router.post('/reg', function (req, res, next) {
+router.post('/register', function (req, res, next) {
     var name = req.body.name,
         password = req.body.password,
         rePwd = req.body['rePwd'];
     //检验用户两次输入的密码是否一致
     if (rePwd != password) {
-        req.flash('error', '两次输入的密码不一致!');
-        return res.redirect('/reg');//返回主册页
+        return res.json({
+            success: false,
+            msg: '两次输入的密码不一致!'
+        });
     }
     //生成密码的 md5 值
     var md5 = crypto.createHash('md5'),
@@ -43,7 +45,7 @@ router.post('/reg', function (req, res, next) {
             req.session.user = user;//用户信息存入 session
             return res.json({//成功！返回文章页
                 success: true,
-                msg: '/reg'
+                msg: '/login'
             });
         });
     });

@@ -18,8 +18,8 @@ export default class Header extends Component {
 
     static defaultProps = {
         title: 'lidy'//document.title
-
     }
+
     onToggleMenu() {
         setTimeout(function () {
             this.setState({

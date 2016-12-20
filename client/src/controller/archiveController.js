@@ -43,7 +43,7 @@ export default (req, res)=> {
         }
     );
 }
-export function Page404(req, res) {
+export function get_404(req, res) {
     return res.render('home', {
         react: '系统维护中。。。',
         initialState: [],

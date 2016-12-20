@@ -1,25 +1,12 @@
 /**
  * Created by Lidy on 2016/12/12.
  */
-import React from 'react';
-import {render} from 'react-dom';
+import React, {PropTypes, Component} from 'react'
+import ReactDOM from 'react-dom'
 import {Header, LoginForm} from '../components';
-import {ObjectParamToStr} from '../utils';
-const Login = React.createClass({
-    renderHeader(){
-        return (
-            <Header>
-                <header className="header-title">
-                    <h1>用户登录</h1>
-                </header>
-            </Header>
-        );
-    },
-    renderLogin(){
-        return (
-            <LoginForm className="login" onSubmit={this.onSubmit}/>
-        )
-    },
+
+
+export default class Login extends Component{
 
     onSubmit(formParams){
         var that = this;
@@ -40,14 +27,25 @@ const Login = React.createClass({
                 }
             });
         });
-    },
+    }
+
     render() {
         return (
             <div>
-                {this.renderHeader()}
-                {this.renderLogin()}
+                <Header>
+                    <header className="header-title">
+                        <h1>用户登录</h1>
+                    </header>
+                </Header>
+                <LoginForm className="login" onSubmit={this.onSubmit}/>
             </div>
         )
     }
-})
-render(<Login />, document.getElementById('page'));
+}
+
+if (__DEVCLIENT__) {
+    ReactDOM.render(
+        React.createElement(Login),
+        document.getElementById('root')
+    );
+}

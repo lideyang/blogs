@@ -5,8 +5,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/server';
 import Article from '../js/pages/article';
 import Action from '../api';
-export default (req, res) => {
-    if(!req.params.id){
+export function get_article(req, res) {
+    if (!req.params.id) {
         return res.render('article', {
             react: '系统维护中。。。',
             initialState: [],
@@ -20,7 +20,7 @@ export default (req, res) => {
         }
     }).then(
         data => {
-            try{
+            try {
                 var props = {
                     articleDetail: data.data
                 }
@@ -31,7 +31,7 @@ export default (req, res) => {
                     initialState: props,
                     title: 'lidy的个人主页-首页',
                 })
-            }catch (e){
+            } catch (e) {
                 console.log(e);
             }
         }

@@ -1,18 +1,17 @@
 /**
  * Created by Lidy on 2016/11/23.
  */
-import React from 'react'
-import {render} from 'react-dom'
+import React, {PropTypes, Component} from 'react'
 import Loading  from '../loading'
 import {Host} from '../../../config'
 
-const ArticleInfo = React.createClass({
-    getDefaultProps(){
-        return {
-            // data: false
-        }
-    },
-    render(){
+export default class ArticleInfo extends Component {
+
+    static defaultProps = {
+        data: false
+    }
+
+    render() {
         if (this.props.data) {
             var data = this.props.data;
             return (
@@ -23,7 +22,8 @@ const ArticleInfo = React.createClass({
                         </div>
                         <h1 className="entry-title">{data.title}</h1>
                         <div className="entry-meta">
-                            <span><i className="iconfont icon-zuozhe"></i> {data.name} <i className="iconfont icon-riqi"></i> { data.time.minute } </span>
+                            <span><i className="iconfont icon-zuozhe"></i> {data.name}
+                                <i className="iconfont icon-riqi"></i> { data.time.minute } </span>
                         </div>
                     </header>
                     <div className="entry-content" dangerouslySetInnerHTML={{__html: data.post}}>
@@ -49,7 +49,7 @@ const ArticleInfo = React.createClass({
                         <div className="clear"></div>
                     </footer>
                     <div id="authorarea">
-                        <img alt='头像' src="" className='avatar avatar-100 photo' height='100' width='100'/>
+                        <img alt='头像' src={require('../../../../public/images/lidy.png')} className='avatar avatar-100 photo' height='100' width='100'/>
                         <h3>关于 { data.name }</h3>
                         <div className="authorinfo">
                             <a className="author-link" href={'/u/name/' + data.name} rel="author">
@@ -64,5 +64,4 @@ const ArticleInfo = React.createClass({
             return <Loading/>
         }
     }
-})
-export default ArticleInfo;
+}
