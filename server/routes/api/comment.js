@@ -6,7 +6,7 @@ var express = require('express'),
     Comment = require('../../models/comment.js');
 var router = express.Router();
 //提交评论
-router.post('/postArticleComment', function (req, res, next) {
+router.post('/add', function (req, res, next) {
     if (!req.body.id) {
         return res.json({success: false});
     }

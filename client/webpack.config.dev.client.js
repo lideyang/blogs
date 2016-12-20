@@ -6,7 +6,8 @@ var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');//加样式游览器兼容前缀
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var path = require("path");
-var publicPath = 'http://localhost:8080/dist/';
+var config = require("./src/config");
+var publicPath = config.ImageHost + 'dist/';
 var entryBase = ['webpack-hot-middleware/client?reload=true']; //热部署中间件
 var pageStr = __dirname + '/src/js/pages';
 var entries = {};
@@ -16,7 +17,7 @@ var walk = function (src) { //递归遍历pages目录所有文件
         if (fs.statSync(src + '/' + item).isDirectory()) {
             walk(src + '/' + item);
         } else {
-            if(item!=='index.js'){
+            if (item !== 'index.js') {
                 var entryPath = './src/js/pages/' + item;
                 var jsName = item.substring(0, item.lastIndexOf('.'));
                 entries['pages/' + jsName] = entryBase.concat(entryPath);
@@ -66,7 +67,7 @@ module.exports = {
             __DEVSERVER__: false,
             __DEVTOOLS__: false,
             __DEVLOGGER__: true,
-            'process.env':{
+            'process.env': {
                 'NODE_ENV': JSON.stringify('development')
             }
         })
@@ -92,7 +93,7 @@ module.exports = {
             },
             {
                 test: /\.less$/,
-                loader: ExtractTextPlugin.extract('style', 'css!less'),
+                loader: ExtractTextPlugin.extract('style', 'css!less?sourceMap'),
                 include: [
                     path.join(__dirname, 'src')
                 ]

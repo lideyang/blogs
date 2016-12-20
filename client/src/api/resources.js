@@ -1,7 +1,7 @@
 require('es6-promise').polyfill()
 import axios from 'axios'
 import {API_ROOT} from '../config'
-import { getCookie,signOut } from '../js/utils/authService'
+import {getCookie, signOut} from '../js/utils/authService'
 
 axios.defaults.baseURL = API_ROOT
 axios.defaults.withCredentials = true
@@ -32,5 +32,11 @@ axios.interceptors.response.use(function (response) {
 })
 
 export const ArticleResource = (method, id, data, api = 'article') => {
+    return axios[method](api + (id ? ( '/' + id) : ''), data)
+}
+export const CommentResource = (method, id, data, api = 'comment') => {
+    return axios[method](api + (id ? ( '/' + id) : ''), data)
+}
+export const AccountResource = (method, id, data, api = 'account') => {
     return axios[method](api + (id ? ( '/' + id) : ''), data)
 }

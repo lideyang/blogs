@@ -9,6 +9,7 @@ import {Carousel} from 'react-bootstrap'
 import '../../less/pages/home.less'
 
 export default class Home extends Component {
+
     constructor(props) {
         super(props);
         this.state = this.props;

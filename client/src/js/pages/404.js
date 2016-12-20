@@ -1,33 +1,18 @@
 /**
  * Created by Lidy on 2016/12/2.
  */
-import React from 'react';
-import {render} from 'react-dom';
+import React, {PropTypes, Component} from 'react'
+import ReactDOM from 'react-dom'
 import {Header, Footer} from '../components';
-const Page404 = React.createClass({
+export default class Page404 extends Component {
+
     getInitialState() {
         return {
             countdown: 5
         };
-    },
-    renderHeader(){
-        return (
-            <Header>
-                <header className="header-title">
-                    <h1>404</h1>
-                </header>
-            </Header>
-        );
-    },
-    renderContent(){
-        return (
-            <div>
-                <h2>404</h2>
-                <p>请求出错啦，{this.state.countdown}秒后跳转回首页^_^</p>
-            </div>
-        )
-    },
-    componentDidMount: function () {
+    }
+
+    componentDidMount() {
         var Tid = setInterval(function () {
             var countdown = this.state.countdown;
             if (countdown > 0) {
@@ -41,14 +26,27 @@ const Page404 = React.createClass({
                 window.location.href = '/';
             }
         }.bind(this), 1000)
-    },
+    }
+
     render() {
         return (
             <div>
-                {this.renderHeader()}
-                {this.renderContent()}
+                <Header>
+                    <header className="header-title">
+                        <h1>404</h1>
+                    </header>
+                </Header>
+                <div>
+                    <h2>404</h2>
+                    <p>请求出错啦，{this.state.countdown}秒后跳转回首页^_^</p>
+                </div>
             </div>
         )
     }
-})
-render(<Page404 />, document.getElementById('page'));
+}
+if (__DEVCLIENT__) {
+    ReactDOM.render(
+        React.createElement(Page404, initialState),
+        document.getElementById('root')
+    );
+}

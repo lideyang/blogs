@@ -1,10 +1,15 @@
 /**
  * Created by Lidy on 2016/11/23.
  */
-import React from 'react';
-import {render} from 'react-dom';
+import React from 'react'
+import {render} from 'react-dom'
+import headerPng from '../../../../public/images/header.png'
+
 const CommentList = React.createClass({
+
     render(){
+        console.log(headerPng+'dsdsgg');
+        console.log('dsdsgg');
         if(this.props.data.length){
             return (
                 <ol className="comment-list">
@@ -14,7 +19,7 @@ const CommentList = React.createClass({
                                 <article id={'div-comment--' + index} className="comment-body">
                                     <footer className="comment-meta">
                                         <div className="comment-author vcard">
-                                            <img alt='头像' src={require('../../../../public/images/header.png')} className="avatar avatar-80 photo avatar-default" height="80" width="80"/>
+                                            <img alt='头像' src={headerPng} className="avatar avatar-80 photo avatar-default" height="80" width="80"/>
                                             <b className="fn">
                                                 <a href={'/u/name/' + item.name} rel='external nofollow' className='url'>
                                                     {item.name}

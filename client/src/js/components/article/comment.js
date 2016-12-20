@@ -1,32 +1,37 @@
 /**
  * Created by Lidy on 2016/11/23.
  */
-import React from 'react';
-import {render} from 'react-dom';
+import React, {PropTypes, Component} from 'react'
 import {Grid, Row, Col} from 'react-bootstrap';
 import CommentList from './commentList'
-const Comment = React.createClass({
-    getDefaultProps(){
-        return {
-            data: []
-        }
-    },
-    submitHandle(e){
+export default class extends Component {
+
+    constructor(props) {
+        super(props);
+        this.submitHandle = this.submitHandle.bind(this);
+    }
+
+    static defaultProps = {
+        data: []
+    }
+
+    submitHandle(e) {
         e.preventDefault();
-        if (!this.refs.content.value){
+        if (!this.refs.content.value) {
             //气泡提示
             return;
         }
         let newComment = {
             content: this.refs.content.value,
-            name: this.refs.nickName.value||'游客',
+            name: this.refs.nickName.value || '游客',
             email: this.refs.email.value,
             url: this.refs.url.value
         }
         this.refs.addCommentForm.reset();
         this.props.onAddComment(newComment);
-    },
-    render(){
+    }
+
+    render() {
         let data = this.props.data;
         return (
             <div id="comments" className="comments-area">
@@ -79,5 +84,4 @@ const Comment = React.createClass({
             </div>
         )
     }
-});
-export default Comment;
+}

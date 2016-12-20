@@ -3,37 +3,47 @@
  */
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import Article from '../js/pages/article';
+import Article from '../js/pages/articleDetail';
+import ArticleAdd from '../js/pages/articleAdd';
 import Action from '../api';
-export default (req, res) => {
-    if(!req.params.id){
-        return res.render('article', {
+
+export default (req, res)=>  {
+    if (!req.params.id) {
+        return res.render('articleDetail', {
             react: '系统维护中。。。',
             initialState: [],
             title: 'lidy的个人主页-文章详情',
         })
     }
-    console.log(req.params.id);
+
     Action.ArticleDetail({
         params: {
             id: req.params.id
         }
     }).then(
         data => {
-            try{
+            try {
                 var props = {
                     articleDetail: data.data
                 }
                 const html = ReactDOM.renderToString(React.createElement(Article, props));
                 console.log('dsd');
-                return res.render('article', {
+                return res.render('articleDetail', {
                     react: html,
                     initialState: props,
                     title: 'lidy的个人主页-首页',
                 })
-            }catch (e){
+            } catch (e) {
                 console.log(e);
             }
         }
     );
+}
+export function PostController(req, res) {
+    const html = ReactDOM.renderToString(React.createElement(ArticleAdd));
+    return res.render('articleAdd', {
+        react: html,
+        initialState: [],
+        title: 'lidy的个人主页-注册',
+    })
 }

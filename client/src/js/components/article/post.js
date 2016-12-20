@@ -1,16 +1,20 @@
 /**
  * Created by Lidy on 2016/12/9.
  */
-import React from 'react';
+import React, {PropTypes, Component} from 'react'
 import {Loading, Ueditor} from '../../components';
 import {Form, FormGroup, ControlLabel, Grid, Col, Button} from 'react-bootstrap';
 
-const Post = React.createClass({
-    getInitialState() {
-        return {
+export default class Post extends Component{
+
+    constructor(props) {
+        super(props);
+        this.state={
             sort: ['心情', '学习', '技术']
-        };
-    },
+        }
+        this.submitHandle = this.submitHandle.bind(this);
+    }
+
     getDefaultProps(){
         return {
             loading: false,
@@ -22,7 +26,8 @@ const Post = React.createClass({
                 description: ''
             }
         }
-    },
+    }
+
     submitHandle(e){
         e.preventDefault();
         var contentTxt = this.refs.editor.state.editorDOM.getContentTxt();
@@ -39,7 +44,7 @@ const Post = React.createClass({
             description: description
         }
         this.props.onSubmit(formParams);
-    },
+    }
     render() {
         var that = this;
         if (this.props.loading) {
@@ -97,5 +102,4 @@ const Post = React.createClass({
             </Grid>
         )
     }
-})
-export default Post;
+}

@@ -1,6 +1,8 @@
 var path = require('path')
 var webpack = require('webpack')
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var config = require("./src/config");
+var publicPath = config.ImageHost + 'dist/';
 module.exports = {
     name: "server-side rendering",
     target: "node",
@@ -14,7 +16,7 @@ module.exports = {
     output: {
         path: './dist',
         filename: "routes.js",
-        publicPath: "/",
+        publicPath: publicPath,
         libraryTarget: "commonjs2"
     },
     plugins: [
@@ -41,15 +43,15 @@ module.exports = {
                 test: /\.json$/, loader: "json-loader"
             },
             {
+                test: /\.(gif|jpg|png)\??.*$/,
+                loader: 'url-loader?limit=50000&name=images/[name].[ext]'
+            },
+            {
                 test: /\.css$/,
                 loader: 'ignore-loader'
             },
             {
                 test: /\.less$/,
-                loader: 'ignore-loader'
-            },
-            {
-                test: /\.(gif|jpg|png)\??.*$/,
                 loader: 'ignore-loader'
             },
             {

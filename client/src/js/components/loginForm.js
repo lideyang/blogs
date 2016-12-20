@@ -15,7 +15,7 @@ const LoginForm = React.createClass({
     render() {
         return (
             <Grid>
-                <Form horizontal onSubmit={this.submitHandle}>
+                <Form className="account-form" horizontal onSubmit={this.submitHandle}>
                     <FormGroup>
                         <Col componentClass={ControlLabel} sm={4}>
                             用户名
