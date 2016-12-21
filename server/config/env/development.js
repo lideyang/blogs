@@ -8,7 +8,7 @@
 module.exports = {
     //开发环境mongodb配置
     mongo: {
-        uri: 'mongodb://localhost/jackblog-dev'
+        uri: 'mongodb://localhost/myblogs'
     },
     //开发环境redis配置
     redis: {

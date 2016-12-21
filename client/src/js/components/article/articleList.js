@@ -31,7 +31,7 @@ const ArticleList = React.createClass({
                                                              className="dynpost animated post-5 post type-post status-publish format-standard hentry category-uncategorized">
                                                         <header className="entry-header">
                                                             <div className="cat-list">
-                                                                <a href={'/u/' + item._id}>{item.sort}</a>
+                                                                <a href={'/u/sort/' + item.sort}>{item.sort}</a>
                                                             </div>
                                                             <h2 className="entry-title">
                                                                 <a href={'/u/' + item._id}>{item.title}</a>

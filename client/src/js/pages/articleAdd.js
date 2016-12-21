@@ -19,7 +19,7 @@ export default class ArticleAdd extends Component {
             response=> {
                 var data = response.data;
                 if (data.success) {
-                   //window.location.href = data.msg;
+                   window.location.href = data.msg;
                 }
             }
         )

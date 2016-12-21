@@ -29,8 +29,8 @@ export default class ArticleInfo extends Component {
                     </header>
                     <div className="entry-content" dangerouslySetInnerHTML={{__html: data.post}}>
                     </div>
-                    <span><a className="edit" href={'/edit/' + data._id}>编辑</a></span>
-                    <span><a className="edit" href={'/remove/' + data._id}>删除</a></span>
+                    <span><a className="edit" href={'/u/edit/' + data._id}>编辑</a></span>
+                    <span><a className="edit" href={'/u/remove/' + data._id}>删除</a></span>
                     <footer className="entry-footer">
                         <div className="com-box">
                             <i className="iconfont icon-comment"></i>{ data.comments.length }条留言

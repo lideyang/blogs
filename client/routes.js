@@ -38,17 +38,11 @@ module.exports = function (app) {
     });
 
     app.get('/tags', function (req, res) {
-        res.render('tags', {
-            title: 'lidy的个人主页-标签',
-            user: req.session.user
-        });
+        Controller.Tags(req, res);
     });
 
     app.get('/tag/:tag', function (req, res) {
-        res.render('tag', {
-            title: 'lidy的个人主页-标签:' + req.params.tag,
-            user: req.session.user
-        });
+        Controller.Tag(req, res);
     });
 
     app.get('/links', function (req, res) {
@@ -59,10 +53,7 @@ module.exports = function (app) {
     });
 
     app.get('/search/:keyword', function (req, res) {
-        res.render('search', {
-            title: "lidy的个人主页-搜索结果:" + req.params.keyword,
-            user: req.session.user
-        });
+        Controller.Search(req, res);
     });
 
     app.get('/u/:id', function (req, res) {
@@ -70,57 +61,21 @@ module.exports = function (app) {
     });
 
     app.get('/u/name/:name', function (req, res) {
-        var page = req.query.p ? parseInt(req.query.p) : 1;
-        //检查用户是否存在
-        res.render('user', {
-            title: 'lidy的个人主页-' + req.params.name + '的文章',
-            page: page,
-            user: req.session.user
-        });
+        Controller.UserArchive(req,res);
     });
     app.get('/u/sort/:sort', function (req, res) {
-        var page = req.query.p ? parseInt(req.query.p) : 1;
-        res.render('sort', {
-            title: 'lidy的个人主页-分类查询-' + req.params.sort,
-            page: page,
-            user: req.session.user
-        });
+        Controller.SortList(req, res)
     });
 
 
-    app.get('/edit/:id', checkLogin);
-    app.get('/edit/:id', function (req, res) {
+    app.get('/u/edit/:id', checkLogin);
+    app.get('/u/edit/:id', function (req, res) {
         Controller.ArticleEdit(req, res);
     });
 
-    app.get('/remove/:name/:day/:title', checkLogin);
-    app.get('/remove/:name/:day/:title', function (req, res) {
-        var currentUser = req.session.user;
-        Post.remove(currentUser.name, req.params.day, req.params.title, function (err) {
-            if (err) {
-                return res.redirect('back');
-            }
-            res.redirect('/');
-        });
-    });
+    app.get('/u/remove/:id', checkLogin);
+    app.get('/u/remove/:id', function (req, res) {
 
-    app.get('/reprint/:name/:day/:title', checkLogin);
-    app.get('/reprint/:name/:day/:title', function (req, res) {
-        Post.edit(req.params.name, req.params.day, req.params.title, function (err, post) {
-            if (err) {
-                return res.redirect('back');
-            }
-            var currentUser = req.session.user,
-                reprint_from = {name: post.name, day: post.time.day, title: post.title},
-                reprint_to = {name: currentUser.name, head: currentUser.head};
-            Post.reprint(reprint_from, reprint_to, function (err, post) {
-                if (err) {
-                    return res.redirect('back');
-                }
-                var url = encodeURI('/u/' + post.name + '/' + post.time.day + '/' + post.title);
-                res.redirect(url);
-            });
-        });
     });
 
     app.use(function (req, res) {

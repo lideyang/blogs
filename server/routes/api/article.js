@@ -2,8 +2,7 @@
  * Created by lidy on 2016/9/22.
  */
 var express = require('express'),
-    Post = require('../../models/post.js'),
-    User = require('../../models/user.js');
+    Post = require('../../models/post.js');
 var router = express.Router();
 //获取文章列表
 router.get('/list', function (req, res, next) {
@@ -107,58 +106,16 @@ router.post('/edit', function (req, res, next) {
         });
     });
 });
-//获取一个用户文章列表
-router.get('/getUserArticleList', function (req, res, next) {
-    var page = req.query.p ? parseInt(req.query.p) : 1;
-    //检查用户是否存在
-    User.get(req.query.name, function (err, user) {
+//删除文章
+router.get('/del', function (req, res, next) {
+    Post.del(req.query.id, function (err, post) {
         if (err) {
             return res.json({
                 success: false,
-                msg: '查询失败'
+                msg: '删除失败'
             });
         }
-        if (!user) {
-            return res.json({
-                success: false,
-                msg: '用户不存在!'
-            });
-        }
-        //查询并返回该用户第 page 页的 10 篇文章
-        Post.getTen(user.name, page, function (err, posts, total) {
-            if (err) {
-                return res.json({
-                    success: false,
-                    msg: '查询失败'
-                });
-            }
-            return res.json({
-                success: true,
-                data: posts,
-                total: Math.ceil(total / 10)
-            });
-        });
-    });
-});
-//获取查询分类列表
-router.get('/getSortArticleList', function (req, res, next) {
-    var page = req.query.p ? parseInt(req.query.p) : 1;
-    //检查用户是否存在
-    //var sort = req.query.sort === 'all' ? '' : req.query.sort;
-    Post.getSort(req.query.sort, page, function (err, posts, total) {
-        if (err) {
-            return res.json({
-                success: false,
-                msg: '查询失败'
-            });
-        }
-        if (!posts) {
-            return res.json({
-                success: false,
-                msg: '分类不存在!'
-            });
-        }
-        return res.json(posts);
+        return res.json({success: true});
     });
 });
 

@@ -40,7 +40,7 @@ const SearchList = React.createClass({
                                     <a href={'/u/' + item._id}>{item.title}</a>
                                 </h2>
                                 <div className="info">
-                                    <i className="iconfont icon-zuozhe">{/*作者*/}</i><a href={'/u/' + item.name}>{item.name}</a>
+                                    <i className="iconfont icon-zuozhe">{/*作者*/}</i><a href={'/u/name/' + item.name}>{item.name}</a>
                                     <i className="iconfont icon-riqi">{/*日期*/}</i>{ item.time.minute }
                                     <i className="iconfont icon-tags">{/*标签*/}</i>
                                     <TagList data={item.tags}/>

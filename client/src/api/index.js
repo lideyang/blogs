@@ -1,7 +1,16 @@
 /**
  * Created by lidy on 2016/12/18.
  */
-import {AccountResource, ArchiveResource, ArticleResource, CommentResource, SearchResource} from './resources'
+import {
+    AccountResource,
+    ArchiveResource,
+    ArticleResource,
+    CommentResource,
+    SearchResource,
+    SortResource,
+    TagResource,
+    UserResource
+} from './resources'
 
 export default {
     AccountRegister: function (data) {
@@ -25,10 +34,25 @@ export default {
     ArticleEdit: function (method, data) {
         return ArticleResource(method, 'edit', data);
     },
+    ArticleDel: function (method, data) {
+        return ArticleResource(method, 'del', data);
+    },
     CommentAdd: function (data) {
         return CommentResource('post', 'add', data);
     },
     Search: function (data) {
-        return SearchResource('post', null, data);
+        return SearchResource('get', null, data);
+    },
+    SortList: function (data) {
+        return SortResource('get', 'list', data);
+    },
+    TagList: function (data) {
+        return TagResource('get', 'list', data);
+    },
+    TagAll: function (data) {
+        return TagResource('get', 'all', null);
+    },
+    UserArticleList: function (data) {
+        return UserResource('get', 'articleList', data);
     }
 }

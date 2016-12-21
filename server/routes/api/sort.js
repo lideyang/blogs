@@ -1,33 +1,24 @@
 /**
- * Created by Lidy on 2016/12/13.
+ * Created by lidy on 2016/12/21.
  */
 var express = require('express'),
     Post = require('../../models/post.js');
 var router = express.Router();
-//获取指定标签文章
+//查询分类列表
 router.get('/list', function (req, res, next) {
-    var tag = req.query.tag;
     var page = req.query.p ? parseInt(req.query.p) : 1;
-    Post.getTag(tag, page, function (err, posts) {
+    //var sort = req.query.sort === 'all' ? '' : req.query.sort;
+    Post.getSort(req.query.sort, page, function (err, posts, total) {
         if (err) {
             return res.json({
                 success: false,
-                msg: '查询失败'
+                data: '查询失败'
             });
         }
-        return res.json({
-            success: true,
-            data: posts
-        });
-    });
-});
-//获取所有标签
-router.get('/all', function (req, res, next) {
-    Post.getTags(function (err, posts) {
-        if (err) {
+        if (!posts) {
             return res.json({
                 success: false,
-                msg: '查询失败'
+                data: '分类不存在!'
             });
         }
         return res.json({

@@ -45,3 +45,12 @@ export const CommentResource = (method, id, data, api = 'comment') => {
 export const SearchResource = (method, id, data, api = 'search') => {
     return axios[method](api + (id ? ( '/' + id) : ''), data)
 }
+export const SortResource = (method, id, data, api = 'sort') => {
+    return axios[method](api + (id ? ( '/' + id) : ''), data)
+}
+export const TagResource = (method, id, data, api = 'tag') => {
+    return axios[method](api + (id ? ( '/' + id) : ''), data)
+}
+export const UserResource = (method, id, data, api = 'user') => {
+    return axios[method](api + (id ? ( '/' + id) : ''), data)
+}

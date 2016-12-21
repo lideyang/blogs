@@ -13,11 +13,18 @@ const Tags = React.createClass({
     render() {
         if (this.props.data) {
             let data = this.props.data;
+            if (typeof data === 'string') {
+                return (
+                    <div className="inline-block tag-list">
+                        <a href={'/tag/' + data}><Label bsStyle="info">{data}</Label></a>
+                    </div>
+                )
+            }
             return (
                 <div className="inline-block tag-list">
                     {data.map(function (item, index) {
                         return (
-                            <a  key={index} href={'/tag/' + item}><Label bsStyle="info">{item}</Label></a>
+                            <a key={index} href={'/tag/' + item}><Label bsStyle="info">{item}</Label></a>
                         )
                     })}
                 </div>

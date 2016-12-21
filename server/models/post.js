@@ -96,12 +96,7 @@ Post.getTen = function (name, page, callback) {
                     if (err) {
                         return callback(err);
                     }
-                    //解析 markdown 为 html
-//           docs.forEach(function (doc) {
-//             console.log(doc.post);
-//             doc.post = markdown.toHTML(doc.post);
-//             console.log(doc.post);
-//           });
+
                     callback(null, docs, total);
                 });
             });
@@ -257,7 +252,7 @@ Post.update = function (posts, callback) {
 };
 
 //删除一篇文章
-Post.remove = function (name, day, title, callback) {
+Post.del = function (id, callback) {
     //打开数据库
     mongodb.open(function (err, db) {
         if (err) {
@@ -270,56 +265,16 @@ Post.remove = function (name, day, title, callback) {
                 return callback(err);
             }
             //查询要删除的文档
-            collection.findOne({
-                "name": name,
-                "time.day": day,
-                "title": title
-            }, function (err, doc) {
+            collection.remove({
+                _id: ObjectID(id)
+            }, {
+                w: 1
+            }, function (err) {
+                mongodb.close();
                 if (err) {
-                    mongodb.close();
                     return callback(err);
                 }
-                //如果有 reprint_from，即该文章是转载来的，先保存下来 reprint_from
-                var reprint_from = "";
-                if (doc.reprint_info.reprint_from) {
-                    reprint_from = doc.reprint_info.reprint_from;
-                }
-                if (reprint_from != "") {
-                    //更新原文章所在文档的 reprint_to
-                    collection.update({
-                        "name": reprint_from.name,
-                        "time.day": reprint_from.day,
-                        "title": reprint_from.title
-                    }, {
-                        $pull: {
-                            "reprint_info.reprint_to": {
-                                "name": name,
-                                "day": day,
-                                "title": title
-                            }
-                        }
-                    }, function (err) {
-                        if (err) {
-                            mongodb.close();
-                            return callback(err);
-                        }
-                    });
-                }
-
-                //删除转载来的文章所在的文档
-                collection.remove({
-                    "name": name,
-                    "time.day": day,
-                    "title": title
-                }, {
-                    w: 1
-                }, function (err) {
-                    mongodb.close();
-                    if (err) {
-                        return callback(err);
-                    }
-                    callback(null);
-                });
+                callback(null);
             });
         });
     });

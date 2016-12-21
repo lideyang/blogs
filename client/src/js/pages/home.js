@@ -4,7 +4,7 @@
 import React, {PropTypes, Component} from 'react'
 import ReactDOM from 'react-dom'
 import {Header, ArticleList, Loading} from '../components'
-import Action from '../../api';
+import Action from '../../api'
 import {Carousel} from 'react-bootstrap'
 import '../../less/pages/home.less'
 

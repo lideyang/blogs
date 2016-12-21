@@ -1,10 +1,10 @@
 /**
- * Created by Lidy on 2016/12/13.
+ * Created by Lidy on 2016/12/1.
  */
 import React, {PropTypes, Component} from 'react'
 import ReactDOM from 'react-dom'
 import {Header, SearchList} from '../components';
-export default class Search extends Component {
+export default class SortList extends Component {
 
     constructor(props) {
         super(props);
@@ -16,18 +16,17 @@ export default class Search extends Component {
             <div>
                 <Header>
                     <header className="header-title">
-                        <h1>搜索结果</h1>
+                        <h1>文章分类</h1>
                     </header>
                 </Header>
-                <SearchList data={this.state.list} />
+                <SearchList data={this.state.list}/>
             </div>
         )
     }
 }
-
 if (__DEVCLIENT__) {
     ReactDOM.render(
-        React.createElement(Search, initialState),
+        React.createElement(SortList, initialState),
         document.getElementById('root')
     );
 }
