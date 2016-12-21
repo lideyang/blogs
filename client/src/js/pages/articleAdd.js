@@ -4,34 +4,25 @@
 import React, {PropTypes, Component} from 'react'
 import ReactDOM from 'react-dom'
 import {Header, Post} from '../components'
+import Action from '../../api'
 
-export default class ArticleAdd extends Component{
+export default class ArticleAdd extends Component {
 
     constructor() {
         super();
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    onSubmit(formParams){
+    onSubmit(formParams) {
         var that = this;
-        let formParamsStr = ObjectParamToStr(formParams);
-
-        fetch('/api/addArchive', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            credentials: 'same-origin',//发送cookie，深坑
-            body: formParamsStr
-        }).then(function (response) {
-            response.json().then(function (data) {
-                if (that.isMounted()) {
-                    if (data.success) {
-                        window.location.href = data.msg;
-                    }
+        Action.ArticleAdd(formParams).then(
+            response=> {
+                var data = response.data;
+                if (data.success) {
+                   //window.location.href = data.msg;
                 }
-            });
-        });
+            }
+        )
     }
 
     render() {

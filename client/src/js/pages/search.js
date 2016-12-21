@@ -1,31 +1,17 @@
 /**
  * Created by Lidy on 2016/12/13.
  */
-import React from 'react';
-import {render} from 'react-dom';
+import React, {PropTypes, Component} from 'react'
+import ReactDOM from 'react-dom'
 import {Header, SearchList} from '../components';
-const Search = React.createClass({
-    getInitialState() {
-        return {
-            list: [],
-            loading: true
-        };
-    },
-    renderHeader(){
-        return (
-            <Header>
-                <header className="header-title">
-                    <h1>搜索结果</h1>
-                </header>
-            </Header>
-        );
-    },
-    renderSearchList(){
-        return (
-            <SearchList data={this.state.list} loading={this.state.loading}/>
-        )
-    },
-    componentDidMount: function () {
+export default class Search extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = this.props;
+    }
+
+    componentDidMount() {
         let that = this;
         let url = window.location.pathname;
         let index = url.lastIndexOf('search/');
@@ -44,14 +30,25 @@ const Search = React.createClass({
                 });
             });
         }
-    },
+    }
+
     render() {
         return (
             <div>
-                {this.renderHeader()}
-                {this.renderSearchList()}
+                <Header>
+                    <header className="header-title">
+                        <h1>搜索结果</h1>
+                    </header>
+                </Header>
+                <SearchList data={this.state.list} loading={this.state.loading}/>
             </div>
         )
     }
-})
-render(<Search />, document.getElementById('page'));
+}
+
+if (__DEVCLIENT__) {
+    ReactDOM.render(
+        React.createElement(Search, initialState),
+        document.getElementById('root')
+    );
+}

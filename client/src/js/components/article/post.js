@@ -5,30 +5,28 @@ import React, {PropTypes, Component} from 'react'
 import {Loading, Ueditor} from '../../components';
 import {Form, FormGroup, ControlLabel, Grid, Col, Button} from 'react-bootstrap';
 
-export default class Post extends Component{
+export default class Post extends Component {
 
     constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             sort: ['心情', '学习', '技术']
         }
         this.submitHandle = this.submitHandle.bind(this);
     }
 
-    getDefaultProps(){
-        return {
-            loading: false,
-            data: {
-                title: '',
-                tags: '',
-                post: '',
-                sort: '',
-                description: ''
-            }
+    static defaultProps = {
+        loading: false,
+        data: {
+            title: '',
+            tags: '',
+            post: '',
+            sort: '',
+            description: ''
         }
     }
 
-    submitHandle(e){
+    submitHandle(e) {
         e.preventDefault();
         var contentTxt = this.refs.editor.state.editorDOM.getContentTxt();
         var description = contentTxt.length > 100 ? contentTxt.substring(0, 200) : contentTxt; //设置前100字符简介
@@ -45,6 +43,7 @@ export default class Post extends Component{
         }
         this.props.onSubmit(formParams);
     }
+
     render() {
         var that = this;
         if (this.props.loading) {

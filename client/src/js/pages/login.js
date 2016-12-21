@@ -4,22 +4,24 @@
 import React, {PropTypes, Component} from 'react'
 import ReactDOM from 'react-dom'
 import Action from '../../api'
+import {saveCookie} from '../utils/authService'
 import {Header, LoginForm} from '../components'
 
 
-export default class Login extends Component{
+export default class Login extends Component {
 
     constructor() {
         super();
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    onSubmit(formParams){
+    onSubmit(formParams) {
         var that = this;
         Action.AccountLogin(formParams).then(
             response => {
                 let data = response.data;
                 if (data.success) {
+                    saveCookie('token', data.token);
                     window.location.href = data.msg;
                 }
             }

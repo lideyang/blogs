@@ -1,7 +1,8 @@
 /**
  * Created by lidy on 2016/12/18.
  */
-export HomeController from './homeController'
-export ArticleController from './articleController'
-export ArchiveController from './archiveController'
-export {RegisterController,LoginController} from './accountController'
+export Home from './homeController'
+export {ArticleDetail, ArticleAdd, ArticleEdit} from './articleController'
+export Archive from './archiveController'
+export {Register, Login, Logout} from './accountController'
+export Search from './searchController'

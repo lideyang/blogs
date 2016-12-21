@@ -3,50 +3,45 @@
  */
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import Home from '../js/pages/home';
+import ArchiveComponent from '../js/pages/archive';
 import Action from '../api';
 export default (req, res)=> {
     var page = req.query.p ? parseInt(req.query.p) : 1;
-    Action.ArticleList({
+    Action.ArchiveList({
         params: {
             p: page
         }
     }).then(
-        data => {
-            var data = data.data;
+        response => {
+            var data = response.data;
             try {
+                console.log(data);
                 if (!data.success) {
-                    return res.render('home', {
+                    return res.render('archive', {
                         react: '系统维护中。。。',
                         initialState: [],
-                        title: 'lidy的个人主页-首页',
+                        title: 'lidy的个人主页-存档',
                     })
                 }
+
                 var props = {
-                    articleList: data.data,
+                    archiveList: data.data,
                     total: data.total
                 }
-                const html = ReactDOM.renderToString(React.createElement(Home, props));
-                return res.render('home', {
+                const html = ReactDOM.renderToString(React.createElement(ArchiveComponent, props));
+                return res.render('archive', {
                     react: html,
                     initialState: props,
-                    title: 'lidy的个人主页-首页',
+                    title: 'lidy的个人主页-存档',
                 })
             } catch (e) {
                 console.error(e);
-                return res.render('home', {
+                return res.render('archive', {
                     react: e,
                     initialState: [],
-                    title: 'lidy的个人主页-首页',
+                    title: 'lidy的个人主页-存档',
                 })
             }
         }
     );
-}
-export function get_404(req, res) {
-    return res.render('home', {
-        react: '系统维护中。。。',
-        initialState: [],
-        title: 'lidy的个人主页-首页',
-    })
 }

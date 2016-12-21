@@ -2,14 +2,14 @@
  * Created by lidy on 2016/12/18.
  */
 import cookie from 'react-cookie'
-import { CookieDomain } from '../../config'
+import {CookieDomain} from '../../config'
 let cookieConfig = {}
-if(CookieDomain !== ''){
-    cookieConfig = { domain: CookieDomain }
+if (CookieDomain !== '') {
+    cookieConfig = {domain: CookieDomain}
 }
 
-export function saveCookie(name,value) {
-    cookie.save(name, value, cookieConfig)
+export function saveCookie(name, value) {
+    cookie.save(name, value)
 }
 
 export function getCookie(name) {
@@ -24,18 +24,6 @@ export function signOut() {
     cookie.remove('token', cookieConfig)
 }
 
-export function isLogin() {
-    return !!cookie.load('token')
-}
-
-export function redirectToBack(nextState, replaceState) {
-    //已经登录则不进入
-    if (isLogin()) {
-        replaceState(null, '/')
-    }
-}
-export function redirectToLogin(nextState,replaceState) {
-    if (!isLogin()) {
-        replaceState(null, '/login')
-    }
+export function isLogin(req) {
+    return !!req.cookies.token
 }

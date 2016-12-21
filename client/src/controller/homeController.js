@@ -12,8 +12,8 @@ export default (req, res)=> {
             p: page
         }
     }).then(
-        data => {
-            var data = data.data;
+        response => {
+            var data = response.data;
             try {
                 if (!data.success) {
                     return res.render('home', {

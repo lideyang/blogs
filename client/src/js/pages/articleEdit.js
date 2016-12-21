@@ -1,83 +1,50 @@
 /**
  * Created by Lidy on 2016/12/2.
  */
-import React from 'react';
-import {render} from 'react-dom';
+import React, {PropTypes, Component} from 'react'
+import ReactDOM from 'react-dom'
 import {Header, Post} from '../components';
-import {ObjectParamToStr, GetUrlToId} from '../utils';
-import 'whatwg-fetch';
+import Action from '../../api'
 
-const Edit = React.createClass({
-    getInitialState() {
-        return {
-            loading: true,
-            data: {
-                id: '',
-                title: '',
-                tags: '',
-                post: '',
-                sort: '',
-                description: ''
+export default class ArticleEdit extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = this.props;
+        this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    onSubmit(formParams) {
+        var that = this;
+        formParams.id = this.state.data._id;
+        Action.ArticleEdit('post', formParams).then(
+            response=> {
+                var data = response.data;
+                if (data.success) {
+                    window.location.href = data.msg;
+                }
             }
-        };
-    },
-    renderHeader(){
-        return (
-            <Header>
-                <header className="header-title">
-                    <h1>编辑文章</h1>
-                </header>
-            </Header>
-        );
-    },
-    renderContent(){
-        var that = this;
-        return (
-            <Post data={this.state.data} loading={this.state.loading} onSubmit={this.onSubmit}/>
         )
-    },
+    }
 
-    onSubmit(formParams){
-        var that = this;
-        let formParamsStr = ObjectParamToStr(formParams);
-        fetch('/api/setArchiveContent?id=' + this.state.data._id, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            credentials: 'same-origin',//发送cookie，深坑
-            body: formParamsStr
-        }).then(function (response) {
-            response.json().then(function (data) {
-                if (that.isMounted()) {
-                    if (data.success) {
-                        window.location.href = data.msg;
-                    }
-                }
-            });
-        });
-    },
-    componentDidMount: function () {
-        var that = this;
-        var id = GetUrlToId();
-        fetch('/api/getArchiveContent?id=' + id).then(function (response) {
-            response.json().then(function (data) {
-                if (that.isMounted()) {
-                    that.setState({
-                        data: data,
-                        loading: false
-                    });
-                }
-            });
-        });
-    },
     render() {
+        console.log(this.state.data);
         return (
             <div>
-                {this.renderHeader()}
-                {this.renderContent()}
+                <Header>
+                    <header className="header-title">
+                        <h1>编辑文章</h1>
+                    </header>
+                </Header>
+                <Post data={this.state.data} loading={this.state.loading} onSubmit={this.onSubmit}/>
             </div>
         )
     }
-})
-render(<Edit />, document.getElementById('page'));
+}
+
+if (__DEVCLIENT__) {
+    ReactDOM.render(
+        React.createElement(ArticleEdit, initialState),
+        document.getElementById('root')
+    );
+}

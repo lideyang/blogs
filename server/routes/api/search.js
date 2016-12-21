@@ -5,7 +5,7 @@ var express = require('express'),
     Post = require('../../models/post.js');
 var router = express.Router();
 //提交评论
-router.get('/search', function (req, res, next) {
+router.get('/', function (req, res, next) {
     var keyword = req.query.keyword;
     var page = req.query.p ? parseInt(req.query.p) : 1;
     Post.search(keyword, page, function (err, posts) {

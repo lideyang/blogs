@@ -2,66 +2,39 @@
  * Created by lidy on 2016/12/18.
  */
 'use strict';
-
-import path from 'path';
+import * as authService from './src/js/utils/authService'
 import * as Controller from './src/controller';
 
 
 module.exports = function (app) {
     app.get('/', function (req, res) {
-        Controller.HomeController(req, res);
+        Controller.Home(req, res);
     });
 
     app.get('/reg', checkNotLogin);
     app.get('/reg', function (req, res) {
-        Controller.RegisterController(req, res);
+        Controller.Register(req, res);
     });
 
     app.get('/login', checkNotLogin);
     app.get('/login', function (req, res) {
-        Controller.LoginController(req, res);
+        Controller.Login(req, res);
     });
 
     app.get('/post', checkLogin);
     app.get('/post', function (req, res) {
-        res.render('post', {
-            title: 'lidy的个人主页-发表文章',
-            user: req.session.user
-        });
+        Controller.ArticleAdd(req, res);
     });
 
-    // app.get('/logout', checkLogin);
+    app.use('/upload', require('./src/controller/uploadController'));
+
+    app.get('/logout', checkLogin);
     app.get('/logout', function (req, res) {
-        if (req.session && req.session.user) {
-            req.session.user = null;
-        }
-        res.redirect('/login');//登出成功后跳转到登录页
-    });
-
-    app.get('/upload', checkLogin);
-    app.get('/upload', function (req, res) {
-        res.render('upload', {
-            title: '文件上传',
-            user: req.session.user
-        });
-    });
-
-    app.post('/upload', checkLogin);
-    app.post('/upload', function (req, res) {
-        res.redirect('/upload');
+        Controller.Logout(req, res);
     });
 
     app.get('/archive', function (req, res) {
-        Post.getArchive(function (err, posts) {
-            if (err) {
-                return res.redirect('/');
-            }
-            res.render('archive', {
-                title: 'lidy的个人主页-存档',
-                posts: posts,
-                user: req.session.user
-            });
-        });
+        Controller.Archive(req, res);
     });
 
     app.get('/tags', function (req, res) {
@@ -93,7 +66,7 @@ module.exports = function (app) {
     });
 
     app.get('/u/:id', function (req, res) {
-        Controller.ArticleController(req, res);
+        Controller.ArticleDetail(req, res);
     });
 
     app.get('/u/name/:name', function (req, res) {
@@ -117,13 +90,7 @@ module.exports = function (app) {
 
     app.get('/edit/:id', checkLogin);
     app.get('/edit/:id', function (req, res) {
-        var id = req.params.id;
-        if (!id) {
-            return res.redirect('/');
-        }
-        res.render('edit', {
-            title: 'lidy的个人主页-文章编辑'
-        });
+        Controller.ArticleEdit(req, res);
     });
 
     app.get('/remove/:name/:day/:title', checkLogin);
@@ -161,8 +128,7 @@ module.exports = function (app) {
     });
 
     function checkLogin(req, res, next) {
-        console.log(req.session);
-        if (!req.session.user) {
+        if (!authService.isLogin(req)) {
             return res.redirect('/login');
         } else {
             next();
@@ -171,7 +137,9 @@ module.exports = function (app) {
     }
 
     function checkNotLogin(req, res, next) {
-        if (req.session.user) {
+        console.log('login');
+        console.log(authService.isLogin(req));
+        if (authService.isLogin(req)) {
             return res.redirect('/');//返回之前的页面
         }
         next();

@@ -34,13 +34,17 @@
         font-size: 14px;
         border-radius: 20px;
         &:after {
-          content: "\f0d9";
-          font-family: fontawesome;
           position: absolute;
-          top: 30px;
-          color: @secondarycolor;
-          font-size: 36px;
-          left: -10px;
+          left:-10px;
+          top:50%;
+          margin-top: -10px;
+          display: block;
+          content: '';
+          width: 0;
+          height: 0;
+          border-top:10px solid transparent;
+          border-right: 10px solid @secondarycolor;
+          border-bottom: 10px solid transparent;
         }
         .comment-meta {
           border-bottom: 1px solid @bordercolor;
@@ -54,6 +58,7 @@
           }
           .comment-author {
             font-size: 18px;
+            margin-bottom: 10px;
             img {
               position: absolute;
               left: -100px;

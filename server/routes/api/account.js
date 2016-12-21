@@ -42,7 +42,7 @@ router.post('/register', function (req, res, next) {
                     msg: '注册失败，请稍后再试'
                 });//注册失败提示
             }
-            req.session.user = user;//用户信息存入 session
+           // req.sessionID.user = user;//用户信息存入 session
             return res.json({//成功！返回文章页
                 success: true,
                 msg: '/login'
@@ -68,6 +68,7 @@ router.post('/login', function (req, res) {
         req.session.user = user;
         res.json({//成功！返回文章页
             success: true,
+            token: req.sessionID,
             msg: '/'//登陆成功后跳转到主页
         });
     });

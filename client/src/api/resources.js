@@ -30,13 +30,18 @@ axios.interceptors.response.use(function (response) {
     // Do something with response error
     return Promise.reject(error)
 })
-
+export const AccountResource = (method, id, data, api = 'account') => {
+    return axios[method](api + (id ? ( '/' + id) : ''), data)
+}
+export const ArchiveResource = (method, id, data, api = 'archive') => {
+    return axios[method](api + (id ? ( '/' + id) : ''), data)
+}
 export const ArticleResource = (method, id, data, api = 'article') => {
     return axios[method](api + (id ? ( '/' + id) : ''), data)
 }
 export const CommentResource = (method, id, data, api = 'comment') => {
     return axios[method](api + (id ? ( '/' + id) : ''), data)
 }
-export const AccountResource = (method, id, data, api = 'account') => {
+export const SearchResource = (method, id, data, api = 'search') => {
     return axios[method](api + (id ? ( '/' + id) : ''), data)
 }

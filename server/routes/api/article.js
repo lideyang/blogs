@@ -28,7 +28,7 @@ router.get('/list', function (req, res, next) {
 //获取一篇文章信息及评论
 router.get('/detail', function (req, res, next) {
     console.log(req.query.id);
-    if(!req.query.id){
+    if (!req.query.id) {
         return res.json({
             success: false,
             msg: '查询失败'
@@ -42,6 +42,69 @@ router.get('/detail', function (req, res, next) {
             });
         }
         return res.json(posts);
+    });
+});
+//新增文章
+router.post('/add', function (req, res, next) {
+    var currentUser = req.session.user;
+    console.log(req.session);
+    var posts = {
+        name: currentUser.name,
+        head: currentUser.head,
+        title: req.body.title,
+        tags: req.body.tags,
+        post: req.body.post,
+        sort: req.body.sort,
+        description: req.body.description
+    }
+    Post.save(posts, function (err, doc) {
+        if (err) {
+            return res.json({//出错提示
+                success: false,
+                msg: '保存失败，请联系管理员'
+            });
+        }
+        var url = '/u/' + doc.insertedIds;
+        res.json({//成功！返回文章页
+            success: true,
+            msg: url
+        });
+    });
+});
+//编辑文章获取
+router.get('/edit', function (req, res, next) {
+    Post.edit(req.query.id, function (err, post) {
+        if (err) {
+            return res.json({
+                success: false,
+                msg: '查询失败'
+            });
+        }
+        return res.json(post);
+    });
+});
+//编辑保存文章
+router.post('/edit', function (req, res, next) {
+    var posts = {
+        id: req.body.id,
+        title: req.body.title,
+        tags: [req.body.tag1, req.body.tag2, req.body.tag3],
+        post: req.body.post,
+        sort: req.body.sort,
+        description: req.body.description
+    }
+    Post.update(posts, function (err) {
+        if (err) {
+            return res.json({
+                success: false,
+                msg: '更新文章失败'
+            });
+        }
+        var url = encodeURI('/u/' + req.body.id);
+        res.json({//成功！返回文章页
+            success: true,
+            msg: url
+        });
     });
 });
 //获取一个用户文章列表
@@ -98,66 +161,5 @@ router.get('/getSortArticleList', function (req, res, next) {
         return res.json(posts);
     });
 });
-//编辑获取文章内容
-router.get('/getArchiveContent', function (req, res, next) {
-    Post.edit(req.query.id, function (err, post) {
-        if (err) {
-            return res.json({
-                success: false,
-                msg: '查询失败'
-            });
-        }
-        return res.json(post);
-    });
-});
-//编辑保存文章内容
-router.post('/setArchiveContent', function (req, res, next) {
-    var posts = {
-        id: req.query.id,
-        title: req.body.title,
-        tags: [req.body.tag1, req.body.tag2, req.body.tag3],
-        post: req.body.post,
-        sort: req.body.sort,
-        description: req.body.description
-    }
-    Post.update(posts, function (err) {
-        if (err) {
-            return res.json({
-                success: false,
-                msg: '更新文章失败'
-            });
-        }
-        var url = encodeURI('/u/' + req.query.id);
-        res.json({//成功！返回文章页
-            success: true,
-            msg: url
-        });
-    });
-});
-//新增文章
-router.post('/addArchive', function (req, res, next) {
-    var currentUser = req.session.user;
-    var posts = {
-        name: currentUser.name,
-        head: currentUser.head,
-        title: req.body.title,
-        tags: req.body.tags,
-        post: req.body.post,
-        sort: req.body.sort,
-        description: req.body.description
-    }
-    Post.save(posts, function (err, doc) {
-        if (err) {
-            return res.json({//出错提示
-                success: false,
-                msg: '保存失败，请联系管理员'
-            });
-        }
-        var url = '/u/' + doc.insertedIds;
-        res.json({//成功！返回文章页
-            success: true,
-            msg: url
-        });
-    });
-});
+
 module.exports = router;
