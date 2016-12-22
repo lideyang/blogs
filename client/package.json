@@ -4,12 +4,12 @@
   "private": true,
   "description": "lidy-blog for express react",
   "scripts": {
-    "start": "npm-run-all --sequential build start-prod",
-    "dev": "npm-run-all --sequential build-server:dev start-dev",
+    "start": "npm-run-all --sequential dev build:client",
+    "dev": "npm-run-all --sequential build:dll build:server start-dev",
     "build:dll": "webpack --config webpack.dll.config.js",
     "build:server": "webpack --colors --config webpack.config.dev.server.js",
     "build:client": "webpack --colors --config webpack.config.dev.client.js",
-    "start-dev": "node src/server.bundle.js"
+    "start-dev": "node server.js"
   },
   "dependencies": {
     "babel-runtime": "^6.11.6",
