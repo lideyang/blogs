@@ -1,28 +1,16 @@
 /**
  * Created by Lidy on 2016/12/12.
  */
-import React from 'react';
-import Loading from './loading';
-const Link = React.createClass({
-    getInitialState: function () {
-        return {
-            data: []
-        };
-    },
-    componentWillMount(){
-        var that = this;
-        fetch('/api/linkList').then(function (response) {
-            response.json().then(function (data) {
-                if (that.isMounted()) {
-                    that.setState({
-                        data: data.data
-                    });
-                }
-            });
-        });
-    },
+import React, {Component} from 'react'
+import Loading from './loading'
+export default class Link extends Component {
+
+    constructor(props) {
+        super(props);
+    }
+
     render() {
-        var linkList = this.state.data;
+        var linkList = this.state.props;
         if (linkList) {
             return (
                 <ul>
@@ -42,5 +30,4 @@ const Link = React.createClass({
             <Loading/>
         );
     }
-});
-export default Link;
+}

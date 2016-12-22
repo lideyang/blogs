@@ -1,16 +1,22 @@
 /**
  * Created by Lidy on 2016/11/23.
  */
-import React from 'react'
+import React, {PropTypes, Component} from 'react'
 import {render} from 'react-dom'
 import headerPng from '../../../../public/images/header.png'
 
-const CommentList = React.createClass({
+export default class CommentList extends Component {
 
-    render(){
-        console.log(headerPng+'dsdsgg');
-        console.log('dsdsgg');
-        if(this.props.data.length){
+    constructor(props) {
+        super(props);
+    }
+
+    static defaultProps = {
+        data: []
+    }
+
+    render() {
+        if (this.props.data.length) {
             return (
                 <ol className="comment-list">
                     {this.props.data.map(function (item, index) {
@@ -47,5 +53,4 @@ const CommentList = React.createClass({
         }
         return <p>暂无评论</p>
     }
-})
-export default CommentList;
+}

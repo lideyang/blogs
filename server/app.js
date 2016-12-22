@@ -17,7 +17,6 @@ if ('development' === config.env) {
     app.use(errorHandler());
 }else{
     app.use(function (err, req, res, next) {
-        console.error(err.stack);
         return res.status(500).send();
     });
 }

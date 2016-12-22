@@ -1,15 +1,20 @@
 /**
  * Created by Lidy on 2016/12/13.
  */
-import React from 'react';
+import React, {PropTypes, Component} from 'react'
 import {Label} from 'react-bootstrap';
 import Loading  from '../loading';
-const Tags = React.createClass({
-    getDefaultProps: function () {
-        return {
-            data: []
-        };
-    },
+
+export default class Tags extends Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    static defaultProps = {
+        data: []
+    }
+
     render() {
         if (this.props.data) {
             let data = this.props.data;
@@ -34,5 +39,4 @@ const Tags = React.createClass({
             <Loading/>
         );
     }
-});
-export default Tags;
+}

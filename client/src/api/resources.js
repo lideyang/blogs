@@ -6,19 +6,7 @@ import {getCookie, signOut} from '../js/utils/authService'
 axios.defaults.baseURL = API_ROOT
 axios.defaults.withCredentials = true
 
-// Add a request interceptor
-axios.interceptors.request.use(function (config) {
-    config.headers = config.headers || {}
-    if (getCookie('token')) {
-        config.headers.Authorization = 'Bearer ' + getCookie('token').replace(/(^\")|(\"$)/g, '')
-    }
-    return config
-}, function (error) {
-    // Do something with request error
-    return Promise.reject(error)
-})
-
-// Add a response interceptor
+// 返回处理
 axios.interceptors.response.use(function (response) {
     if (response.status === 401) {
         signOut()
@@ -27,9 +15,9 @@ axios.interceptors.response.use(function (response) {
     //console.log(response.data);
     return response;
 }, function (error) {
-    // Do something with response error
     return Promise.reject(error)
 })
+
 export const AccountResource = (method, id, data, api = 'account') => {
     return axios[method](api + (id ? ( '/' + id) : ''), data)
 }

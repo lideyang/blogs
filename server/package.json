@@ -26,7 +26,7 @@
     "markdown-it": "^8.0.0",
     "method-override": "^2.3.6",
     "moment": "^2.15.1",
-    "mongoose": "^4.6.2",
+    "mongodb": "^2.2.16",
     "multer": "^1.2.0",
     "passport": "^0.3.2",
     "passport-github": "^1.1.0",
@@ -35,7 +35,5 @@
     "passport-weibo": "^0.1.2",
     "qiniu": "^6.1.11"
   },
-  "devDependencies": {
-
-  }
+  "devDependencies": {}
 }

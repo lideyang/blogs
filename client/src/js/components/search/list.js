@@ -1,21 +1,26 @@
 /**
  * Created by Lidy on 2016/12/1.
  */
-import React from 'react';
-import {render} from 'react-dom';
+import React, {PropTypes, Component} from 'react'
 import {Grid} from 'react-bootstrap';
 import {TagList, PaginationAdvanced} from '../../components';
 import Loading  from '../loading'
-const SearchList = React.createClass({
-    getDefaultProps(){
-        return {
-            data: [],
-            loading: false
-        }
-    },
+export default class SearchList extends Component {
+
+    constructor(props) {
+        super(props);
+        this.onChangePage = this.onChangePage.bind(this);
+    }
+
+    static defaultProps = {
+        data: [],
+        loading: false
+    }
+
     onChangePage(index){
         this.props.onChangePage(index);
-    },
+    }
+
     render(){
         if (this.props.loading) {
             return (
@@ -63,6 +68,4 @@ const SearchList = React.createClass({
             )
         }
     }
-});
-
-export default SearchList;
+}

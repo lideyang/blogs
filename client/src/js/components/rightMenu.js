@@ -1,7 +1,7 @@
 /**
  * Created by Lidy on 2016/11/17.
  */
-import React, {PropTypes, Component} from 'react';
+import React, {Component} from 'react';
 
 export default class RightMenu extends Component {
 

@@ -16,7 +16,9 @@ export default class ArticleDetail extends Component {
         this.onAddComment = this.onAddComment.bind(this);
     }
 
-    static defaultProps = {}
+    static defaultProps = {
+
+    }
 
     onAddComment(newComment) {
         var that = this;

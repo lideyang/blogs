@@ -1,21 +1,29 @@
 /**
  * Created by Lidy on 2016/11/21.
  */
-import React from 'react'
+import React, {PropTypes, Component} from 'react'
 import {Grid, Row, Col} from 'react-bootstrap'
 import PaginationAdvanced from '../pagination'
 import Loading from '../loading'
 import {Host} from '../../../config'
 
-const ArticleList = React.createClass({
-    getInitialState: function () {
-        return {};
-    },
-    onChangePage(index){
+export default class ArticleList extends Component {
+
+    constructor(props) {
+        super(props);
+        this.onChangePage = this.onChangePage.bind(this);
+    }
+
+    static defaultProps = {
+        data: []
+    }
+
+    onChangePage(index) {
         this.props.onChangePage(index);
-    },
+    }
+
     render() {
-        if (this.props.data) {
+        if (this.props.data.length) {
             return (
                 // 首页列表
                 <div id="content" className="site-content">
@@ -82,5 +90,4 @@ const ArticleList = React.createClass({
         }
 
     }
-});
-export default ArticleList;
+}

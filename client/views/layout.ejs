@@ -11,10 +11,10 @@
     <link rel='stylesheet' href='/dist/css/base.css'/>
     <meta name="baidu-site-verification" content="0BasK8NTEP"/>
     <script>
-        var json = '<%- JSON.stringify(initialState) %>';
-        window.initialState = JSON.parse(json);
+        window.initialState = <%- initialState %>;
     </script>
 </head>
-<body class="home blog hfeed"><div id="main_loading"><p id="loading-one">载入中</p></div><%- body %>
+<body class="home blog hfeed">
+<div id="main_loading"><p id="loading-one">载入中</p></div><%- body %>
 </body>
 </html>

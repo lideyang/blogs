@@ -2,7 +2,8 @@
  * Created by lidy on 2016/9/22.
  */
 var express = require('express'),
-    Post = require('../../models/post.js');
+    Post = require('../../models/post.js'),
+    ObjectID = require('mongodb').ObjectID;
 var router = express.Router();
 //获取文章列表
 router.get('/list', function (req, res, next) {
@@ -30,17 +31,20 @@ router.get('/detail', function (req, res, next) {
     if (!req.query.id) {
         return res.json({
             success: false,
-            msg: '查询失败'
+            data: '查询失败'
         });
     }
     Post.getOne(req.query.id, function (err, posts) {
-        if (err) {
+        if (err || !posts) {
             return res.json({
                 success: false,
-                msg: '查询失败'
+                data: '查询失败'
             });
         }
-        return res.json(posts);
+        return res.json({
+            success: true,
+            data: posts
+        });
     });
 });
 //新增文章

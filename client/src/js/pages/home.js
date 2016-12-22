@@ -18,13 +18,39 @@ export default class Home extends Component {
     }
 
     static defaultProps = {
-        autoPlay: false,
-        maxLoops: 10,
+        articleList: []
     }
 
     static propTypes = {
         total: PropTypes.number.isRequired,
         articleList: PropTypes.array.isRequired
+    }
+
+
+    getArticleList(pageIndex) {
+        return Action.ArticleList({
+            params: {
+                p: pageIndex
+            }
+        })
+    }
+
+    onChangePage(index) {
+        var that = this;
+        this.getArticleList(index).then(
+            data => {
+                that.setState({
+                    articleList: data.data.data,
+                    total: data.data.total
+                })
+            }
+        );
+    }
+
+    componentDidMount() {
+        if (__DEVCLIENT__) {
+            console.log('render')
+        }
     }
 
     render() {
@@ -58,26 +84,6 @@ export default class Home extends Component {
         } else {
             return <Loading />
         }
-    }
-
-    getArticleList(pageIndex) {
-        return Action.ArticleList({
-            params: {
-                p: pageIndex
-            }
-        })
-    }
-
-    onChangePage(index) {
-        var that = this;
-        this.getArticleList(index).then(
-            data => {
-                that.setState({
-                    articleList: data.data.data,
-                    total: data.data.total
-                })
-            }
-        );
     }
 }
 //游览器数据

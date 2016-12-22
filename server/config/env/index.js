@@ -15,7 +15,11 @@ var all = {
     mongo: {
         options: {
             user: process.env.MONGO_USERNAME || '',
-            pass: process.env.MONGO_PASSWORD || ''
+            pass: process.env.MONGO_PASSWORD || '',
+            cookieSecret: 'myblog',
+            db: 'blog',
+            host: 'localhost',
+            port: 27017
         }
     },
     //redis 配置
@@ -27,7 +31,7 @@ var all = {
     //是否初始化数据
     seedDB: false,
     session:{
-        secrets: 'jackblog-secret',
+        secrets: 'myblog',
     },
     //用户角色种类
     userRoles: ['user', 'admin'],
@@ -39,7 +43,7 @@ var all = {
         bucket: process.env.QINIU_APP_BUCKET || ''           //七牛空间名称
     },
     //默认首页图片.
-    defaultIndexImage: 'https://upload.jackhu.top/blog/index/default.jpg-600x1500q80',
+    defaultIndexImage: 'images/index/default.jpg-600x1500q80',
     //第三方登录配置
     github:{
         clientID: process.env.GITHUB_CLIENT_ID || 'clientID',
@@ -56,29 +60,27 @@ var all = {
         clientSecret: process.env.QQ_CLIENT_SECRET || 'clientSecret',
         callbackURL: process.env.QQ_CALLBACK_URL || '',
     },
-    //移动APP列表
     apps:[
         {
-            name:'React Native',
-            gitUrl:'//github.com/jackhutu/jackblog-react-native-redux',
+            name:'',
+            gitUrl:'',
             downloadUrl:{
-                android:'//a.app.qq.com/o/simple.jsp?pkgname=top.jackhu.reactnative',
+                android:'',
                 ios:''
             },
-            qrcode:'https://upload.jackhu.top/qrcode/jackblog-react-native-qrcode.png'
+            qrcode:''
         },
         {
-            name:'Ionic 2.0',
-            gitUrl:'//github.com/jackhutu/jackblog-ionic2',
+            name:'',
+            gitUrl:'',
             downloadUrl:{
-                android:'https://upload.jackhu.top/downloads/Jackblog-ionic2-1.0.0.apk',
+                android:'',
                 ios:''
             },
-            qrcode:'https://upload.jackhu.top/qrcode/jackblog-ionic2-v1.0.0.png'
+            qrcode:''
         }
     ],
-    //开启第三方登录
-    snsLogins:['github','qq']
+    snsLogins:[]
 };
 
 var config = _.merge(all,require('./' + process.env.NODE_ENV + '.js') || {});

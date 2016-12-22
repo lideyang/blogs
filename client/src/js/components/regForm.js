@@ -1,10 +1,16 @@
 /**
  * Created by Lidy on 2016/12/13.
  */
-import React from 'react';
+import React, {Component} from 'react'
 import {Form, FormGroup, ControlLabel, Grid, Col, Button} from 'react-bootstrap';
 
-const RegForm = React.createClass({
+export default class RegForm extends Component {
+
+    constructor(props) {
+        super(props);
+        this.submitHandle = this.submitHandle.bind(this);
+    }
+
     submitHandle(e){
         e.preventDefault();
         let formParams = {
@@ -14,7 +20,8 @@ const RegForm = React.createClass({
             email: this.refs.email.value
         }
         this.props.onSubmit(formParams);
-    },
+    }
+
     render() {
         return (
             <Grid>
@@ -62,5 +69,4 @@ const RegForm = React.createClass({
             </Grid>
         );
     }
-});
-export default RegForm;
+}

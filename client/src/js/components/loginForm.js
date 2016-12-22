@@ -1,17 +1,24 @@
 /**
  * Created by Lidy on 2016/12/12.
  */
-import React from 'react';
+import React, {Component} from 'react'
 import {Form, FormGroup, ControlLabel, Grid, Col, Button} from 'react-bootstrap';
-const LoginForm = React.createClass({
-    submitHandle(e){
+export default class LoginForm extends Component {
+
+    constructor(props) {
+        super(props);
+        this.submitHandle = this.submitHandle.bind(this);
+    }
+
+    submitHandle(e) {
         e.preventDefault();
         let formParams = {
             name: this.refs.name.value,
             password: this.refs.password.value
         }
         this.props.onSubmit(formParams);
-    },
+    }
+
     render() {
         return (
             <Grid>
@@ -43,5 +50,4 @@ const LoginForm = React.createClass({
             </Grid>
         );
     }
-});
-export default LoginForm;
+}

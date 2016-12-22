@@ -1,28 +1,36 @@
 /**
  * Created by Lidy on 2016/12/13.
  */
-import React from 'react';
+import React, {PropTypes, Component} from 'react'
 import {Pagination} from 'react-bootstrap';
 
-const PaginationAdvanced = React.createClass({
-    getInitialState() {
-        return {
+export default class PaginationAdvanced extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
             activePage: 1
         };
-    },
-    getDefaultProps(){
-        return {
-            items: 0
-        }
-    },
+        this.handleSelect = this.handleSelect.bind(this);
+    }
+
+    static defaultProps = {
+        items: 0
+    }
+
+    static propTypes = {
+        items: PropTypes.number.isRequired
+    }
+
     handleSelect(eventKey) {
-        if(eventKey!==this.state.activePage){
+        if (eventKey !== this.state.activePage) {
             this.setState({
                 activePage: eventKey
             });
             this.props.onChangePage(eventKey);
         }
-    },
+    }
+
     render() {
         if (this.props.items) {
             return (
@@ -43,5 +51,4 @@ const PaginationAdvanced = React.createClass({
         }
         return null;
     }
-});
-export default PaginationAdvanced;
+}

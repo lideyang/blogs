@@ -6,26 +6,29 @@ import ReactDOM from 'react-dom'
 import {Header, Footer} from '../components';
 export default class Page404 extends Component {
 
-    getInitialState() {
-        return {
+    constructor() {
+        super();
+        this.state = {
             countdown: 5
-        };
+        }
     }
 
     componentDidMount() {
-        var Tid = setInterval(function () {
-            var countdown = this.state.countdown;
-            if (countdown > 0) {
-                countdown--;
-                this.setState({
-                    countdown: countdown
-                })
-            }
-            else {
-                clearInterval(Tid);
-                window.location.href = '/';
-            }
-        }.bind(this), 1000)
+        if (__DEVCLIENT__) {
+            var Tid = setInterval(function () {
+                var countdown = this.state.countdown;
+                if (countdown > 0) {
+                    countdown--;
+                    this.setState({
+                        countdown: countdown
+                    })
+                }
+                else {
+                    clearInterval(Tid);
+                    window.location.href = '/';
+                }
+            }.bind(this), 1000)
+        }
     }
 
     render() {
@@ -46,7 +49,7 @@ export default class Page404 extends Component {
 }
 if (__DEVCLIENT__) {
     ReactDOM.render(
-        React.createElement(Page404, initialState),
+        React.createElement(Page404),
         document.getElementById('root')
     );
 }
