@@ -26,7 +26,12 @@ router.post('/add', function (req, res, next) {
         if (err) {
             return res.json({success: false, msg: '保存失败'});
         }
-        return res.json({success: true});
+        return res.json({
+            success: true,
+            data: {
+                time: time
+            }
+        });
     });
 });
 module.exports = router;

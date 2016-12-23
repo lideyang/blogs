@@ -7,7 +7,7 @@
     "start": "npm-run-all --sequential dev build:client",
     "dev": "npm-run-all --sequential build:dll build:server start-dev",
     "build:dll": "webpack --config webpack.dll.config.js",
-    "build:server": "webpack --colors --config webpack.config.dev.server.js",
+    "build:server": "webpack --colors --config webpack.config.dev.server.js --watch",
     "build:client": "webpack --colors --config webpack.config.dev.client.js",
     "start-dev": "node server.js"
   },

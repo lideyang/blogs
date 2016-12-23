@@ -16,18 +16,20 @@ export default class ArticleDetail extends Component {
         this.onAddComment = this.onAddComment.bind(this);
     }
 
-    static defaultProps = {
-
-    }
+    static defaultProps = {}
 
     onAddComment(newComment) {
         var that = this;
         newComment.id = this.state.articleDetail._id;
         Action.CommentAdd(newComment).then(
-            data=> {
-                that.setState({
-                    articleDetail: update(that.state.articleDetail, {comments: {$push: [newComment]}})
-                })
+            response=> {
+                var data = response.data;
+                if (data.success) {
+                    newComment.time = data.data.time;
+                    that.setState({
+                        articleDetail: update(that.state.articleDetail, {comments: {$push: [newComment]}})
+                    })
+                }
             }
         )
     }
