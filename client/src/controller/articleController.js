@@ -10,11 +10,7 @@ import Action from '../api'
 
 export function ArticleDetail(req, res) {
     if (!req.params.id) {
-        return res.render('articleDetail', {
-            react: '系统维护中。。。',
-            initialState: [],
-            title: 'lidy的个人主页-文章详情',
-        })
+        return res.redirect('/');
     }
 
     Action.ArticleDetail({
@@ -32,9 +28,7 @@ export function ArticleDetail(req, res) {
                     }
                 })
             } else {
-                View(req, res, '404', '请求错误', {
-                    Component: Page404Component
-                })
+                return res.redirect('/404');
             }
         }
     );

@@ -77,9 +77,11 @@ module.exports = function (app) {
     app.get('/u/remove/:id', function (req, res) {
 
     });
-
+    app.get('/404', function (req, res) {
+        Controller.Page404(req,res);
+    });
     app.use(function (req, res) {
-        res.render("404", {title: '404'});
+        return res.redirect('/404');
     });
 
     function checkLogin(req, res, next) {

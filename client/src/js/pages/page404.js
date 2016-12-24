@@ -3,7 +3,8 @@
  */
 import React, {PropTypes, Component} from 'react'
 import ReactDOM from 'react-dom'
-import {Header, Footer} from '../components';
+import {Header, Footer} from '../components'
+import {Grid} from 'react-bootstrap'
 export default class Page404 extends Component {
 
     constructor() {
@@ -39,10 +40,10 @@ export default class Page404 extends Component {
                         <h1>404</h1>
                     </header>
                 </Header>
-                <div>
+                <Grid>
                     <h2>404</h2>
                     <p>请求出错啦，{this.state.countdown}秒后跳转回首页^_^</p>
-                </div>
+                </Grid>
             </div>
         )
     }
