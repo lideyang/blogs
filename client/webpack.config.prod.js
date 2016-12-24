@@ -7,6 +7,8 @@ var autoprefixer = require('autoprefixer');//加样式游览器兼容前缀
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var path = require("path");
 var config = require("./src/config");
+var imgPath = config.ImageHost + 'dist/';
+console.log(imgPath);
 var pageStr = __dirname + '/src/js/pages';
 var entries = {};
 var walk = function (src) { //递归遍历pages目录所有文件
@@ -32,18 +34,17 @@ var baseStyle = [
 ];
 entries['base'] = baseStyle;
 module.exports = {
-    devtool: 'source-map',//cheap-module-eval-source-map,eval,cheap-module-source-map,source-map
     // context: path.join(__dirname, 'app', 'js'),
     entry: entries,
     output: {
-        path: '/',
+        path: './dist',
         filename: 'js/[name].js',
         publicPath: '/'
     },
     plugins: [
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.UglifyJsPlugin({
-            compress: { warnings: false }
+            compress: {warnings: false}
         }),
         new webpack.DllReferencePlugin({
             context: __dirname,
@@ -57,14 +58,13 @@ module.exports = {
             minChunks: 2
         }),
         new ExtractTextPlugin("css/[name].css"),
-        new ExtractTextPlugin('css/[name].less'),
         new webpack.DefinePlugin({
             __DEVCLIENT__: true,
             __DEVSERVER__: false,
             __DEVTOOLS__: false,
             __DEVLOGGER__: true,
             'process.env': {
-                'NODE_ENV': JSON.stringify('development')
+                'NODE_ENV': JSON.stringify('production')
             }
         })
     ],
@@ -96,11 +96,14 @@ module.exports = {
             },
             {
                 test: /\.(gif|jpg|png)\??.*$/,
-                loader: 'url-loader?limit=50000&name=images/[name].[ext]'
+                loaders: [
+                    'file-loader?limit=50000&name=images/[name].[ext]&publicPath=' + imgPath,
+                    'image-webpack?{progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
+                ]
             },
             {
                 test: /\.(woff|woff2|svg|eot|ttf|otf)\??.*$/,
-                loader: 'url-loader?limit=50000&name=fonts/[name].[ext]'
+                loader: 'url-loader?limit=50000&name=dist/fonts/[name].[ext]'
             }
         ]
     },

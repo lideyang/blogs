@@ -14,7 +14,6 @@ export default class ArticleInfo extends Component {
     render() {
         if (this.props.data) {
             var data = this.props.data;
-            console.log(require('../../../../public/images/lidy.png'));
             return (
                 <article id="post-1" className="post-1 post type-post status-publish format-standard hentry category-uncategorized">
                     <header className="entry-header">

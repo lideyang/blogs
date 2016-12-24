@@ -19,6 +19,9 @@ module.exports = {
         library: '[name]_library'
     },
     plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            compress: { warnings: false }
+        }),
         new webpack.DllPlugin({
             /**
              * path

@@ -2,7 +2,7 @@ var path = require('path')
 var webpack = require('webpack')
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var config = require("./src/config");
-var publicPath = config.ImageHost + 'dist/';
+var imgPath = config.ImageHost + 'dist/';
 module.exports = {
     name: "server-side rendering",
     target: "node",
@@ -11,19 +11,19 @@ module.exports = {
         __dirname: true
     },
     entry: {
-        server: ['babel-polyfill','./routes.js']
+        server: ['babel-polyfill', './routes.js']
     },
     output: {
         path: './dist',
         filename: "routes.js",
-        publicPath: publicPath,
+        publicPath: '/',
         libraryTarget: "commonjs2"
     },
     plugins: [
         new webpack.DefinePlugin({
             __DEVCLIENT__: false,
             __DEVSERVER__: true,
-            'process.env':{
+            'process.env': {
                 'NODE_ENV': JSON.stringify('development')
             }
         }),
@@ -35,7 +35,7 @@ module.exports = {
                 loader: 'babel',
                 query: {
                     "presets": ["es2015", "react", "stage-0"],
-                    "plugins":["transform-decorators-legacy","syntax-async-functions"]
+                    "plugins": ["transform-decorators-legacy", "syntax-async-functions"]
                 },
                 exclude: /node_modules/
             },
@@ -44,7 +44,7 @@ module.exports = {
             },
             {
                 test: /\.(gif|jpg|png)\??.*$/,
-                loader: 'url-loader?limit=50000&name=images/[name].[ext]'
+                loader: 'file-loader?limit=50000&name=images/[name].[ext]&publicPath=' + imgPath
             },
             {
                 test: /\.css$/,

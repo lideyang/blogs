@@ -9,6 +9,7 @@
     "build:dll": "webpack --config webpack.dll.config.js",
     "build:server": "webpack --colors --config webpack.config.dev.server.js --watch",
     "build:client": "webpack --colors --config webpack.config.dev.client.js",
+    "build:prod": "webpack --colors --config webpack.config.prod.js",
     "start-dev": "node server.js"
   },
   "dependencies": {
