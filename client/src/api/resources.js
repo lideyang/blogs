@@ -5,7 +5,7 @@ import {getCookie, signOut} from '../js/utils/authService'
 
 axios.defaults.baseURL = API_ROOT
 axios.defaults.withCredentials = true
-
+console.log('api:'+API_ROOT);
 // 返回处理
 axios.interceptors.response.use(function (response) {
     if (response.status === 401) {

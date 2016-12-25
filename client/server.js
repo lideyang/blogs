@@ -9,7 +9,7 @@ const partials = require('express-partials');
 const app = express()
 const isDev = true||process.env.NODE_ENV === 'development'
 const defaultPort = isDev? 4000 : 8300
-const port = process.env.PORT || defaultPort
+const port = process.env.PORT || defaultPo
 app.use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')))
 app.use(cookieParser());
 app.use(partials());

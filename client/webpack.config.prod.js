@@ -35,6 +35,7 @@ var baseStyle = [
 entries['base'] = baseStyle;
 module.exports = {
     // context: path.join(__dirname, 'app', 'js'),
+   //devtool: 'source-map',
     entry: entries,
     output: {
         path: './dist',
@@ -62,10 +63,7 @@ module.exports = {
             __DEVCLIENT__: true,
             __DEVSERVER__: false,
             __DEVTOOLS__: false,
-            __DEVLOGGER__: true,
-            'process.env': {
-                'NODE_ENV': JSON.stringify('production')
-            }
+            __DEVLOGGER__: true
         })
     ],
     module: {
