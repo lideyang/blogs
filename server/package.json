@@ -4,7 +4,7 @@
   "private": true,
   "description": "lidy-blog for express",
   "scripts": {
-    "start": "node app"
+    "start": "node app.js"
   },
   "dependencies": {
     "bluebird": "^3.4.6",
