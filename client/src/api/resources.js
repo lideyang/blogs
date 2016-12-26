@@ -5,7 +5,8 @@ import {getCookie, signOut} from '../js/utils/authService'
 
 axios.defaults.baseURL = API_ROOT
 axios.defaults.withCredentials = true
-console.log('api:'+API_ROOT);
+axios.defaults.timeout = 3000
+console.log('api:' + API_ROOT);
 // 返回处理
 axios.interceptors.response.use(function (response) {
     if (response.status === 401) {
@@ -15,6 +16,7 @@ axios.interceptors.response.use(function (response) {
     //console.log(response.data);
     return response;
 }, function (error) {
+    console.log('response' + error);
     return Promise.reject(error)
 })
 

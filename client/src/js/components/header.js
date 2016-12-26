@@ -30,7 +30,6 @@ export default class Header extends Component {
 
     componentWillMount() {
         if (__DEVCLIENT__) {
-            debugger;
             WaveCanvas('waveCanvas');
             document.getElementById('main_loading').style.display = 'none';
         }

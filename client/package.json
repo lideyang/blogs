@@ -4,12 +4,15 @@
   "private": true,
   "description": "lidy-blog for express react",
   "scripts": {
-    "start": "npm-run-all --sequential build build-server:dev start-prod",
-    "dev": "npm-run-all --sequential build-server:dev start-dev",
-    "build": "npm-run-all --parallel build:dll build:prod",
+    "start": "npm-run-all --sequential build build-server:dev start-dev",
+    "dev-build": "npm-run-all --parallel build:dll build-server:dev",
+    "dev": "npm-run-all --parallel build-server:watch start-dev build-server:proxy",
+    "server": "npm-run-all --parallel build-server:watch start-dev",
+    "build": "npm-run-all --sequential build:dll build:prod",
     "build:dll": "better-npm-run build:dll",
     "build-server:dev": "better-npm-run build-dev-server",
     "build-server:watch": "better-npm-run build-dev-server:watch",
+    "build-server:proxy": "better-npm-run dev-server:proxy",
     "build:prod": "better-npm-run build-prod",
     "start-dev": "better-npm-run nodemon-dev",
     "start-prod": "better-npm-run node-prod"
@@ -27,8 +30,14 @@
         "NODE_ENV": "development"
       }
     },
-    "build-dev-server:proxy": {
+    "build-dev-server:watch": {
       "command": "webpack --colors --watch --config ./webpack.config.dev.server.js",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    "dev-server:proxy": {
+      "command": "nodemon ./webpack.config.dev.proxy.js",
       "env": {
         "NODE_ENV": "development"
       }
