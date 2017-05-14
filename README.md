@@ -9,10 +9,7 @@ lidy-blog 是使用 React服务端同构 Express + MongoDB 开发的个人博客
 ### 开发
 
 ```
-$ git clone https://github.com/lideyang/blogs
-$ cd blogs
-$ cd client //客户端（内附说明)
-$ cd server //服务端（内附说明)
+$ npm run start 
 ```
 
 ### 目录结构
@@ -38,4 +35,9 @@ $ cd server //服务端（内附说明)
 │   ├── routes               				  // api路由
 │   ├── app.js             					  // 服务启动入口
 .
+```
+
+### 线上布署
+```
+$ pm2 start process.json
 ```

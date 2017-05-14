@@ -21,6 +21,15 @@ export function Home(req, res) {
                     total: data.total
                 }
             })
+        },
+        error=> {
+            View(req, res, 'home', '首页', {
+                Component: HomeComponent,
+                props: {
+                    articleList: [],
+                    total: 0
+                }
+            })
         }
     );
 }
