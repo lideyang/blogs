@@ -18,7 +18,11 @@ app.set('view engine', 'ejs')
 app.use('/assets', express.static('public')); //静态资源
 app.use('/dist', express.static('dist'));
 require('./dist/routes')(app);
-
+app.use(function(err, req, res, next) {
+    // 业务逻辑
+    console.error(err.stack);
+    next(err);
+});
 app.listen(port, function(err) {
     if (err) {
         console.error(err)
