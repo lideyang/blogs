@@ -1,6 +1,6 @@
 {
   "name": "lidy-blog",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "lidy-blog for express react",
   "scripts": {
@@ -11,6 +11,7 @@
     "build": "npm-run-all --sequential build:dll build:prod",
     "build:dll": "better-npm-run build:dll",
     "build-server:dev": "better-npm-run build-dev-server",
+    "build-server:pro": "better-npm-run build-pro-server",
     "build-server:watch": "better-npm-run build-dev-server:watch",
     "build-server:proxy": "better-npm-run dev-server:proxy",
     "build:prod": "better-npm-run build-prod",
@@ -28,6 +29,12 @@
       "command": "webpack --colors --config ./webpack.config.dev.server.js",
       "env": {
         "NODE_ENV": "development"
+      }
+    },
+    "build-pro-server": {
+      "command": "webpack --colors --config ./webpack.config.dev.server.js",
+      "env": {
+        "NODE_ENV": "production"
       }
     },
     "build-dev-server:watch": {
