@@ -4,7 +4,6 @@
 import ArticleDetailComponent from '../js/pages/articleDetail'
 import ArticleAddComponent from '../js/pages/articleAdd'
 import ArticleEditComponent from '../js/pages/articleEdit'
-import Page404Component from '../js/pages/Page404'
 import View from './view'
 import Action from '../api'
 
