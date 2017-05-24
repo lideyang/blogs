@@ -63,7 +63,10 @@ module.exports = {
             __DEVCLIENT__: true,
             __DEVSERVER__: false,
             __DEVTOOLS__: false,
-            __DEVLOGGER__: true
+            __DEVLOGGER__: true,
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
         })
     ],
     module: {
