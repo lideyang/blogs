@@ -50,7 +50,7 @@ router.post('/controller', function (req, res, next) {
                         result = {
                             "state": "fail",
                             "message": "上传失败",
-                            "data": ''
+                            "data": err
                         };
                     } else {
                         result ={

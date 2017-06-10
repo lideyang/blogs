@@ -75,7 +75,7 @@ module.exports = function (app) {
 
     app.get('/u/remove/:id', checkLogin);
     app.get('/u/remove/:id', function (req, res) {
-
+        Controller.ArticleDel(req, res);
     });
     app.get('/404', function (req, res) {
         Controller.Page404(req,res);

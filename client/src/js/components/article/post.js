@@ -28,7 +28,7 @@ export default class Post extends Component {
 
     submitHandle(e) {
         e.preventDefault();
-        var contentTxt = this.refs.editor.state.editorDOM.getContentTxt();
+        var contentTxt = this.refs.editor.state.editorDOM.getContent();
         var description = contentTxt.length > 100 ? contentTxt.substring(0, 200) : contentTxt; //设置前100字符简介
         if (!contentTxt) {
             //气泡提示
