@@ -10,14 +10,10 @@ function Post(name, head, title, tags, post, sort, description) {
     this.sort = sort;
     this.description = description;
 }
-
-module.exports = Post;
-
-//存储一篇文章及其相关信息
-Post.save = function (post, callback) {
-    var date = new Date();
+var getDataFormat = function (str) {
+    var date = new Date(str || '');
     //存储各种时间格式，方便以后扩展
-    var time = {
+    return {
         date: date,
         year: date.getFullYear(),
         month: date.getFullYear() + "-" + (date.getMonth() + 1),
@@ -25,6 +21,12 @@ Post.save = function (post, callback) {
         minute: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +
         date.getHours() + ":" + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())
     }
+}
+module.exports = Post;
+
+//存储一篇文章及其相关信息
+Post.save = function (post, callback) {
+    var time = getDataFormat(post.minute);
     var listTime = time.minute;
     //要存入数据库的文档
     var post = {
@@ -204,7 +206,8 @@ Post.edit = function (id, callback) {
                         sort: 1,
                         description: 1,
                         name: 1,
-                        post: 1
+                        post: 1,
+                        time: 1
                     }
                 },
                 function (err, doc) {
@@ -220,6 +223,8 @@ Post.edit = function (id, callback) {
 
 //更新一篇文章及其相关信息
 Post.update = function (posts, callback) {
+    var time = getDataFormat(posts.minute);
+    var listTime = time.minute;
     //打开数据库
     mongodb.open(function (err, db) {
         if (err) {
@@ -240,7 +245,9 @@ Post.update = function (posts, callback) {
                     ags: [posts.tags.tag1, posts.tags.tag2, posts.tags.tag3],
                     post: posts.post,
                     sort: posts.sort,
-                    description: posts.description
+                    description: posts.description,
+                    listTime: listTime,
+                    time: time
                 }
             }, function (err) {
                 mongodb.close();

@@ -22,7 +22,10 @@ export default class Post extends Component {
             tags: '',
             post: '',
             sort: '',
-            description: ''
+            description: '',
+            time: {
+                minute: ''
+            }
         }
     }
 
@@ -40,6 +43,7 @@ export default class Post extends Component {
             tags: this.refs.tags.value.split(','),
             post: contentHTML,
             sort: this.refs.sort.value,
+            minute: this.refs.minute.value,
             description: description
         }
         this.props.onSubmit(formParams);
@@ -81,6 +85,14 @@ export default class Post extends Component {
                                     )
                                 })}
                             </select>
+                        </Col>
+                    </FormGroup>
+                    <FormGroup>
+                        <Col componentClass={ControlLabel} sm={2}>
+                            发布时间
+                        </Col>
+                        <Col sm={10}>
+                            <input className="form-control" ref="minute" defaultValue={this.props.data.time.minute} placeholder="发布时间"/>
                         </Col>
                     </FormGroup>
                     <FormGroup>

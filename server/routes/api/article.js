@@ -58,7 +58,8 @@ router.post('/add', function (req, res, next) {
         tags: req.body.tags,
         post: req.body.post,
         sort: req.body.sort,
-        description: req.body.description
+        description: req.body.description,
+        minute:req.body.minute
     }
     Post.save(posts, function (err, doc) {
         if (err) {
@@ -94,7 +95,8 @@ router.post('/edit', function (req, res, next) {
         tags: [req.body.tag1, req.body.tag2, req.body.tag3],
         post: req.body.post,
         sort: req.body.sort,
-        description: req.body.description
+        description: req.body.description,
+        minute:req.body.minute
     }
     Post.update(posts, function (err) {
         if (err) {
