@@ -28,7 +28,8 @@ export default class Post extends Component {
 
     submitHandle(e) {
         e.preventDefault();
-        var contentTxt = this.refs.editor.state.editorDOM.getContent();
+        var contentHTML = this.refs.editor.state.editorDOM.getContent();
+        var contentTxt = this.refs.editor.state.editorDOM.getContentTxt();
         var description = contentTxt.length > 100 ? contentTxt.substring(0, 200) : contentTxt; //设置前100字符简介
         if (!contentTxt) {
             //气泡提示
@@ -37,7 +38,7 @@ export default class Post extends Component {
         let formParams = {
             title: this.refs.title.value,
             tags: this.refs.tags.value.split(','),
-            post: contentTxt,
+            post: contentHTML,
             sort: this.refs.sort.value,
             description: description
         }
