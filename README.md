@@ -40,4 +40,6 @@ $ npm run start
 ### 线上布署
 ```
 $ pm2 start process.json
+./mongod --fork --dbpath /usr/local/mongodb/data --logpath /usr/local/mongodb/logs
+mongod --config /etc/mongodb.conf
 ```
