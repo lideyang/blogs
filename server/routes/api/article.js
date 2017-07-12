@@ -40,11 +40,12 @@ router.get('/detail', function (req, res, next) {
                 success: false,
                 data: '查询失败'
             });
+        } else {
+            return res.json({
+                success: true,
+                data: posts
+            });
         }
-        return res.json({
-            success: true,
-            data: posts
-        });
     });
 });
 //新增文章
@@ -59,7 +60,7 @@ router.post('/add', function (req, res, next) {
         post: req.body.post,
         sort: req.body.sort,
         description: req.body.description,
-        minute:req.body.minute
+        minute: req.body.minute
     }
     Post.save(posts, function (err, doc) {
         if (err) {
@@ -69,7 +70,7 @@ router.post('/add', function (req, res, next) {
             });
         }
         var url = '/u/' + doc.insertedIds;
-        res.json({//成功！返回文章页
+        return res.json({//成功！返回文章页
             success: true,
             msg: url
         });
@@ -96,7 +97,7 @@ router.post('/edit', function (req, res, next) {
         post: req.body.post,
         sort: req.body.sort,
         description: req.body.description,
-        minute:req.body.minute
+        minute: req.body.minute
     }
     Post.update(posts, function (err) {
         if (err) {
@@ -106,7 +107,7 @@ router.post('/edit', function (req, res, next) {
             });
         }
         var url = encodeURI('/u/' + req.body.id);
-        res.json({//成功！返回文章页
+        return res.json({//成功！返回文章页
             success: true,
             msg: url
         });
