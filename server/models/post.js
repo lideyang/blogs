@@ -176,8 +176,8 @@ Post.getOne = function (id, callback) {
 //             comment.content = markdown.toHTML(comment.content);
 //           });
                 }
-                callback('无数据', doc);
                 mongodb.close();
+                callback(null, doc);
             });
         });
     });

@@ -35,17 +35,16 @@ router.get('/detail', function (req, res, next) {
         });
     }
     Post.getOne(req.query.id, function (err, posts) {
-        if (err || !posts) {
+        if (err) {
             return res.json({
                 success: false,
                 data: '查询失败'
             });
-        } else {
-            return res.json({
-                success: true,
-                data: posts
-            });
         }
+        return res.json({
+            success: true,
+            data: posts
+        });
     });
 });
 //新增文章
